@@ -1,0 +1,9 @@
+/bin
+/lib
+*.jar
+*.zip
+.classpath
+.project
+.settings
+/src/main/java/*
+!src/main/java/org/
