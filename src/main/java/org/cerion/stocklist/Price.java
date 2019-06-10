@@ -1,9 +1,11 @@
 package org.cerion.stocklist;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
 
-import org.cerion.stocklist.data.BandArray;
+import org.cerion.stocklist.arrays.BandArray;
 
 public class Price implements Comparable<Price>
 {
@@ -12,7 +14,7 @@ public class Price implements Comparable<Price>
 	public float open;
 	public float high;
 	public float low;
-	public long volume;
+	public float volume;
 	public float close;
 	
 	//Fields used in list
@@ -72,8 +74,8 @@ public class Price implements Comparable<Price>
 	public float pvoHist() { return parent.pvo(12, 26, 9).hist(pos); }
 	
 	//Volume based
-	//public long volume50; //SMA of volume
-	public long smaVolume(int period) { return parent.smaVolume(period).get(pos); }
+	//public long volume50; //SimpleMovingAverage of volume
+	public float smaVolume(int period) { return parent.smaVolume(period).get(pos); }
 	public float mfi() { return parent.mfi(14).get(pos); }
 	public float cmf() { return parent.cmf(20).get(pos); } //Chaikin Money Flow
 	public float fi() { return parent.forceIndex(13).get(pos); }
@@ -81,15 +83,16 @@ public class Price implements Comparable<Price>
 	public float adl() { return parent.adl().get(pos); }
 	public float co() { return parent.co(3, 10).get(pos); }
 	public float nvi () { return parent.nvi().get(pos); }
-	public long obv() { return parent.onBalanceVolume().get(pos); }
+	public float obv() { return parent.onBalanceVolume().get(pos); }
 
-	public String getDate() { return YahooFinance.mDateFormat.format(date); } //When it needs to be formatted properly
+	private static DateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	public String getDate() { return mDateFormat.format(date); } //When it needs to be formatted properly
 	
 	//Bands
 	public float getBBU() { return getBBU(2.0f); }
 	public float getBBL() { return getBBL(2.0f); }
-	public float getBBU(float mult) { return parent.bb(20, 2.0f).upper(pos); }
-	public float getBBL(float mult) { return parent.bb(20, 2.0f).lower(pos); }
+	public float getBBU(float mult) { return parent.bb(20, mult).upper(pos); }
+	public float getBBL(float mult) { return parent.bb(20, mult).lower(pos); }
 	public boolean aboveBB() { return (close > getBBL()); }
 	public boolean belowBB() { return (close < getBBL()); }
 	public float percentB(int period, float multiplier) { return parent.bb(period, multiplier).percent(pos); }
@@ -111,21 +114,34 @@ public class Price implements Comparable<Price>
 	{
 		return String.format("%.2f",val);
 	}
-	
+
+	@Deprecated
 	public Price(java.util.Date date, float open, float high, float low, float close, long volume)
 	{
+		this.date = date;
+		this.open = open;
+		this.high = high;
+		this.low  = low;
+		this.volume = volume;
+		this.close = close;
+		
+		//Error checking
+		if(open < low || close < low || open > high || close > high)
+			throw new RuntimeException("Price range inconsistency " + String.format("%s,%f,%f,%f,%f", getDate(), open, high, low, close));
+
+	}
+
+	public Price(java.util.Date date, float open, float high, float low, float close, float volume) {
 		this.date = date;
 		this.open = open;
 		this.high = high;
 		this.low = low;
 		this.volume = volume;
 		this.close = close;
-		
+
 		//Error checking
 		if(open < low || close < low || open > high || close > high)
-		{
-			System.out.println(String.format("%s,%f,%f,%f,%f", getDate(), open, high, low, close));
-		}
+			throw new RuntimeException("Price range inconsistency " + String.format("%s,%f,%f,%f,%f", getDate(), open, high, low, close));
 	}
 	
 	public int getDOW()
@@ -134,12 +150,14 @@ public class Price implements Comparable<Price>
 		c.setTime(date);
 		return c.get(Calendar.DAY_OF_WEEK);
 	}
-	
+
+	@Deprecated
 	public float avgGain()
 	{
 		return avgGain(1);
 	}
-	
+
+	@Deprecated
 	public float avgGain(int days)
 	{
 		float gain = 0;
@@ -170,13 +188,11 @@ public class Price implements Comparable<Price>
 	public float rsi(int period) { return parent.rsi(period).get(pos); } //Relative Strength Index
 	public float atr(int period) { return parent.atr(period).get(pos); } //average true range
 	
-	public float rsiAvg(int rsiPeriod, int smaPeriod) { return parent.rsiAvg(rsiPeriod, smaPeriod).get(pos); }
-	public float rsiStd(int rsiPeriod, int stdPeriod) { return parent.rsiStd(rsiPeriod, stdPeriod).get(pos); }
-
 	public float tp() { return parent.tp(pos); } //Typical price
 	public float mfv() { return parent.mfv(pos); } //Money flow volume
 	public float roc(int period) { return parent.roc(pos, period); }; //Rate of change
 
+	// TODO add this as indicator class
 	public float copp(int roc1, int roc2, int period) //Coppock Curve
 	{
 		int total = 0;
@@ -194,7 +210,7 @@ public class Price implements Comparable<Price>
 	public float getPercentDiff(Price old)
 	{
 		if(old.date.before(date) == false)
-			System.out.println("getPercentDiff() error");
+			throw new RuntimeException("current price is older than input price");
 		
 		float diff = close - old.close;
 		float percent = (100 * (diff / old.close));
@@ -207,7 +223,8 @@ public class Price implements Comparable<Price>
 	public float getRatio(float avg) //Bias ratio
 	{
 		if(avg == 0)
-			System.out.println("error");
+			throw new ArithmeticException("Divide by zero");
+
 		float diff = close - avg;
 		return (100 * (diff / avg));
 	}
