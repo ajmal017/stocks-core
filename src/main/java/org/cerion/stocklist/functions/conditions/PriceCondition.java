@@ -8,7 +8,6 @@ import org.cerion.stocklist.arrays.ValueArray;
 import org.cerion.stocklist.charts.PriceChart;
 import org.cerion.stocklist.charts.StockChart;
 import org.cerion.stocklist.functions.IPriceOverlay;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class PriceCondition implements ICondition {
 
@@ -31,7 +30,7 @@ public class PriceCondition implements ICondition {
         } else if (arr instanceof BandArray) {
             return evalBandArray((BandArray)arr);
         } else
-            throw new NotImplementedException();
+            throw new UnsupportedOperationException();
     }
 
     @Override

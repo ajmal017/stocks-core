@@ -16,7 +16,7 @@ import java.util.List;
 public class IndicatorChart extends StockChart {
 
     private IIndicator mIndicator;
-    private List<IIndicator> extra = new ArrayList<>();
+    private ArrayList<IIndicator> extra = new ArrayList<IIndicator>();
 
     public IndicatorChart(IIndicator indicator) {
         mIndicator = indicator;
@@ -67,7 +67,7 @@ public class IndicatorChart extends StockChart {
 
     @Override
     public List<IDataSet> getDataSets() {
-        List<IDataSet> result = new ArrayList<>();
+        List<IDataSet> result = new ArrayList<IDataSet>();
 
         //DataSet data = new DataSet(mList.getVolume(), mIndicator.toString(), colorBlack());
         //result.addAll(Arrays.asList(data) );
@@ -86,7 +86,7 @@ public class IndicatorChart extends StockChart {
 
     private List<DataSet> getOverlayDataSets(ValueArray arr) {
         resetNextColor();
-        List<DataSet> result = new ArrayList<>();
+        List<DataSet> result = new ArrayList<DataSet>();
 
         for(IOverlay overlay : mOverlays) {
             ISimpleOverlay ol = (ISimpleOverlay)overlay;

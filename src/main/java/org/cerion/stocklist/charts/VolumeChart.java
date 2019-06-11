@@ -16,7 +16,7 @@ public class VolumeChart extends StockChart {
 
     @Override
     public List<IDataSet> getDataSets() {
-        List<IDataSet> result = new ArrayList<>();
+        List<IDataSet> result = new ArrayList<IDataSet>();
 
         DataSet data = new DataSet(getPriceList(logScale).getVolume(), "Volume", colorBlack());
         data.setLineType(LineType.BAR);
@@ -28,7 +28,7 @@ public class VolumeChart extends StockChart {
 
     private List<IDataSet> getOverlayDataSets() {
         resetNextColor();
-        List<IDataSet> result = new ArrayList<>();
+        List<IDataSet> result = new ArrayList<IDataSet>();
         FloatArray volume = getPriceList(logScale).getVolume();
 
         for(IOverlay overlay : mOverlays) {

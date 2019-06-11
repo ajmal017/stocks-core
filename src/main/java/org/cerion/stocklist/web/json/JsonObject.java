@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class JsonObject extends Json {
 
-    private Map<String, Json> values = new HashMap<>();
+    private Map<String, Json> values = new HashMap<String, Json>();
 
     public JsonObject(String json) {
         this(json, 0);

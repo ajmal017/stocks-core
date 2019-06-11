@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class RepositoryCachedAPI implements CachedDataAPI {
 
     private DataAPI mAPI;
@@ -39,7 +37,7 @@ public class RepositoryCachedAPI implements CachedDataAPI {
 
     @Override
     public PriceList getPrices(String symbol, Interval interval, int max) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
         /*
         HistoricalDates dates = mPriceRepo.getHistoricalDates(symbol, interval);
         boolean update = false;

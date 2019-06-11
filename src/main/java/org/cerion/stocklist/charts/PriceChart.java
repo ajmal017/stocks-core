@@ -22,7 +22,7 @@ public class PriceChart extends StockChart {
         List<IFunctionEnum> overlay = Arrays.asList(super.getOverlays());
         List<PriceOverlay> priceOverlay = Arrays.asList(PriceOverlay.values());
 
-        List<IFunctionEnum> combined = new ArrayList<>();
+        List<IFunctionEnum> combined = new ArrayList<IFunctionEnum>();
         combined.addAll(overlay);
         combined.addAll(priceOverlay);
 
@@ -35,7 +35,7 @@ public class PriceChart extends StockChart {
 
     @Override
     public List<IDataSet> getDataSets() {
-        List<IDataSet> result = new ArrayList<>();
+        List<IDataSet> result = new ArrayList<IDataSet>();
 
         if(!showPrice) {
             // Don't add price data
@@ -73,7 +73,7 @@ public class PriceChart extends StockChart {
 
     private List<DataSet> getOverlayDataSets() {
         resetNextColor();
-        List<DataSet> result = new ArrayList<>();
+        List<DataSet> result = new ArrayList<DataSet>();
 
         for(IOverlay overlay : mOverlays) {
             ValueArray arr = overlay.eval(getPriceList(logScale));

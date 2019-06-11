@@ -1,4 +1,4 @@
-package org.cerion.stocklist.web.api;
+package org.cerion.stocklist.web;
 
 import org.cerion.stocklist.Price;
 import org.cerion.stocklist.PriceList;
@@ -344,7 +344,7 @@ public class YahooFinance {
 		return result;
 	}
 
-	static Price parseLine(String sLine) {
+	public static Price parseLine(String sLine) {
 		String fields[] = sLine.split(",");
 		if(fields.length == 7)
 		{

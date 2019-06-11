@@ -1,6 +1,6 @@
 package org.cerion.stocklist;
 
-import org.cerion.stocklist.web.api.YahooFinance;
+import org.cerion.stocklist.web.YahooFinance;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

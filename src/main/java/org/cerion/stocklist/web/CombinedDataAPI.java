@@ -7,8 +7,7 @@ import org.cerion.stocklist.model.Interval;
 import org.cerion.stocklist.model.Quote;
 import org.cerion.stocklist.model.Symbol;
 import org.cerion.stocklist.web.api.GoogleFinance;
-import org.cerion.stocklist.web.api.YahooFinance;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.cerion.stocklist.web.YahooFinance;
 
 import java.util.Date;
 import java.util.List;
@@ -42,7 +41,7 @@ public class CombinedDataAPI implements DataAPI {
 
     @Override
     public List<Symbol> getSymbols(Set<String> symbols) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -53,7 +52,7 @@ public class CombinedDataAPI implements DataAPI {
 
     @Override
     public Map<String, Quote> getQuotes(Set<String> symbols) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
