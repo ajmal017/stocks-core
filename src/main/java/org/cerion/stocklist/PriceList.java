@@ -54,17 +54,8 @@ public class PriceList extends ArrayList<Price>
 		
 		return ((close(pos) - close(x)) * 100) / close(x);
 	}
-	
-	//public static final int _DAILY = 0;
-	//public static final int TYPE_WEEKLY = 1;
-	//public static final int TYPE_MONTHLY = 2;
-	public String mSymbol;
-	//public int mType = TYPE_DAILY;
 
-	//private static final long serialVersionUID = 1L;
-	
-	//private Map<String,float[]> mMapIndicators = new HashMap<String,float[]>();
-	//private Map<String,ValueArray> mMapIndicators = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+	public String mSymbol;
     private Map<IFunction, ValueArray> cachedResults = new HashMap<>();
 
 	public PriceList(String symbol, List<Price> list) {
@@ -238,31 +229,10 @@ public class PriceList extends ArrayList<Price>
 
 		return new PriceList(mSymbol, prices);
 	}
-	
-	//For estimating new price near closing, why are other values missing?
-	/*
-	public Price addPrice(float close)
-	{
-		Price prev = get(size()-1);
-
-		Price p = new Price();
-		p.adjClose = close;
-		p.low = close;
-		p.high = close;
-		p.close = close;
-		p.date = new Date();
-		p.date.setTime(prev.date.getTime() + 1 * 24 * 60 * 60 * 1000); 
-		
-		add(p);
-		
-		return p;
-	}
-	*/
 
 	public Price getLast(int prev) {
 		return get(size()-1-prev);
 	}
-	
 	public Price getLast() {
 		return getLast(0);
 	}
@@ -310,22 +280,6 @@ public class PriceList extends ArrayList<Price>
 		}
 	}
 
-	/*
-	@Deprecated
-    private ValueArray eval(IFunction id, Number... params) {
-    	FunctionCall call = new FunctionCall(id, params);
-    	
-    	ValueArray result = cachedResults.get(call);
-    	if(result == null)
-    	{
-    		result = call.eval(this);
-    		cachedResults.put(call, result);
-    	}
-    	
-    	return result;
-    }
-    */
-
     private ValueArray eval(IFunction function) {
 		ValueArray result = cachedResults.get(function);
 		if(result == null) {
@@ -347,62 +301,20 @@ public class PriceList extends ArrayList<Price>
     //Simple Overlays
     public FloatArray ema(int period) { return evalFA(new ExpMovingAverage(period)); }
     public FloatArray sma(int period) { return evalFA(new SimpleMovingAverage(period)); }
-    public FloatArray kama(int p1, int p2, int p3) { return evalFA(new KAMA(p1, p2, p3)); }
 	public BandArray bb(int period, float multiplier) { return (BandArray)eval(new BollingerBands(period, multiplier)); }
-	public FloatArray smaVolume(int period) { return getVolume().sma(period); }
 
     //Indicators
     public FloatArray rsi(int period)  { return evalFA(new RSI(period)); }
-	public FloatArray forceIndex(int period) { return evalFA(new ForceIndex(period)); }
-	public FloatArray adx(int period) { return evalFA(new AverageDirectionalIndex(period)); }
-	public FloatArray cci(int p1) { return evalFA(new CommodityChannelIndex(p1)); }
 	public FloatArray atr(int period) { return evalFA(new AverageTrueRange(period)); }
-	public FloatArray stochRSI(int period) { return evalFA(new StochasticRSI(period)); }
-	public FloatArray mfi(int period) { return evalFA(new MoneyFlowIndex(period)); }
-	public FloatArray cmf(int period) { return evalFA(new ChaikinMoneyFlow(period)); }
-	public FloatArray massIndex(int p1) { return evalFA(new MassIndex(p1)); }
-	public FloatArray trix(int p1) { return evalFA(new TRIX(p1)); }
-	public FloatArray ulcer(int period) { return evalFA(new UlcerIndex(period)); }
-	public FloatArray sharpe(int years, float riskFreeRate) { return evalFA(new SharpeRatio(years, riskFreeRate)); }
-
-	public FloatArray emv(int period) { return evalFA(new EaseOfMovement(period)); }
-	public FloatArray wpr(int period) { return evalFA(new WilliamsPercentR(period)); }
 	public FloatArray adl() { return evalFA(new AverageDirectionalIndex()); }
-	public FloatArray onBalanceVolume() { return evalFA(new OnBalanceVolume()); }
-	public FloatArray nvi() { return evalFA(new NegativeVolumeIndex()); }
-	public FloatArray specialK() { return evalFA(new PringsSpecialK()); }
-	
 
 	public FloatArray co(int p1, int p2) { return evalFA(new ChaikinOscillator(p1, p2)); }
 	public FloatArray uo(int p1, int p2, int p3) { return evalFA(new UltimateOscillator(p1, p2, p3)); }
-	public FloatArray tsi(int p1, int p2) { return evalFA(new TrueStrengthIndex(p1, p2)); }
-	public FloatArray pmo(int p1, int p2) { return evalFA(new PriceMomentumOscillator(p1, p2)); }
-	public FloatArray stoch(int K)                       { return stoch(K,1,1); }
-	public FloatArray stoch(int K, int D)                { return stoch(K,D,1); }
-	public FloatArray stoch(int K, int fastD, int slowD) { return evalFA(new Stochastic(K, fastD, slowD)); }
 	public FloatArray kst(int r1, int r2, int r3, int r4, int ma1, int ma2, int ma3, int ma4) { 
 		return evalFA(new PringsKnowSureThing(r1, r2, r3, r4, ma1, ma2, ma3, ma4));
 		}
 
-	//Pair Values
-	public PairArray vortex(int period) { return evalPA(new Vortex(period)); }
-	public PairArray aroon(int period) { return evalPA(new AroonUpDown(period)); }
 	public PairArray di(int period) { return evalPA(new DirectionalIndex(period)); }
-
-	//MACD related
 	public MACDArray macd(int p1, int p2, int signal) { return (MACDArray)eval(new MACD(p1, p2, signal)); }
-	public MACDArray ppo(int p1, int p2, int signal)  { return (MACDArray)eval(new PercentagePriceOscillator(p1, p2, signal)); }
-	public MACDArray pvo(int p1, int p2, int signal)  { return (MACDArray)eval(new PercentageVolumeOscillator(p1, p2, signal)); }
-
-	// Price overlays
-	public FloatArray pSAR(float step, float max) { return evalFA(new ParabolicSAR(step, max)); }
-	public PairArray cexit(int period, float multiplier) { return evalPA(new ChandelierExit(period, multiplier)); }
-	public BandArray kc(int emaPeriod, float multiplier, int atrPeriod) { return (BandArray)eval(new KeltnerChannels(emaPeriod, multiplier, atrPeriod)); }
-	public BandArray chan(int period) { return (BandArray)eval(new PriceChannels(period)); }
-	public PairArray cloud(int conversion, int base, int span) { return evalPA(new IchimokuClouds(conversion, base, span)); }
-
-
-	//TODO, add default version of these with no parameter
-	//TODO, change float parameters to Number so Float/Double/Int works
 }
 
