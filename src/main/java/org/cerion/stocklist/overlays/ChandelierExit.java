@@ -5,6 +5,7 @@ import org.cerion.stocklist.arrays.FloatArray;
 import org.cerion.stocklist.arrays.PairArray;
 import org.cerion.stocklist.arrays.ValueArray;
 import org.cerion.stocklist.functions.types.PriceOverlay;
+import org.cerion.stocklist.indicators.AverageTrueRange;
 
 public class ChandelierExit extends PriceOverlayBase {
 
@@ -32,7 +33,7 @@ public class ChandelierExit extends PriceOverlayBase {
 
         FloatArray high = new FloatArray(size);
         FloatArray low = new FloatArray(size);
-        FloatArray atr = list.atr(period);
+        FloatArray atr = new AverageTrueRange(period).eval(list);
 
         for(int i = 0; i < size; i++)
         {

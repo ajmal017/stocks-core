@@ -32,7 +32,7 @@ public class AverageDirectionalIndex extends IndicatorBase {
         int size = list.size();
         FloatArray result = new FloatArray(size);
 
-        PairArray di = list.di(period);
+        PairArray di = new DirectionalIndex(period).eval(list);
         float[] dx = new float[size];
 
         for(int i = 1; i < size; i++)

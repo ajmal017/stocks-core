@@ -28,7 +28,7 @@ public class ChaikinOscillator extends IndicatorBase {
     private static FloatArray chaikinOscillator(PriceList list, int p1, int p2) {
         FloatArray result = new FloatArray(list.size());
 
-        FloatArray adl = list.adl();
+        FloatArray adl = new AccumulationDistributionLine().eval(list);
         FloatArray ema1 = adl.ema(p1);
         FloatArray ema2 = adl.ema(p2);
 

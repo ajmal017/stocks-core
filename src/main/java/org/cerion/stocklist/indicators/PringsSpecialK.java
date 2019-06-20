@@ -41,9 +41,9 @@ public class PringsSpecialK extends IndicatorBase {
 	    */
 
         //This is just 3 different versions of knowSureThing so it can be calculated easy
-        FloatArray kst1 = list.kst(10, 15, 20, 30,     10, 10, 10, 15);
-        FloatArray kst2 = list.kst(40, 65, 75, 100,    50, 65, 75, 100);
-        FloatArray kst3 = list.kst(195, 265, 390, 530, 130, 130, 130, 195);
+        FloatArray kst1 = new PringsKnowSureThing(10, 15, 20, 30,     10, 10, 10, 15).eval(list);
+        FloatArray kst2 = new PringsKnowSureThing(40, 65, 75, 100,    50, 65, 75, 100).eval(list);
+        FloatArray kst3 = new PringsKnowSureThing(195, 265, 390, 530, 130, 130, 130, 195).eval(list);
 
         for(int i = 0; i < list.size(); i++)
             result.mVal[i] = kst1.get(i) + kst2.get(i) + kst3.get(i);

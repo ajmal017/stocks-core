@@ -134,7 +134,7 @@ public class PriceList extends ArrayList<Price>
 
 	public PriceList toWeekly() {
 		if(getInterval() != Interval.DAILY)
-			throw new RuntimeException("Interval must be monthly");
+			throw new RuntimeException("Interval must be daily");
 
 		List<Price> prices = new ArrayList<>();
 
@@ -294,27 +294,11 @@ public class PriceList extends ArrayList<Price>
 		return (FloatArray)eval(function);
 	}
 
-	private PairArray evalPA(IFunction function) {
-		return (PairArray)eval(function);
-	}
-
-    //Simple Overlays
     public FloatArray ema(int period) { return evalFA(new ExpMovingAverage(period)); }
     public FloatArray sma(int period) { return evalFA(new SimpleMovingAverage(period)); }
 	public BandArray bb(int period, float multiplier) { return (BandArray)eval(new BollingerBands(period, multiplier)); }
-
-    //Indicators
     public FloatArray rsi(int period)  { return evalFA(new RSI(period)); }
-	public FloatArray atr(int period) { return evalFA(new AverageTrueRange(period)); }
-	public FloatArray adl() { return evalFA(new AverageDirectionalIndex()); }
-
-	public FloatArray co(int p1, int p2) { return evalFA(new ChaikinOscillator(p1, p2)); }
 	public FloatArray uo(int p1, int p2, int p3) { return evalFA(new UltimateOscillator(p1, p2, p3)); }
-	public FloatArray kst(int r1, int r2, int r3, int r4, int ma1, int ma2, int ma3, int ma4) { 
-		return evalFA(new PringsKnowSureThing(r1, r2, r3, r4, ma1, ma2, ma3, ma4));
-		}
-
-	public PairArray di(int period) { return evalPA(new DirectionalIndex(period)); }
 	public MACDArray macd(int p1, int p2, int signal) { return (MACDArray)eval(new MACD(p1, p2, signal)); }
 }
 
