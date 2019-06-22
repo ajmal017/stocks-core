@@ -9,18 +9,19 @@ import org.cerion.stocklist.functions.ISimpleOverlay;
 
 import java.lang.reflect.Method;
 
-abstract class OverlayBase extends PriceOverlayBase implements ISimpleOverlay {
+abstract class OverlayBase<T extends ValueArray> extends PriceOverlayBase implements ISimpleOverlay {
 
     OverlayBase(IFunctionEnum id, Number ...params) {
         super(id,params);
     }
 
-    // TODO if this is removed each type can return its actual type instead of generic ValueArray
-    // or use Template classes with return type as parameter
     @Override
-    public ValueArray eval(PriceList list) {
+    public T eval(PriceList list) {
         return eval(list.getClose());
     }
+
+    @Override
+    public abstract T eval(FloatArray arr);
 
     @Override
     @SuppressWarnings("unchecked")

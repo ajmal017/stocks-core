@@ -1,4 +1,4 @@
-package org.cerion.stocklist.web;
+package org.cerion.stocklist.web.api;
 
 import org.cerion.stocklist.Price;
 import org.cerion.stocklist.PriceList;

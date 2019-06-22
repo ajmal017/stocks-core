@@ -4,7 +4,7 @@ package org.cerion.stocklist.overlays;
 import org.cerion.stocklist.arrays.FloatArray;
 import org.cerion.stocklist.functions.types.Overlay;
 
-public class LinearRegressionLine extends OverlayBase {
+public class LinearRegressionLine extends OverlayBase<FloatArray> {
 
     public LinearRegressionLine() {
         super(Overlay.LINREG);

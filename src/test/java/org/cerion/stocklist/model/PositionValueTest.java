@@ -2,7 +2,7 @@ package org.cerion.stocklist.model;
 
 import org.cerion.stocklist.Price;
 import org.cerion.stocklist.PriceList;
-import org.cerion.stocklist.web.YahooFinance;
+import org.cerion.stocklist.web.api.YahooFinance;
 import org.junit.Test;
 
 import java.util.*;

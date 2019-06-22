@@ -3,7 +3,7 @@ package org.cerion.stocklist.overlays;
 import org.cerion.stocklist.arrays.FloatArray;
 import org.cerion.stocklist.functions.types.Overlay;
 
-public class KAMA extends OverlayBase {
+public class KAMA extends OverlayBase<FloatArray> {
 
     public KAMA() {
         super(Overlay.KAMA, 10, 2, 30);

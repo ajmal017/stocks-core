@@ -1,7 +1,7 @@
 package org.cerion.stocklist.web;
 
 import org.cerion.stocklist.Price;
-import org.cerion.stocklist.web.YahooFinance;
+import org.cerion.stocklist.web.api.YahooFinance;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

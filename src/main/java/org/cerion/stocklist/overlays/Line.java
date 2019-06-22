@@ -3,7 +3,7 @@ package org.cerion.stocklist.overlays;
 import org.cerion.stocklist.arrays.FloatArray;
 import org.cerion.stocklist.functions.types.Overlay;
 
-public class Line extends OverlayBase {
+public class Line extends OverlayBase<FloatArray> {
 
     public Line() {
         super(Overlay.LINE, 1.0);

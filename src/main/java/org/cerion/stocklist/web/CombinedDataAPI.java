@@ -7,7 +7,7 @@ import org.cerion.stocklist.model.Interval;
 import org.cerion.stocklist.model.Quote;
 import org.cerion.stocklist.model.Symbol;
 import org.cerion.stocklist.web.api.GoogleFinance;
-import org.cerion.stocklist.web.YahooFinance;
+import org.cerion.stocklist.web.api.YahooFinance;
 
 import java.util.Date;
 import java.util.List;
