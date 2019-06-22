@@ -15,6 +15,8 @@ abstract class OverlayBase extends PriceOverlayBase implements ISimpleOverlay {
         super(id,params);
     }
 
+    // TODO if this is removed each type can return its actual type instead of generic ValueArray
+    // or use Template classes with return type as parameter
     @Override
     public ValueArray eval(PriceList list) {
         return eval(list.getClose());

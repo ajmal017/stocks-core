@@ -1,16 +1,19 @@
 package org.cerion.stocklist;
 
-import org.cerion.stocklist.arrays.*;
-import org.cerion.stocklist.functions.*;
-import org.cerion.stocklist.indicators.*;
+import org.cerion.stocklist.arrays.FloatArray;
 import org.cerion.stocklist.model.Interval;
-import org.cerion.stocklist.overlays.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 @SuppressWarnings("WeakerAccess")
 public class PriceList extends ArrayList<Price>
 {
+	public String mSymbol;
+	private boolean mLogScale = false;
+
 	public java.util.Date[] mDate;
 	public FloatArray mOpen;
 	public FloatArray mHigh;
@@ -30,7 +33,42 @@ public class PriceList extends ArrayList<Price>
 	public FloatArray getLow() { return mLow; }
 	public FloatArray getVolume() { return mVolume; }
 
-	private boolean mLogScale = false;
+	public PriceList(String symbol, List<Price> list) {
+
+		try {
+			Collections.sort(list);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		mSymbol = symbol;
+		int size = list.size();
+
+		mDate = new java.util.Date[size];
+		mOpen = new FloatArray(size);
+		mHigh = new FloatArray(size);
+		mLow = new FloatArray(size);
+		mClose = new FloatArray(size);
+		mVolume = new FloatArray(size);
+		//mAdjCloses = new float[size];
+
+		for(int i = 0; i < size; i++) {
+			Price p = list.get(i);
+			p.pos = i;
+			p.parent = this;
+
+			mDate[i] = p.date;
+			mOpen.mVal[i] = p.open;
+			mHigh.mVal[i] = p.high;
+			mLow.mVal[i] = p.low;
+			mClose.mVal[i] = p.close;
+			mVolume.mVal[i] = p.volume;
+
+			this.add(p);
+		}
+	}
 
 	//Values derived from current days prices
 	public float tp(int pos) { return (mClose.get(pos) + mHigh.get(pos) + mLow.get(pos)) / 3; } //Typical price
@@ -53,46 +91,6 @@ public class PriceList extends ArrayList<Price>
 			x = pos-period;
 		
 		return ((close(pos) - close(x)) * 100) / close(x);
-	}
-
-	public String mSymbol;
-    private Map<IFunction, ValueArray> cachedResults = new HashMap<>();
-
-	public PriceList(String symbol, List<Price> list) {
-
-		try {
-			Collections.sort(list);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		mSymbol = symbol;
-		int size = list.size();
-		
-		mDate = new java.util.Date[size];
-		mOpen = new FloatArray(size);
-		mHigh = new FloatArray(size);
-		mLow = new FloatArray(size);
-		mClose = new FloatArray(size);
-		mVolume = new FloatArray(size);
-		//mAdjCloses = new float[size];
-		
-		for(int i = 0; i < size; i++) {
-			Price p = list.get(i);
-			p.pos = i;
-			p.parent = this;
-
-			mDate[i] = p.date;
-			mOpen.mVal[i] = p.open;
-			mHigh.mVal[i] = p.high;
-			mLow.mVal[i] = p.low;
-			mClose.mVal[i] = p.close;
-			mVolume.mVal[i] = p.volume;
-
-			this.add(p);
-		}
 	}
 
 	public PriceList toLogScale() {
@@ -279,26 +277,5 @@ public class PriceList extends ArrayList<Price>
 			default: return 12;
 		}
 	}
-
-    private ValueArray eval(IFunction function) {
-		ValueArray result = cachedResults.get(function);
-		if(result == null) {
-			result = function.eval(this);
-			cachedResults.put(function, result);
-		}
-
-		return result;
-	}
-
-	private FloatArray evalFA(IFunction function) {
-		return (FloatArray)eval(function);
-	}
-
-    public FloatArray ema(int period) { return evalFA(new ExpMovingAverage(period)); }
-    public FloatArray sma(int period) { return evalFA(new SimpleMovingAverage(period)); }
-	public BandArray bb(int period, float multiplier) { return (BandArray)eval(new BollingerBands(period, multiplier)); }
-    public FloatArray rsi(int period)  { return evalFA(new RSI(period)); }
-	public FloatArray uo(int p1, int p2, int p3) { return evalFA(new UltimateOscillator(p1, p2, p3)); }
-	public MACDArray macd(int p1, int p2, int signal) { return (MACDArray)eval(new MACD(p1, p2, signal)); }
 }
 

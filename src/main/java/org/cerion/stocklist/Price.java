@@ -20,25 +20,9 @@ public class Price implements Comparable<Price>
 	//Fields used in list
 	public PriceList parent;
 	public int pos;
-	
-
-	//Misc indicators
-	public float uo() { return parent.uo(7,14,28).get(pos); }
-	public float macdHist() { return parent.macd(12, 26, 9).hist(pos); }
 
 	private static DateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	public String getDate() { return mDateFormat.format(date); } //When it needs to be formatted properly
-	
-	//Bands
-	public float getBBU() { return getBBU(2.0f); }
-	public float getBBL() { return getBBL(2.0f); }
-	public float getBBU(float mult) { return parent.bb(20, mult).upper(pos); }
-	public float getBBL(float mult) { return parent.bb(20, mult).lower(pos); }
-	public boolean aboveBB() { return (close > getBBL()); }
-	public boolean belowBB() { return (close < getBBL()); }
-	public float percentB(int period, float multiplier) { return parent.bb(period, multiplier).percent(pos); }
-
-
 	public static String getDecimal(float val)
 	{
 		return String.format("%.2f",val);
@@ -100,12 +84,9 @@ public class Price implements Comparable<Price>
 			gain = 10; //Bug in PLL
 		return gain;
 	}
-	
-	public float sma(int period) { return parent.sma(period).get(pos); } //Simple moving average
-	public float ema(int period) { return parent.ema(period).get(pos); } //Exponential moving average
-	public float rsi(int period) { return parent.rsi(period).get(pos); } //Relative Strength Index
-	public float tp() { return parent.tp(pos); } //Typical price
 
+	public float slope(int period) { return parent.slope(period, pos); } //Slope of closing price
+	public float tp() { return parent.tp(pos); } //Typical price
 	public float change(Price prev)
 	{
 		return getPercentDiff(prev);
@@ -119,9 +100,6 @@ public class Price implements Comparable<Price>
 		float percent = (100 * (diff / old.close));
 		return percent;
 	}
-
-    public float slope(int period) { return parent.slope(period, pos); } //Slope of closing price
-    
 
 	@Override
 	public int compareTo(Price p) {

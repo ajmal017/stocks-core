@@ -28,8 +28,7 @@ public class StochasticRSI extends IndicatorBase {
 
     private static FloatArray stochasticRSI(PriceList list, int period) {
         FloatArray result = new FloatArray(list.size());
-
-        FloatArray rsi_arr = list.rsi(period);
+        FloatArray rsi_arr = new RSI(period).eval(list);
 
         for(int i = 0; i < list.size(); i++)
         {

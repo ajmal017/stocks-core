@@ -1,7 +1,9 @@
 package org.cerion.stocklist.overlays;
 
+import org.cerion.stocklist.PriceList;
 import org.cerion.stocklist.arrays.BandArray;
 import org.cerion.stocklist.arrays.FloatArray;
+import org.cerion.stocklist.arrays.ValueArray;
 import org.cerion.stocklist.functions.types.Overlay;
 
 public class BollingerBands extends OverlayBase {
@@ -23,5 +25,10 @@ public class BollingerBands extends OverlayBase {
     @Override
     public BandArray eval(FloatArray arr) {
         return arr.bb(getInt(0), getFloat(1));
+    }
+
+    @Override
+    public BandArray eval(PriceList list) {
+        return eval(list.mClose);
     }
 }
