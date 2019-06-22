@@ -36,62 +36,6 @@ public class RepositoryCachedAPI implements CachedDataAPI {
     }
 
     @Override
-    public PriceList getPrices(String symbol, Interval interval, int max) {
-        throw new UnsupportedOperationException();
-        /*
-        HistoricalDates dates = mPriceRepo.getHistoricalDates(symbol, interval);
-        boolean update = false;
-        Date retrieveFrom = null;
-
-        if(dates == null) {
-            update = true;
-        } else {
-            Date now = new Date();
-            long diff = now.getTime() - dates.LastUpdated.getTime();
-            diff /= 1000 * 60 * 60;
-            long hours = diff;
-            long days = diff / 24;
-
-            System.out.println(symbol + " " + interval.name() + " last updated " + dates.LastUpdated + " (" + diff + " days ago)");
-
-            // TODO, smarter updates based on last price obtained and weekends
-            if(interval == Interval.DAILY && hours >= 12)
-                update = true;
-            else if(interval == Interval.WEEKLY && days > 3)
-                update = true;
-            else if(interval == Interval.MONTHLY && days > 7)
-                update = true;
-
-            // Incremental update, not sure if all this is necessary but start a few data points earlier to be safe
-            if (update) {
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(dates.LastDate);
-                switch(interval)
-                {
-                    case DAILY: cal.add(Calendar.DAY_OF_MONTH, -7); break;
-                    case WEEKLY: cal.add(Calendar.DAY_OF_MONTH, -14); break;
-                    case MONTHLY: cal.add(Calendar.DAY_OF_MONTH, -90); break;
-                }
-
-                retrieveFrom = cal.getTime();
-            }
-        }
-
-        try {
-            if (retrieveFrom != null) {
-                updatePricesIncremental(symbol, interval, retrieveFrom);
-            } else if (update)
-                updatePrices(symbol, interval, max); // TODO remove limit here
-
-        } catch(Exception e) {
-            return null;
-        }
-
-        return mPriceRepo.get(symbol, interval, max);
-        */
-    }
-
-    @Override
     public List<Price> getPrices(String symbol, Interval interval, Date start, boolean forceUpdate) throws Exception {
 
         HistoricalDates dates = mPriceRepo.getHistoricalDates(symbol, interval);

@@ -25,11 +25,6 @@ public class CombinedDataAPI implements DataAPI {
     }
 
     @Override
-    public PriceList getPrices(String symbol, Interval interval, int max) {
-        return yahoo.getPrices(symbol, interval, max);
-    }
-
-    @Override
     public List<Price> getPrices(String symbol, Interval interval, Date start) throws Exception {
         return yahoo.getPrices(symbol, interval, start);
     }

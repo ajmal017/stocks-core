@@ -5,10 +5,7 @@ import org.cerion.stocklist.PriceList;
 import org.cerion.stocklist.web.YahooFinance;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -52,15 +49,15 @@ public class PositionValueTest {
         final double purchasePrice = 4090.9401f; // Issues representing this in double, should really be 4094.94000000000
         final double profit = 63.95;
 
-        Position pos = new Position("FRIFX", 341.481, 11.98, new Date(2017,2,9), true);
+        Position pos = new Position("FRIFX", 341.481, 11.98, new GregorianCalendar(2017, 2, 9).getTime(), true);
         Quote q = new Quote("FRIFX");
         q.lastTrade = 12.13f;
 
         YahooFinance api = YahooFinance.getInstance();
         List<Price> prices = new ArrayList<>();
-        prices.add(new Price(new Date(2017,2,8), 1f, 1f, 1f, 1f, 10000000.0f));
-        prices.add(new Price(new Date(2017,2,9), 11.99f, 11.99f, 11.90f, 11.943306f, 10000000.0f));
-        prices.add(new Price(new Date(2017,2,10), 2f, 2f, 2f, 2f, 10000000.0f));
+        prices.add(new Price(new GregorianCalendar(2017, 2, 8).getTime(), 1f, 1f, 1f, 1f, 10000000.0f));
+        prices.add(new Price(new GregorianCalendar(2017, 2, 9).getTime(), 11.99f, 11.99f, 11.90f, 11.943306f, 10000000.0f));
+        prices.add(new Price(new GregorianCalendar(2017, 2, 10).getTime(), 2f, 2f, 2f, 2f, 10000000.0f));
         PriceList list = new PriceList("FRIFX",prices);
 
         PositionValue position = new PositionValue(pos, list);

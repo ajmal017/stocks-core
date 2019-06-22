@@ -23,7 +23,7 @@ public class VolumeWeightedMovingAverage extends PriceOverlayBase {
     }
 
     @Override
-    public ValueArray eval(PriceList list) {
+    public FloatArray eval(PriceList list) {
         int size = list.size();
         int period = getInt(0);
         FloatArray result = new FloatArray(size);

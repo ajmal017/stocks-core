@@ -15,7 +15,7 @@ public class Utils {
 	{
 		List<Price> prices = new ArrayList<>();
 		for(int i = 0; i < size; i++)
-			prices.add(new Price(new Date(), i, i, i, i, i));
+			prices.add(new Price(new Date(), i, i, i, i, (float)i));
 		
 		return new PriceList("TEST", prices);
 	}

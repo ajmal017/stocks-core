@@ -7,7 +7,7 @@ import java.util.Random;
 
 import org.cerion.stocklist.arrays.BandArray;
 
-public class Price implements Comparable<Price>
+public class Price implements Comparable<Price>, IPrice
 {
 	//Core fields
 	public java.util.Date date;
@@ -105,5 +105,10 @@ public class Price implements Comparable<Price>
 	public int compareTo(Price p) {
 		//Sort by date ascending, oldest first
 		return this.date.compareTo(p.date);
+	}
+
+	@Override
+	public float getClose() {
+		return close;
 	}
 }
