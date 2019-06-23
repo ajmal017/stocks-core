@@ -7,6 +7,7 @@ import org.cerion.stocklist.model.Interval;
 import org.cerion.stocklist.model.Quote;
 import org.cerion.stocklist.model.Symbol;
 import org.cerion.stocklist.web.api.GoogleFinance;
+import org.cerion.stocklist.web.api.Tiingo;
 import org.cerion.stocklist.web.api.YahooFinance;
 
 import java.util.Date;
@@ -18,10 +19,12 @@ public class CombinedDataAPI implements DataAPI {
 
     private YahooFinance yahoo;
     private GoogleFinance google;
+    private Tiingo tiingo;
 
     public CombinedDataAPI() {
         yahoo = YahooFinance.getInstance();
         google = new GoogleFinance();
+        tiingo = new Tiingo();
     }
 
     @Override
@@ -41,8 +44,14 @@ public class CombinedDataAPI implements DataAPI {
 
     @Override
     public Symbol getSymbol(String symbol) {
-        Quote q = google.getQuote(symbol);
-        return new Symbol(q.symbol, q.name, q.exchange);
+        try {
+            return tiingo.getSymbol(symbol);
+        }
+        catch (Exception ignored) {
+
+        }
+
+        return null;
     }
 
     @Override

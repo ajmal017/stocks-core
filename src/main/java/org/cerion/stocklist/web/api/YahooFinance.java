@@ -154,8 +154,6 @@ public class YahooFinance {
 			"y", "d", "q"
 	};
 
-	/*
-	@Override
 	public Map<String,Quote> getQuotes(Set<String> symbols) {
 		String flags = "";
 		for(String s : FLAGS)
@@ -169,7 +167,8 @@ public class YahooFinance {
 			symbols_join += s;
 		}
 
-		String sResult = Tools.getURL("https://download.finance.yahoo.com/d/quotes.csv?s=" + symbols_join + "&f=" + flags + "&e=.csv");
+		String url = "https://download.finance.yahoo.com/d/quotes.csv?s=" + symbols_join + "&f=" + flags + "&e=.csv";
+		String sResult = Tools.getURL(url);
 		String lines[] = sResult.split("\r\n");
 
 		Map<String,Quote> result = new HashMap<>();
@@ -187,16 +186,13 @@ public class YahooFinance {
 
 		return result;
 	}
-	*/
 
-	/*
 	public Quote getQuote(String symbol) {
 		Set<String> symbols = new HashSet<String>(Arrays.asList(symbol));
 		Map<String,Quote> map = getQuotes(symbols);
 
 		return map.get(symbol);
 	}
-	*/
 
 	/*
 	@Deprecated
@@ -213,7 +209,6 @@ public class YahooFinance {
 	}
 	*/
 
-	/*
 	private static Quote parseQuote(String symbol, String line) {
 		line = line.replace(", ", "&comma; ");
 		String lines[] = line.split(",");
@@ -248,9 +243,9 @@ public class YahooFinance {
 				case "d1": quote.lastTradeDate = parseDate(value); break;
 
 				case "e": quote.eps = parseFloat(value); break;
-				case "e7": quote.epsEstCurrentYear = parseFloat(value); break;
-				case "e8": quote.epsEstNextYear = parseFloat(value); break;
-				case "e9": quote.epsEstNextQuarter = parseFloat(value); break;
+				//case "e7": quote.epsEstCurrentYear = parseFloat(value); break;
+				//case "e8": quote.epsEstNextYear = parseFloat(value); break;
+				//case "e9": quote.epsEstNextQuarter = parseFloat(value); break;
 
 				case "b4": quote.bookValue = parseFloat(value); break;
 				case "j4": quote.ebitda = parseString(value); break;
@@ -259,8 +254,8 @@ public class YahooFinance {
 
 				case "r": quote.peRatio = parseFloat(value); break;
 				case "r5": quote.pegRatio = parseFloat(value); break;
-				case "r6": quote.priceEPSEstCurrentYear = parseFloat(value); break;
-				case "r7": quote.priceEPSEstNextYear = parseFloat(value); break;
+				//case "r6": quote.priceEPSEstCurrentYear = parseFloat(value); break;
+				//case "r7": quote.priceEPSEstNextYear = parseFloat(value); break;
 				case "s7": quote.shortRatio = parseFloat(value); break;
 				case "s6": quote.revenue = parseString(value); break;
 
@@ -285,7 +280,6 @@ public class YahooFinance {
 
 		return quote;
 	}
-	*/
 
 	private static float parseFloat(String str)
 	{
