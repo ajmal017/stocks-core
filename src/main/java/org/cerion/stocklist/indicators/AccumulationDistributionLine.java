@@ -2,6 +2,7 @@ package org.cerion.stocklist.indicators;
 
 import org.cerion.stocklist.PriceList;
 import org.cerion.stocklist.arrays.FloatArray;
+import org.cerion.stocklist.arrays.ValueArray;
 import org.cerion.stocklist.functions.types.Indicator;
 
 public class AccumulationDistributionLine extends IndicatorBase {
