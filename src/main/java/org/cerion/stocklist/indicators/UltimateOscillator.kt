@@ -1,0 +1,78 @@
+package org.cerion.stocklist.indicators
+
+import org.cerion.stocklist.PriceList
+import org.cerion.stocklist.arrays.FloatArray
+import org.cerion.stocklist.functions.types.Indicator
+
+class UltimateOscillator() : IndicatorBase(Indicator.UO, 7, 14, 28) {
+
+    constructor(vararg params: Number) : this() {
+        setParams(*params)
+    }
+
+    override fun getName(): String {
+        return "Ultimate Oscillator"
+    }
+
+    override fun eval(list: PriceList): FloatArray {
+        return ultimateOscillator(list, getInt(0), getInt(1), getInt(2))
+    }
+
+    private fun ultimateOscillator(list: PriceList, p1: Int, p2: Int, p3: Int): FloatArray {
+        val size = list.size
+        val result = FloatArray(size)
+
+        val bp = kotlin.FloatArray(size)
+        for (i in 1 until size)
+            bp[i] = list.close(i) - Math.min(list.low(i), list.close(i - 1))
+
+        val average = Array(size) { kotlin.FloatArray(3) }
+
+        //First Period
+        for (i in p1 until size) {
+            var bpsum = 0f
+            var trsum = 0f
+            for (j in i - p1 + 1..i) {
+                bpsum += bp[j]
+                trsum += list.tr(j)
+            }
+            average[i][0] = bpsum / trsum
+
+            if (trsum == 0f)
+                average[i][0] = 0f
+        }
+
+        //Second Period
+        for (i in p2 until size) {
+            var bpsum = 0f
+            var trsum = 0f
+            for (j in i - p2 + 1..i) {
+                bpsum += bp[j]
+                trsum += list.tr(j)
+            }
+            average[i][1] = bpsum / trsum
+        }
+
+        for (i in p3 until size) {
+            var bpsum = 0f
+            var trsum = 0f
+            for (j in i - p3 + 1..i) {
+                bpsum += bp[j]
+                trsum += list.tr(j)
+            }
+            average[i][2] = bpsum / trsum
+        }
+
+        //Parameters should be ordered lowest to highest, but just in-case
+        val max = Math.max(Math.max(p1, p2), p3)
+        for (i in max until size) {
+            val avg1 = average[i][0]
+            val avg2 = average[i][1]
+            val avg3 = average[i][2]
+            result.mVal[i] = 100 * (4 * avg1 + 2 * avg2 + avg3) / (4 + 2 + 1)
+        }
+
+        return result
+    }
+
+}

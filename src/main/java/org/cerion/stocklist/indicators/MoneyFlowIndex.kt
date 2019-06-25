@@ -1,0 +1,44 @@
+package org.cerion.stocklist.indicators
+
+import org.cerion.stocklist.PriceList
+import org.cerion.stocklist.arrays.FloatArray
+import org.cerion.stocklist.functions.types.Indicator
+
+class MoneyFlowIndex() : IndicatorBase(Indicator.MFI, 14) {
+
+    constructor(vararg params: Number) : this() {
+        setParams(*params)
+    }
+
+    override fun getName(): String {
+        return "Money Flow Index"
+    }
+
+    override fun eval(list: PriceList): FloatArray {
+        return moneyFlowIndex(list, getInt(0))
+    }
+
+    private fun moneyFlowIndex(list: PriceList, period: Int): FloatArray {
+        val result = FloatArray(list.size)
+
+        //Typical Price = (High + Low + Close)/3
+        //Raw Money Flow = Typical Price x Volume
+        //Money Flow Ratio = (14-period Positive Money Flow)/(14-period Negative Money Flow)
+        //Money Flow Index = 100 - 100/(1 + Money Flow Ratio)
+        for (i in period until list.size) {
+            var posflow = 0f
+            var negflow = 0f
+            for (j in i - period + 1..i) {
+                if (list.tp(j) > list.tp(j - 1))
+                    posflow += list.tp(j) * list.volume(j)
+                else
+                    negflow += list.tp(j) * list.volume(j)
+            }
+
+            val ratio = posflow / negflow
+            result.mVal[i] = 100 - 100 / (1 + ratio)
+        }
+
+        return result
+    }
+}

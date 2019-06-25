@@ -463,4 +463,9 @@ public class FloatArray extends ValueArray {
 		result += "...}";
 		return result;
 	}
+
+	// TODO make mVal private and use array notation directly on object
+	public void set(int i, float value) {
+		mVal[i] = value;
+	}
 }
