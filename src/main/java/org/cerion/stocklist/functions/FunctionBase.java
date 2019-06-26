@@ -18,7 +18,7 @@ public abstract class FunctionBase implements IFunction {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + mId.ordinal();
+        result = prime * result + mId.getOrdinal();
         result = prime * result + Arrays.hashCode(mParams);
         return result;
     }
