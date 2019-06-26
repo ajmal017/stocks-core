@@ -4,11 +4,9 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class PriceMomentumOscillator() : IndicatorBase(Indicator.PMO, 35, 20) {
+class PriceMomentumOscillator(p1: Int, p2: Int) : IndicatorBase(Indicator.PMO, p1, p2) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(35, 20)
 
     override fun getName(): String {
         return "Price Momentum Oscillator"

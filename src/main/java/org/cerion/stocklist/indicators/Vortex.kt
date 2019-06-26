@@ -6,11 +6,7 @@ import org.cerion.stocklist.arrays.PairArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class Vortex() : IndicatorBase(Indicator.VORTEX, 14) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class Vortex(period: Int = 14) : IndicatorBase(Indicator.VORTEX, period) {
 
     override fun getName(): String {
         return "Vortex"

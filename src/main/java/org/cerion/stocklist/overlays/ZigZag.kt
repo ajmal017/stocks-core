@@ -4,11 +4,7 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.PriceOverlay
 
-class ZigZag() : PriceOverlayBase(PriceOverlay.ZIGZAG, 5.0) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class ZigZag(percent: Double = 5.0) : PriceOverlayBase(PriceOverlay.ZIGZAG, percent) {
 
     override fun eval(list: PriceList): FloatArray {
         return zigzag(list, getFloat(0))

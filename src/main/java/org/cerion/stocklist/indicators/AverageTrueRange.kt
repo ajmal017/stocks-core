@@ -4,11 +4,7 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class AverageTrueRange() : IndicatorBase(Indicator.ATR, 14) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class AverageTrueRange(period: Int = 14) : IndicatorBase(Indicator.ATR, period) {
 
     override fun getName(): String {
         return "Average True Range"

@@ -4,11 +4,9 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.MACDArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class MACD() : IndicatorBase(Indicator.MACD, 12, 26, 9) {
+class MACD(p1: Int, p2: Int, signal: Int) : IndicatorBase(Indicator.MACD, p1, p2, signal) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(12, 26, 9)
 
     override fun getName(): String {
         return "MACD"

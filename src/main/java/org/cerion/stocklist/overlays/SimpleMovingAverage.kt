@@ -3,11 +3,7 @@ package org.cerion.stocklist.overlays
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Overlay
 
-class SimpleMovingAverage() : OverlayBase<FloatArray>(Overlay.SMA, 50) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class SimpleMovingAverage(period: Int = 50) : OverlayBase<FloatArray>(Overlay.SMA, period) {
 
     override fun getName(): String = "Simple Moving Average"
 

@@ -4,11 +4,9 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.PriceOverlay
 
-class ParabolicSAR() : PriceOverlayBase(PriceOverlay.PSAR, 0.02, 0.2) {
+class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverlay.PSAR, step, maxStep) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(0.02, 0.2)
 
     override fun eval(list: PriceList): FloatArray {
         return parabolicSAR(list, getFloat(0), getFloat(1))

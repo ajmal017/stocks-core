@@ -5,11 +5,7 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class EaseOfMovement() : IndicatorBase(Indicator.EMV, 14) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class EaseOfMovement(period: Int = 14) : IndicatorBase(Indicator.EMV, period) {
 
     override fun getName(): String {
         return "Ease of Movement"

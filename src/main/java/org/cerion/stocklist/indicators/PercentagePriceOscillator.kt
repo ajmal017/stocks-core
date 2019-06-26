@@ -5,11 +5,9 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.MACDArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class PercentagePriceOscillator() : IndicatorBase(Indicator.PPO, 12, 26, 9) {
+class PercentagePriceOscillator(p1: Int, p2: Int, signal: Int) : IndicatorBase(Indicator.PPO, p1, p2, signal) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(12, 26, 9)
 
     override fun getName(): String {
         return "Percentage Price Oscillator"

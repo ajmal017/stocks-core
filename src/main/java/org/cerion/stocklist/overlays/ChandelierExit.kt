@@ -7,11 +7,9 @@ import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.PriceOverlay
 import org.cerion.stocklist.indicators.AverageTrueRange
 
-class ChandelierExit() : PriceOverlayBase(PriceOverlay.CEXIT, 22, 3.0) {
+class ChandelierExit(period: Int, multiplier: Double) : PriceOverlayBase(PriceOverlay.CEXIT, period, multiplier) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(22, 3.0)
 
     override fun eval(list: PriceList): PairArray {
         return chandelierExit(list, getInt(0), getFloat(1))

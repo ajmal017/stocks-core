@@ -5,11 +5,7 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.PairArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class DirectionalIndex() : IndicatorBase(Indicator.DI, 14) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class DirectionalIndex(period: Int = 14) : IndicatorBase(Indicator.DI, period) {
 
     override fun getName(): String {
         return "Directional Index"

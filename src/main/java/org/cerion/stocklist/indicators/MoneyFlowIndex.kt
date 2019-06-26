@@ -4,11 +4,7 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class MoneyFlowIndex() : IndicatorBase(Indicator.MFI, 14) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class MoneyFlowIndex(period: Int = 14) : IndicatorBase(Indicator.MFI, period) {
 
     override fun getName(): String {
         return "Money Flow Index"

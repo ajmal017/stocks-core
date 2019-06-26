@@ -5,11 +5,9 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.PairArray
 import org.cerion.stocklist.functions.types.PriceOverlay
 
-class IchimokuClouds() : PriceOverlayBase(PriceOverlay.CLOUD, 9, 26, 52) {
+class IchimokuClouds(p1: Int, p2: Int, p3: Int) : PriceOverlayBase(PriceOverlay.CLOUD, p1, p2, p3) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(9, 26, 52)
 
     override fun eval(list: PriceList): PairArray {
         return ichimokuCloud(list, getInt(0), getInt(1), getInt(2))

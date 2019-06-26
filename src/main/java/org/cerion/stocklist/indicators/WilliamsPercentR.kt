@@ -5,11 +5,7 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class WilliamsPercentR() : IndicatorBase(Indicator.WPR, 14) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class WilliamsPercentR(period: Int = 14) : IndicatorBase(Indicator.WPR, period) {
 
     override fun getName(): String {
         return "Williams %R"

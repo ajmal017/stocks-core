@@ -4,11 +4,9 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class ChaikinOscillator() : IndicatorBase(Indicator.CO, 3, 10) {
+class ChaikinOscillator(p1: Int, p2: Int) : IndicatorBase(Indicator.CO, p1, p2) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(3, 10)
 
     override fun getName(): String {
         return "Chaikin Oscillator"

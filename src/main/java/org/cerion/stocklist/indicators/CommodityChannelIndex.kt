@@ -5,11 +5,7 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class CommodityChannelIndex() : IndicatorBase(Indicator.CCI, 20) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class CommodityChannelIndex(period: Int = 20) : IndicatorBase(Indicator.CCI, period) {
 
     override fun getName(): String {
         return "Commodity Channel Index"

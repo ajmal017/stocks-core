@@ -7,8 +7,8 @@ import org.junit.Test;
 public class AverageDirectionalIndexTest extends FunctionTestBase {
 
     @Test
-    public void averageDirectionalIndex_test_14() {
-        FloatArray adx = new AverageDirectionalIndex(14).eval(mPriceList);
+    public void averageDirectionalIndex_defaults() {
+        FloatArray adx = new AverageDirectionalIndex().eval(mPriceList); // period is 14 by default
 
         assertEqual(0, adx.first(), "first");
         assertEqual(50, adx.get(1), "position 1");

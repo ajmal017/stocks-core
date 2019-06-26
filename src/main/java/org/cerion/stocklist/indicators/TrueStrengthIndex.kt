@@ -4,11 +4,9 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class TrueStrengthIndex() : IndicatorBase(Indicator.TSI, 25, 13) {
+class TrueStrengthIndex(p1: Int, p2: Int) : IndicatorBase(Indicator.TSI, p1, p2) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(25, 13)
 
     override fun getName(): String {
         return "True Strength Index"

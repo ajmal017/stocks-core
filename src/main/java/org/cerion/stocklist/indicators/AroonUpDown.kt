@@ -5,11 +5,7 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.PairArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class AroonUpDown() : IndicatorBase(Indicator.AROON, 25) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class AroonUpDown(period: Int = 25) : IndicatorBase(Indicator.AROON, period) {
 
     override fun getName(): String {
         return "Aroon Up/Down"

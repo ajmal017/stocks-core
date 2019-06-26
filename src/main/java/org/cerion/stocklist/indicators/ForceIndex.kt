@@ -4,11 +4,7 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class ForceIndex() : IndicatorBase(Indicator.FORCE_INDEX, 13) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class ForceIndex(period: Int = 13) : IndicatorBase(Indicator.FORCE_INDEX, period) {
 
     override fun getName(): String {
         return "Force Index"

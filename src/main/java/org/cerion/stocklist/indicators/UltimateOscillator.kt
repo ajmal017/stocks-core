@@ -4,11 +4,9 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class UltimateOscillator() : IndicatorBase(Indicator.UO, 7, 14, 28) {
+class UltimateOscillator(p1: Int, p2: Int, p3: Int) : IndicatorBase(Indicator.UO, p1, p2, p3) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(7, 14, 28)
 
     override fun getName(): String {
         return "Ultimate Oscillator"

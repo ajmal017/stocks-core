@@ -5,11 +5,9 @@ import org.cerion.stocklist.arrays.BandArray
 import org.cerion.stocklist.functions.types.PriceOverlay
 import org.cerion.stocklist.indicators.AverageTrueRange
 
-class KeltnerChannels() : PriceOverlayBase(PriceOverlay.KC, 20, 2.0, 10) {
+class KeltnerChannels(period: Int, multiplier: Double, atr: Int) : PriceOverlayBase(PriceOverlay.KC, period, multiplier, atr) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(20, 2.0, 10)
 
     override fun getName(): String = "Keltner Channels"
 

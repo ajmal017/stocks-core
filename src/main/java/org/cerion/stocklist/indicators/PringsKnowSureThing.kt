@@ -4,11 +4,10 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class PringsKnowSureThing() : IndicatorBase(Indicator.KST, 10, 15, 20, 30, 10, 10, 10, 15) {
+class PringsKnowSureThing(p1: Int, p2: Int, p3: Int, p4: Int, p5: Int, p6: Int, p7: Int, p8: Int)
+    : IndicatorBase(Indicator.KST, p1, p2, p3, p4, p5, p6, p7, p8) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(10, 15, 20, 30, 10, 10, 10, 15)
 
     override fun getName(): String {
         return "Pring's Know Sure Thing"

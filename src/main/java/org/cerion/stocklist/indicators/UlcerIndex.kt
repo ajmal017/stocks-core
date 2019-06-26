@@ -5,11 +5,7 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class UlcerIndex() : IndicatorBase(Indicator.ULCER_INDEX, 14) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class UlcerIndex(period: Int = 14) : IndicatorBase(Indicator.ULCER_INDEX, period) {
 
     override fun getName(): String {
         return "Ulcer Index"

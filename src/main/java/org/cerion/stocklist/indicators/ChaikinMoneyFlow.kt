@@ -5,11 +5,7 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class ChaikinMoneyFlow() : IndicatorBase(Indicator.CMF, 20) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class ChaikinMoneyFlow(period: Int = 20) : IndicatorBase(Indicator.CMF, period) {
 
     override fun getName(): String {
         return "Chaikin Money Flow"

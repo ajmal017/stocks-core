@@ -4,11 +4,9 @@ import org.cerion.stocklist.arrays.BandArray
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Overlay
 
-class BollingerBands() : OverlayBase<BandArray>(Overlay.BB, 20, 2.0) {
+class BollingerBands(period: Int, stddev: Double) : OverlayBase<BandArray>(Overlay.BB, period, stddev) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(20, 2.0)
 
     override fun getName(): String = "Bollinger Bands"
 

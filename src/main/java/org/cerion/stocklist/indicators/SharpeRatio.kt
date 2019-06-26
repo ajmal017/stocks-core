@@ -6,12 +6,10 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
 import org.cerion.stocklist.model.Interval
 
-class SharpeRatio()// default 0.75 estimate of 3-month US treasury
-    : IndicatorBase(Indicator.SHARPE, 10, 0.75) {
+class SharpeRatio(period: Int, riskFreeRate: Double) : IndicatorBase(Indicator.SHARPE, period, riskFreeRate) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    // Default 0.75 estimate of 3-month US treasury
+    constructor() : this(10, 0.75)
 
     override fun eval(list: PriceList): FloatArray {
         val years = getInt(0)

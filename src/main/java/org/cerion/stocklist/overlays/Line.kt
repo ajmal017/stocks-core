@@ -3,11 +3,7 @@ package org.cerion.stocklist.overlays
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Overlay
 
-class Line() : OverlayBase<FloatArray>(Overlay.LINE, 1.0) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class Line(slope: Double = 1.0) : OverlayBase<FloatArray>(Overlay.LINE, slope) {
 
     override fun getName(): String {
         return "Line"

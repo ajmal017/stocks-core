@@ -4,11 +4,7 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class MassIndex() : IndicatorBase(Indicator.MASS_INDEX, 25) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class MassIndex(period: Int = 25) : IndicatorBase(Indicator.MASS_INDEX, period) {
 
     override fun getName(): String {
         return "Mass Index"

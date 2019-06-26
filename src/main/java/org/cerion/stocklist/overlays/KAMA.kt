@@ -3,11 +3,9 @@ package org.cerion.stocklist.overlays
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Overlay
 
-class KAMA() : OverlayBase<FloatArray>(Overlay.KAMA, 10, 2, 30) {
+class KAMA(er: Int, fast: Int, slow: Int) : OverlayBase<FloatArray>(Overlay.KAMA, er, fast, slow) {
 
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+    constructor() : this(10, 2, 30)
 
     override fun getName(): String = "Adaptive Moving Average"
 

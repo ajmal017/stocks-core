@@ -6,11 +6,7 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.PriceOverlay
 
-class VolumeWeightedMovingAverage() : PriceOverlayBase(PriceOverlay.VWMA, 20) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class VolumeWeightedMovingAverage(period: Int = 20) : PriceOverlayBase(PriceOverlay.VWMA, period) {
 
     override fun getName(): String = "Volume Weighted Moving Average"
 

@@ -83,6 +83,7 @@ public class FunctionBaseTest {
         call.eval(Utils.generateList(50));
     }
 
+    /* Type checked now so not necessary to test
     @Test(expected = IllegalArgumentException.class)
     public void parametersVerified_MissingParameter() {
         IFunction call = new BollingerBands(20);
@@ -100,4 +101,5 @@ public class FunctionBaseTest {
         IFunction call = new BollingerBands(20.0, 2.0);
         call.eval(Utils.generateList(50));
     }
+    */
 }

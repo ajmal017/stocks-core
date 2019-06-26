@@ -4,11 +4,7 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class TRIX() : IndicatorBase(Indicator.TRIX, 15) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class TRIX(period: Int = 15) : IndicatorBase(Indicator.TRIX, period) {
 
     override fun getName(): String {
         return "TRIX"

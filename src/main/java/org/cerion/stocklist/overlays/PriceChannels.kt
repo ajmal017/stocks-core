@@ -6,11 +6,7 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.PriceOverlay
 
-class PriceChannels() : PriceOverlayBase(PriceOverlay.CHAN, 20) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class PriceChannels(period: Int = 20) : PriceOverlayBase(PriceOverlay.CHAN, period) {
 
     override fun eval(list: PriceList): BandArray {
         return priceChannels(list, getInt(0))

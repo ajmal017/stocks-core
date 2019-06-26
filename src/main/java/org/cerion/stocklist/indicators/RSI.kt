@@ -5,11 +5,7 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.Indicator
 
-class RSI() : IndicatorBase(Indicator.RSI, 14) {
-
-    constructor(vararg params: Number) : this() {
-        setParams(*params)
-    }
+class RSI(period: Int = 14) : IndicatorBase(Indicator.RSI, period) {
 
     override fun getName(): String {
         return "RSI"

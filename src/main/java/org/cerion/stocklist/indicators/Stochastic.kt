@@ -8,6 +8,8 @@ import org.cerion.stocklist.functions.types.Indicator
 class Stochastic() : IndicatorBase(Indicator.STOCH, 14, 3, 3) {
 
     // TODO allow 1-3 parameters
+    // This one is a special case as we do allow vararg but more than 4 is not allowed so probably seperate constructors needed
+    // TODO learn more how this function works if all arugments are not specified, need unit tests prior
     constructor(vararg params: Number) : this() {
         setParams(*params)
     }
