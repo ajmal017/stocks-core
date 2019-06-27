@@ -6,9 +6,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class MassIndex(period: Int = 25) : IndicatorBase(Indicator.MASS_INDEX, period) {
 
-    override fun getName(): String {
-        return "Mass Index"
-    }
+    override val name: String = "Mass Index"
 
     override fun eval(list: PriceList): FloatArray {
         return massIndex(list, getInt(0))

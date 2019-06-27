@@ -8,7 +8,7 @@ import org.cerion.stocklist.functions.types.PriceOverlay
 
 class VolumeWeightedMovingAverage(period: Int = 20) : PriceOverlayBase(PriceOverlay.VWMA, period) {
 
-    override fun getName(): String = "Volume Weighted Moving Average"
+    override val name: String = "Volume Weighted Moving Average"
 
     override fun eval(list: PriceList): FloatArray {
         val size = list.size

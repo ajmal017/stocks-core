@@ -6,9 +6,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class AccumulationDistributionLine : IndicatorBase(Indicator.ADL) {
 
-    override fun getName(): String {
-        return "Accumulation Distribution Line"
-    }
+    override val name: String = "Accumulation Distribution Line"
 
     override fun eval(list: PriceList): FloatArray {
         return accumulationDistributionLine(list)

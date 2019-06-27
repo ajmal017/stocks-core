@@ -7,9 +7,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class EaseOfMovement(period: Int = 14) : IndicatorBase(Indicator.EMV, period) {
 
-    override fun getName(): String {
-        return "Ease of Movement"
-    }
+    override val name: String = "Ease of Movement"
 
     override fun eval(list: PriceList): FloatArray {
         return easeOfMovement(list, getInt(0))

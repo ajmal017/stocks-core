@@ -7,9 +7,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class AroonUpDown(period: Int = 25) : IndicatorBase(Indicator.AROON, period) {
 
-    override fun getName(): String {
-        return "Aroon Up/Down"
-    }
+    override val name: String = "Aroon Up/Down"
 
     override fun eval(list: PriceList): PairArray {
         return aroon(list, getInt(0))

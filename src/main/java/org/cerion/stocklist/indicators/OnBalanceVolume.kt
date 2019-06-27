@@ -6,9 +6,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class OnBalanceVolume : IndicatorBase(Indicator.OBV) {
 
-    override fun getName(): String {
-        return "On Balance Volume"
-    }
+    override val name: String = "On Balance Volume"
 
     override fun eval(list: PriceList): FloatArray {
         return onBalanceVolume(list)

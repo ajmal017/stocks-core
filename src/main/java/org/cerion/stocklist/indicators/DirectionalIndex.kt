@@ -7,9 +7,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class DirectionalIndex(period: Int = 14) : IndicatorBase(Indicator.DI, period) {
 
-    override fun getName(): String {
-        return "Directional Index"
-    }
+    override val name: String = "Directional Index"
 
     override fun eval(list: PriceList): PairArray {
         return directionalIndex(list, getInt(0))

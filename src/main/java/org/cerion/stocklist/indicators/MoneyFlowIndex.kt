@@ -6,9 +6,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class MoneyFlowIndex(period: Int = 14) : IndicatorBase(Indicator.MFI, period) {
 
-    override fun getName(): String {
-        return "Money Flow Index"
-    }
+    override val name: String = "Money Flow Index"
 
     override fun eval(list: PriceList): FloatArray {
         return moneyFlowIndex(list, getInt(0))

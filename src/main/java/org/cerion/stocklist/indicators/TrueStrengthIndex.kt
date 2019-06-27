@@ -8,9 +8,7 @@ class TrueStrengthIndex(p1: Int, p2: Int) : IndicatorBase(Indicator.TSI, p1, p2)
 
     constructor() : this(25, 13)
 
-    override fun getName(): String {
-        return "True Strength Index"
-    }
+    override val name: String = "True Strength Index"
 
     override fun eval(list: PriceList): FloatArray {
         return trueStrengthIndex(list, getInt(0), getInt(1))

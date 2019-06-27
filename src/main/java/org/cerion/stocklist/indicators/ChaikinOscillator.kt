@@ -8,9 +8,7 @@ class ChaikinOscillator(p1: Int, p2: Int) : IndicatorBase(Indicator.CO, p1, p2) 
 
     constructor() : this(3, 10)
 
-    override fun getName(): String {
-        return "Chaikin Oscillator"
-    }
+    override val name: String = "Chaikin Oscillator"
 
     override fun eval(list: PriceList): FloatArray {
         return chaikinOscillator(list, getInt(0), getInt(1))

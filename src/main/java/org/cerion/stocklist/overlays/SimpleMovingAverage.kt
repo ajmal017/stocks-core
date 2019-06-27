@@ -5,7 +5,7 @@ import org.cerion.stocklist.functions.types.Overlay
 
 class SimpleMovingAverage(period: Int = 50) : OverlayBase<FloatArray>(Overlay.SMA, period) {
 
-    override fun getName(): String = "Simple Moving Average"
+    override val name: String = "Simple Moving Average"
 
     override fun eval(arr: FloatArray): FloatArray {
         return arr.sma(getInt(0))

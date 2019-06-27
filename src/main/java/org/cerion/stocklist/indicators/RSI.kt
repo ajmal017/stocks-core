@@ -7,9 +7,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class RSI(period: Int = 14) : IndicatorBase(Indicator.RSI, period) {
 
-    override fun getName(): String {
-        return "RSI"
-    }
+    override val name: String = "RSI"
 
     override fun eval(list: PriceList): FloatArray {
         return rsi(list, getInt(0))

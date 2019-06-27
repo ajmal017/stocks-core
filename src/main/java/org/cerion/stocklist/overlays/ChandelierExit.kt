@@ -15,7 +15,7 @@ class ChandelierExit(period: Int, multiplier: Double) : PriceOverlayBase(PriceOv
         return chandelierExit(list, getInt(0), getFloat(1))
     }
 
-    override fun getName(): String = "Chandelier Exit"
+    override val name: String = "Chandelier Exit"
 
     private fun chandelierExit(list: PriceList, period: Int, multiplier: Float): PairArray {
         val size = list.size

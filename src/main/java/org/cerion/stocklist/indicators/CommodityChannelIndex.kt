@@ -7,9 +7,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class CommodityChannelIndex(period: Int = 20) : IndicatorBase(Indicator.CCI, period) {
 
-    override fun getName(): String {
-        return "Commodity Channel Index"
-    }
+    override val name: String = "Commodity Channel Index"
 
     override fun eval(list: PriceList): FloatArray {
         return commodityChannelIndex(list, getInt(0))

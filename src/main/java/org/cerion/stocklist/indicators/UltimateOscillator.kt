@@ -8,9 +8,7 @@ class UltimateOscillator(p1: Int, p2: Int, p3: Int) : IndicatorBase(Indicator.UO
 
     constructor() : this(7, 14, 28)
 
-    override fun getName(): String {
-        return "Ultimate Oscillator"
-    }
+    override val name: String = "Ultimate Oscillator"
 
     override fun eval(list: PriceList): FloatArray {
         return ultimateOscillator(list, getInt(0), getInt(1), getInt(2))

@@ -8,9 +8,7 @@ class PriceMomentumOscillator(p1: Int, p2: Int) : IndicatorBase(Indicator.PMO, p
 
     constructor() : this(35, 20)
 
-    override fun getName(): String {
-        return "Price Momentum Oscillator"
-    }
+    override val name: String = "Price Momentum Oscillator"
 
     override fun eval(list: PriceList): FloatArray {
         return priceMomentumOscillator(list, getInt(0), getInt(1))

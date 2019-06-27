@@ -9,7 +9,7 @@ class KeltnerChannels(period: Int, multiplier: Double, atr: Int) : PriceOverlayB
 
     constructor() : this(20, 2.0, 10)
 
-    override fun getName(): String = "Keltner Channels"
+    override val name: String = "Keltner Channels"
 
     override fun eval(list: PriceList): BandArray {
         val emaPeriod = getInt(0)

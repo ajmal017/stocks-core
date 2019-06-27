@@ -6,9 +6,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class TRIX(period: Int = 15) : IndicatorBase(Indicator.TRIX, period) {
 
-    override fun getName(): String {
-        return "TRIX"
-    }
+    override val name: String = "TRIX"
 
     override fun eval(list: PriceList): FloatArray {
         return trix(list, getInt(0))

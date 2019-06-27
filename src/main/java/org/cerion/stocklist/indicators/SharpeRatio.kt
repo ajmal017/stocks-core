@@ -11,6 +11,8 @@ class SharpeRatio(period: Int, riskFreeRate: Double) : IndicatorBase(Indicator.S
     // Default 0.75 estimate of 3-month US treasury
     constructor() : this(10, 0.75)
 
+    override val name: String = "Sharpe Ratio"
+
     override fun eval(list: PriceList): FloatArray {
         val years = getInt(0)
         val multiplier: Int
@@ -43,9 +45,5 @@ class SharpeRatio(period: Int, riskFreeRate: Double) : IndicatorBase(Indicator.S
         }
 
         return result
-    }
-
-    override fun getName(): String {
-        return "Sharpe Ratio"
     }
 }

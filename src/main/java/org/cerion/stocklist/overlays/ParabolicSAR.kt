@@ -12,7 +12,7 @@ class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverla
         return parabolicSAR(list, getFloat(0), getFloat(1))
     }
 
-    override fun getName(): String = "Parabolic SAR"
+    override val name: String = "Parabolic SAR"
 
     private fun parabolicSAR(list: PriceList, step: Float, max: Float): FloatArray {
         val result = FloatArray(list.size)

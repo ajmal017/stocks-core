@@ -6,9 +6,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class ForceIndex(period: Int = 13) : IndicatorBase(Indicator.FORCE_INDEX, period) {
 
-    override fun getName(): String {
-        return "Force Index"
-    }
+    override val name: String = "Force Index"
 
     override fun eval(list: PriceList): FloatArray {
         return forceIndex(list, getInt(0))

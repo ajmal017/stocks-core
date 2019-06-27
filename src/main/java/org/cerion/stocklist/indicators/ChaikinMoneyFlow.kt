@@ -7,9 +7,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class ChaikinMoneyFlow(period: Int = 20) : IndicatorBase(Indicator.CMF, period) {
 
-    override fun getName(): String {
-        return "Chaikin Money Flow"
-    }
+    override val name: String = "Chaikin Money Flow"
 
     override fun eval(list: PriceList): FloatArray {
         return chaikinMoneyFlow(list, getInt(0))

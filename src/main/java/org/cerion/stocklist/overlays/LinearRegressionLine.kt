@@ -6,7 +6,7 @@ import org.cerion.stocklist.functions.types.Overlay
 
 class LinearRegressionLine : OverlayBase<FloatArray>(Overlay.LINREG) {
 
-    override fun getName(): String = "Linear Regression Line"
+    override val name: String = "Linear Regression Line"
 
     override fun eval(arr: FloatArray): FloatArray {
         return arr.linearRegressionLine()

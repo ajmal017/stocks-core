@@ -7,9 +7,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class StochasticRSI(period: Int = 14) : IndicatorBase(Indicator.STOCHRSI, period) {
 
-    override fun getName(): String {
-        return "Stochastic RSI"
-    }
+    override val name: String = "Stochastic RSI"
 
     override fun eval(list: PriceList): FloatArray {
         return stochasticRSI(list, getInt(0))

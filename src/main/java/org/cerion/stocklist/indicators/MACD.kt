@@ -8,9 +8,7 @@ class MACD(p1: Int, p2: Int, signal: Int) : IndicatorBase(Indicator.MACD, p1, p2
 
     constructor() : this(12, 26, 9)
 
-    override fun getName(): String {
-        return "MACD"
-    }
+    override val name: String = "MACD"
 
     override fun eval(list: PriceList): MACDArray {
         return macd(list, getInt(0), getInt(1), getInt(2))

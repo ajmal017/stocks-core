@@ -7,9 +7,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class WilliamsPercentR(period: Int = 14) : IndicatorBase(Indicator.WPR, period) {
 
-    override fun getName(): String {
-        return "Williams %R"
-    }
+    override val name: String = "Williams %R"
 
     override fun eval(list: PriceList): FloatArray {
         return williamsPercentR(list, getInt(0))

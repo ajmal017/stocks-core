@@ -7,9 +7,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class AverageDirectionalIndex(period: Int = 14) : IndicatorBase(Indicator.ADX, period) {
 
-    override fun getName(): String {
-        return "Average Directional Index"
-    }
+    override val name: String = "Average Directional Index"
 
     override fun eval(list: PriceList): FloatArray {
         return averageDirectionalIndex(list, getInt(0))

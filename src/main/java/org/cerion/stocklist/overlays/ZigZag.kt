@@ -10,7 +10,7 @@ class ZigZag(percent: Double = 5.0) : PriceOverlayBase(PriceOverlay.ZIGZAG, perc
         return zigzag(list, getFloat(0))
     }
 
-    override fun getName(): String = "ZigZag"
+    override val name: String = "ZigZag"
 
     private fun zzPercent(curr: Float, prev: Float): Float {
         return 100 * (curr - prev) / prev

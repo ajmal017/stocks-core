@@ -12,7 +12,7 @@ class PriceChannels(period: Int = 20) : PriceOverlayBase(PriceOverlay.CHAN, peri
         return priceChannels(list, getInt(0))
     }
 
-    override fun getName(): String = "Price Channels"
+    override val name: String = "Price Channels"
 
     private fun priceChannels(list: PriceList, period: Int): BandArray {
         val size = list.size

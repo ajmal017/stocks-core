@@ -9,9 +9,7 @@ class PercentagePriceOscillator(p1: Int, p2: Int, signal: Int) : IndicatorBase(I
 
     constructor() : this(12, 26, 9)
 
-    override fun getName(): String {
-        return "Percentage Price Oscillator"
-    }
+    override val name: String = "Percentage Price Oscillator"
 
     override fun eval(list: PriceList): MACDArray {
         //Percentage version of MACD

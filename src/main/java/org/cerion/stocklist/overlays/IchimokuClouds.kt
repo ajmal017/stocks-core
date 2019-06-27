@@ -13,7 +13,7 @@ class IchimokuClouds(p1: Int, p2: Int, p3: Int) : PriceOverlayBase(PriceOverlay.
         return ichimokuCloud(list, getInt(0), getInt(1), getInt(2))
     }
 
-    override fun getName(): String = "Ichimoku Clouds"
+    override val name: String = "Ichimoku Clouds"
 
     private fun ichimokuCloud(list: PriceList, conversion: Int, base: Int, span: Int): PairArray {
         val size = list.size

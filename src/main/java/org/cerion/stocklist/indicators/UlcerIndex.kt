@@ -7,9 +7,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class UlcerIndex(period: Int = 14) : IndicatorBase(Indicator.ULCER_INDEX, period) {
 
-    override fun getName(): String {
-        return "Ulcer Index"
-    }
+    override val name: String = "Ulcer Index"
 
     override fun eval(list: PriceList): FloatArray {
         return eval(list.close)

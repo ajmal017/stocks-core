@@ -8,7 +8,7 @@ class BollingerBands(period: Int, stddev: Double) : OverlayBase<BandArray>(Overl
 
     constructor() : this(20, 2.0)
 
-    override fun getName(): String = "Bollinger Bands"
+    override val name: String = "Bollinger Bands"
 
     override fun eval(arr: FloatArray): BandArray {
         return arr.bb(getInt(0), getFloat(1))

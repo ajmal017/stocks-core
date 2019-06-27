@@ -9,9 +9,7 @@ class PringsKnowSureThing(p1: Int, p2: Int, p3: Int, p4: Int, p5: Int, p6: Int, 
 
     constructor() : this(10, 15, 20, 30, 10, 10, 10, 15)
 
-    override fun getName(): String {
-        return "Pring's Know Sure Thing"
-    }
+    override val name: String = "Pring's Know Sure Thing"
 
     override fun eval(list: PriceList): FloatArray {
         return knowSureThing(list, getInt(0), getInt(1), getInt(2), getInt(3),

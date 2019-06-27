@@ -6,9 +6,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class NegativeVolumeIndex : IndicatorBase(Indicator.NVI) {
 
-    override fun getName(): String {
-        return "Negative Volume Index"
-    }
+    override val name: String = "Negative Volume Index"
 
     override fun eval(list: PriceList): FloatArray {
         return negativeVolumeIndex(list)

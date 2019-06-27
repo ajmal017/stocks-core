@@ -14,9 +14,7 @@ class Stochastic() : IndicatorBase(Indicator.STOCH, 14, 3, 3) {
         setParams(*params)
     }
 
-    override fun getName(): String {
-        return "Stochastic Oscillator"
-    }
+    override val name: String = "Stochastic Oscillator"
 
     override fun eval(list: PriceList): FloatArray {
         return stochastic(list, getInt(0), getInt(1), getInt(2))

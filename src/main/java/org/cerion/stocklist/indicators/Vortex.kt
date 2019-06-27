@@ -8,9 +8,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class Vortex(period: Int = 14) : IndicatorBase(Indicator.VORTEX, period) {
 
-    override fun getName(): String {
-        return "Vortex"
-    }
+    override val name: String = "Vortex"
 
     override fun eval(list: PriceList): PairArray {
         return vortex(list, getInt(0))

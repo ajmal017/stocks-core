@@ -6,9 +6,7 @@ import org.cerion.stocklist.functions.types.Indicator
 
 class PringsSpecialK : IndicatorBase(Indicator.SPECIALK) {
 
-    override fun getName(): String {
-        return "Pring's Special K"
-    }
+    override val name: String = "Pring's Special K"
 
     override fun eval(list: PriceList): FloatArray {
         return specialK(list)
