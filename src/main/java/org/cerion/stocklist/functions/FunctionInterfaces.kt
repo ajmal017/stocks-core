@@ -11,8 +11,8 @@ interface IFunction {
     val name: String
     val resultType: Class<out ValueArray>
     val id: IFunctionEnum
+    val params: List<Number>
     fun eval(list: PriceList): ValueArray
-    fun params(): Array<Number>?
     fun setParams(vararg params: Number)
 }
 

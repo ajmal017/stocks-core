@@ -95,11 +95,17 @@ public class FunctionBaseTest {
         IFunction call = new BollingerBands(20, 2.0, 10);
         call.eval(Utils.generateList(50));
     }
+    */
 
     @Test(expected = IllegalArgumentException.class)
-    public void parametersVerified_TypeMismatch() {
-        IFunction call = new BollingerBands(20.0, 2.0);
-        call.eval(Utils.generateList(50));
+    public void parametersVerified_setParams_countMismatch() {
+        IFunction call = new BollingerBands(20, 2.0);
+        call.setParams(20,10,10);
     }
-    */
+
+    @Test(expected = IllegalArgumentException.class)
+    public void parametersVerified_setParams_typeMismatch() {
+        IFunction call = new BollingerBands(20, 2.0);
+        call.setParams(20,10);
+    }
 }

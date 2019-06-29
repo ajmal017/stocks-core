@@ -31,7 +31,7 @@ public class IndicatorChart extends StockChart {
         overlays.addAll(chart.mOverlays);
 
         // Copy indicator
-        Number[] params = getIndicator().params().clone();
+        Number[] params = getIndicator().getParams().toArray(new Number[0]).clone();
         IIndicator indicator = getIndicator().getId().getInstance();
         indicator.setParams(params);
         chart.setIndicator(indicator);

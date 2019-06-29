@@ -31,7 +31,7 @@ public abstract class StockChart implements Cloneable {
 
         for(IOverlay overlay : mOverlays) {
             IFunction copy = overlay.getId().getInstance();
-            copy.setParams( overlay.params().clone());
+            copy.setParams( overlay.getParams().toArray(new Number[0]).clone());
             clone.mOverlays.add( (IOverlay)copy );
         }
 

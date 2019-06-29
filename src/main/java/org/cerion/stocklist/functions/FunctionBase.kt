@@ -1,25 +1,24 @@
 package org.cerion.stocklist.functions
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.IFunctionEnum
-
-import java.util.Arrays
+import java.util.*
 
 abstract class FunctionBase protected constructor(override val id: IFunctionEnum, vararg params: Number) : IFunction {
 
-    private var mParams: Array<Number>? = null
+    private val _params: MutableList<Number>
 
     init {
-        mParams = removeDoubles(*params)
+        _params = removeDoubles(*params)
     }
+
+    override val params: List<Number> = _params
 
     override fun hashCode(): Int {
         val prime = 31
         var result = 1
         result = prime * result + id.ordinal
-        result = prime * result + Arrays.hashCode(mParams)
+        result = prime * result + _params.hashCode()
         return result
     }
 
@@ -33,7 +32,7 @@ abstract class FunctionBase protected constructor(override val id: IFunctionEnum
         if (javaClass != other.javaClass)
             return false
 
-        return if (id !== other.id) false else Arrays.equals(mParams, other.mParams)
+        return if (id !== other.id) false else _params == other._params
 
         // Finally, equal if parameters are equal
     }
@@ -43,7 +42,7 @@ abstract class FunctionBase protected constructor(override val id: IFunctionEnum
         var join = id.toString()
 
         var i = 0
-        for (n in mParams!!) {
+        for (n in _params) {
             if (i > 0)
                 join += ","
             else
@@ -55,30 +54,28 @@ abstract class FunctionBase protected constructor(override val id: IFunctionEnum
         return join
     }
 
-    override fun params(): Array<Number>? {
-        return mParams
-    }
-
     protected fun getFloat(pos: Int): Float {
-        return mParams!![pos].toFloat()
+        return _params[pos].toFloat()
     }
 
     protected fun getInt(pos: Int): Int {
-        return mParams!![pos].toInt()
+        return _params[pos].toInt()
     }
 
     override fun setParams(vararg params: Number) {
-        if (mParams!!.size != params.size)
+        if (_params.size != params.size)
             throw IllegalArgumentException("invalid parameter count")
 
         val newParams = removeDoubles(*params)
 
         for (i in newParams.indices) {
-            if (newParams[0].javaClass != mParams!![0].javaClass)
+            val c1 = newParams[i].javaClass
+            val c2 = _params[i].javaClass
+            if (c1 != c2)
                 throw IllegalArgumentException("invalid parameter type at position $i")
         }
 
-        mParams = newParams
+        Collections.copy(_params, newParams)
     }
 
     override val resultType: Class<out ValueArray>
@@ -95,7 +92,7 @@ abstract class FunctionBase protected constructor(override val id: IFunctionEnum
 
         }
 
-    private fun removeDoubles(vararg params: Number): Array<Number> {
+    private fun removeDoubles(vararg params: Number): MutableList<Number> {
         val result = params.toMutableList()
 
         for (i in result.indices) {
@@ -103,6 +100,6 @@ abstract class FunctionBase protected constructor(override val id: IFunctionEnum
                 result[i] = params[i].toFloat()
         }
 
-        return result.toTypedArray()
+        return result
     }
 }
