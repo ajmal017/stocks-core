@@ -63,9 +63,9 @@ public class PriceCondition implements ICondition {
     private boolean evalFloatArray(FloatArray arr, Price last) {
         float v = arr.last();
 
-        if (condition == Condition.ABOVE && last.close > v)
+        if (condition == Condition.ABOVE && last.getClose() > v)
             return true;
-        if (condition == Condition.BELOW && last.close < v)
+        if (condition == Condition.BELOW && last.getClose() < v)
             return true;
 
         return false;

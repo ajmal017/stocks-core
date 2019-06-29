@@ -159,7 +159,7 @@ public class RepositoryCachedAPI implements CachedDataAPI {
         List<Price> currPrices = mPriceRepo.get(symbol, interval);
         for(Price p : currPrices) {
             if (p.date.equals(first.date)) {
-                if (p.close == first.close &&
+                if (p.getClose() == first.getClose() &&
                         p.volume == first.volume &&
                         p.open == first.open &&
                         p.high == first.high &&

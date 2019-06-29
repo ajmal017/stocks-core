@@ -68,7 +68,7 @@ public class PositionValue {
         if (quote != null)
             return quote.lastTrade;
         if (priceList != null)
-            return priceList.getLast().close;
+            return priceList.getLast().getClose();
 
         return 0;
     }

@@ -3,9 +3,6 @@ package org.cerion.stocklist;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Random;
-
-import org.cerion.stocklist.arrays.BandArray;
 
 public class Price implements Comparable<Price>, IPrice
 {
@@ -15,7 +12,7 @@ public class Price implements Comparable<Price>, IPrice
 	public float high;
 	public float low;
 	public float volume;
-	public float close;
+	private float _close;
 	
 	//Fields used in list
 	public PriceList parent;
@@ -28,28 +25,13 @@ public class Price implements Comparable<Price>, IPrice
 		return String.format("%.2f",val);
 	}
 
-	@Deprecated
-	public Price(java.util.Date date, float open, float high, float low, float close, long volume)
-	{
-		this.date = date;
-		this.open = open;
-		this.high = high;
-		this.low  = low;
-		this.volume = volume;
-		this.close = close;
-		
-		//Error checking
-		if(open < low || close < low || open > high || close > high)
-			throw new RuntimeException("Price range inconsistency " + String.format("%s,%f,%f,%f,%f", getDate(), open, high, low, close));
-	}
-
 	public Price(java.util.Date date, float open, float high, float low, float close, float volume) {
 		this.date = date;
 		this.open = open;
 		this.high = high;
 		this.low = low;
 		this.volume = volume;
-		this.close = close;
+		this._close = close;
 
 		//Error checking
 		if(open < low || close < low || open > high || close > high)
@@ -96,8 +78,8 @@ public class Price implements Comparable<Price>, IPrice
 		if(old.date.before(date) == false)
 			throw new RuntimeException("current price is older than input price");
 		
-		float diff = close - old.close;
-		float percent = (100 * (diff / old.close));
+		float diff = _close - old._close;
+		float percent = (100 * (diff / old._close));
 		return percent;
 	}
 
@@ -109,6 +91,6 @@ public class Price implements Comparable<Price>, IPrice
 
 	@Override
 	public float getClose() {
-		return close;
+		return _close;
 	}
 }

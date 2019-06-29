@@ -15,7 +15,7 @@ public class YahooFinanceTest {
         assertEquals(12.01, p.open, 0.0000005);
         assertEquals(12.01, p.high, 0.0000005);
         assertEquals(12.01, p.low, 0.0000005);
-        assertEquals(12.01, p.close, 0.0000005);
+        assertEquals(12.01, p.getClose(), 0.0000005);
     }
 
     @Test
@@ -25,6 +25,6 @@ public class YahooFinanceTest {
         assertEquals(11.973215, p.open, 0.0000005);
         assertEquals(11.973215, p.high, 0.0000005);
         assertEquals(11.973215, p.low, 0.0000005);
-        assertEquals(11.973215, p.close, 0.0000005);
+        assertEquals(11.973215, p.getClose(), 0.0000005);
     }
 }

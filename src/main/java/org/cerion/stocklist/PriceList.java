@@ -63,7 +63,7 @@ public class PriceList extends ArrayList<Price>
 			mOpen.mVal[i] = p.open;
 			mHigh.mVal[i] = p.high;
 			mLow.mVal[i] = p.low;
-			mClose.mVal[i] = p.close;
+			mClose.mVal[i] = p.getClose();
 			mVolume.mVal[i] = p.volume;
 
 			this.add(p);
@@ -100,7 +100,7 @@ public class PriceList extends ArrayList<Price>
 		List<Price> logPrices = new ArrayList<>();
 		for(int i = 0; i < size(); i++) {
 			Price p = get(i);
-			logPrices.add(new Price(p.date, (float)Math.log(p.open), (float)Math.log(p.high), (float)Math.log(p.low), (float)Math.log(p.close), (float)Math.log(p.volume)));
+			logPrices.add(new Price(p.date, (float)Math.log(p.open), (float)Math.log(p.high), (float)Math.log(p.low), (float)Math.log(p.getClose()), (float)Math.log(p.volume)));
 		}
 
 		return new PriceList(mSymbol, logPrices);
@@ -141,7 +141,7 @@ public class PriceList extends ArrayList<Price>
 			Price start = get(i);
 
 			float open = start.open;
-			float close = start.close;
+			float close = start.getClose();
 			float high = start.high;
 			float low = start.low;
 			float volume = start.volume;
@@ -165,7 +165,7 @@ public class PriceList extends ArrayList<Price>
 				if(p.low < low)
 					low = p.low;
 
-				close = p.close;
+				close = p.getClose();
 			}
 
 			Price p = new Price(start.date, open, high, low, close, volume);
@@ -189,7 +189,7 @@ public class PriceList extends ArrayList<Price>
 					p3.open,
 					Math.max(Math.max(p1.high, p2.high),p3.high),
 					Math.min(Math.min(p1.low, p2.low),p3.low),
-					p1.close,
+					p1.getClose(),
 					p1.volume + p2.volume + p3.volume);
 
 			prices.add(p);
@@ -207,7 +207,7 @@ public class PriceList extends ArrayList<Price>
 			Price start = get(i-11);
 
 			float open = start.open;
-			float close = get(i).close;
+			float close = get(i).getClose();
 			float high = 0;
 			float low = open;
 			float volume = 0;
