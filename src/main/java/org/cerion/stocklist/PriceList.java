@@ -3,10 +3,7 @@ package org.cerion.stocklist;
 import org.cerion.stocklist.arrays.FloatArray;
 import org.cerion.stocklist.model.Interval;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @SuppressWarnings("WeakerAccess")
 public class PriceList extends ArrayList<Price>
@@ -36,7 +33,7 @@ public class PriceList extends ArrayList<Price>
 	public PriceList(String symbol, List<Price> list) {
 
 		try {
-			Collections.sort(list);
+			list.sort(Comparator.comparing(Price::getDate));
 		}
 		catch (Exception e)
 		{
@@ -59,12 +56,12 @@ public class PriceList extends ArrayList<Price>
 			p.pos = i;
 			p.parent = this;
 
-			mDate[i] = p.date;
-			mOpen.mVal[i] = p.open;
-			mHigh.mVal[i] = p.high;
-			mLow.mVal[i] = p.low;
+			mDate[i] = p.getDate();
+			mOpen.mVal[i] = p.getOpen();
+			mHigh.mVal[i] = p.getHigh();
+			mLow.mVal[i] = p.getLow();
 			mClose.mVal[i] = p.getClose();
-			mVolume.mVal[i] = p.volume;
+			mVolume.mVal[i] = p.getVolume();
 
 			this.add(p);
 		}
@@ -100,7 +97,7 @@ public class PriceList extends ArrayList<Price>
 		List<Price> logPrices = new ArrayList<>();
 		for(int i = 0; i < size(); i++) {
 			Price p = get(i);
-			logPrices.add(new Price(p.date, (float)Math.log(p.open), (float)Math.log(p.high), (float)Math.log(p.low), (float)Math.log(p.getClose()), (float)Math.log(p.volume)));
+			logPrices.add(new Price(p.getDate(), (float)Math.log(p.getOpen()), (float)Math.log(p.getHigh()), (float)Math.log(p.getLow()), (float)Math.log(p.getClose()), (float)Math.log(p.getVolume())));
 		}
 
 		return new PriceList(mSymbol, logPrices);
@@ -140,18 +137,18 @@ public class PriceList extends ArrayList<Price>
 		while(i < size() - 1) {
 			Price start = get(i);
 
-			float open = start.open;
+			float open = start.getOpen();
 			float close = start.getClose();
-			float high = start.high;
-			float low = start.low;
-			float volume = start.volume;
+			float high = start.getHigh();
+			float low = start.getLow();
+			float volume = start.getVolume();
 
 			while(i < size() - 1) {
 				i++;
 				Price p = get(i);
 
-				long t1 = get(i-1).date.getTime();
-				long t2 = p.date.getTime();
+				long t1 = get(i-1).getDate().getTime();
+				long t2 = p.getDate().getTime();
 				long diff = (t2 - t1);
 				diff/= (1000 * 60 * 60 * 24);
 
@@ -159,16 +156,16 @@ public class PriceList extends ArrayList<Price>
 				if (diff > 2)
 					break;
 
-				volume += p.volume;
-				if(p.high > high)
-					high = p.high;
-				if(p.low < low)
-					low = p.low;
+				volume += p.getVolume();
+				if(p.getHigh() > high)
+					high = p.getHigh();
+				if(p.getLow() < low)
+					low = p.getLow();
 
 				close = p.getClose();
 			}
 
-			Price p = new Price(start.date, open, high, low, close, volume);
+			Price p = new Price(start.getDate(), open, high, low, close, volume);
 			prices.add(p);
 		}
 
@@ -185,12 +182,12 @@ public class PriceList extends ArrayList<Price>
 			Price p2 = get(i-1);
 			Price p3 = get(i-2);
 
-			Price p = new Price(p1.date,
-					p3.open,
-					Math.max(Math.max(p1.high, p2.high),p3.high),
-					Math.min(Math.min(p1.low, p2.low),p3.low),
+			Price p = new Price(p1.getDate(),
+					p3.getOpen(),
+					Math.max(Math.max(p1.getHigh(), p2.getHigh()),p3.getHigh()),
+					Math.min(Math.min(p1.getLow(), p2.getLow()),p3.getLow()),
 					p1.getClose(),
-					p1.volume + p2.volume + p3.volume);
+					p1.getVolume() + p2.getVolume() + p3.getVolume());
 
 			prices.add(p);
 		}
@@ -206,7 +203,7 @@ public class PriceList extends ArrayList<Price>
 		for(int i = size() - 1; i >= 11; i-= 12) {
 			Price start = get(i-11);
 
-			float open = start.open;
+			float open = start.getOpen();
 			float close = get(i).getClose();
 			float high = 0;
 			float low = open;
@@ -214,14 +211,14 @@ public class PriceList extends ArrayList<Price>
 
 			for(int j = i-11; j <= i; j++) {
 				Price q = get(j);
-				volume += q.volume;
-				if(q.high > high)
-					high = q.high;
-				if(q.low < low)
-					low = q.low;
+				volume += q.getVolume();
+				if(q.getHigh() > high)
+					high = q.getHigh();
+				if(q.getLow() < low)
+					low = q.getLow();
 			}
 
-			Price p = new Price(get(i).date, open, high, low, close, volume);
+			Price p = new Price(get(i).getDate(), open, high, low, close, volume);
 			prices.add(p);
 		}
 

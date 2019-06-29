@@ -158,12 +158,12 @@ public class RepositoryCachedAPI implements CachedDataAPI {
         Price first = newPrices.get(0);
         List<Price> currPrices = mPriceRepo.get(symbol, interval);
         for(Price p : currPrices) {
-            if (p.date.equals(first.date)) {
+            if (p.getDate().equals(first.getDate())) {
                 if (p.getClose() == first.getClose() &&
-                        p.volume == first.volume &&
-                        p.open == first.open &&
-                        p.high == first.high &&
-                        p.low == first.low)
+                        p.getVolume() == first.getVolume() &&
+                        p.getOpen() == first.getOpen() &&
+                        p.getHigh() == first.getHigh() &&
+                        p.getLow() == first.getLow())
                     merge = true;
             }
         }
@@ -171,7 +171,7 @@ public class RepositoryCachedAPI implements CachedDataAPI {
         if (merge) {
             List<Price> mergedList = new ArrayList<>();
             for(Price p : currPrices) {
-                if (p.date.equals(first.date)) {
+                if (p.getDate().equals(first.getDate())) {
                     mergedList.addAll(newPrices);
                     break;
                 }

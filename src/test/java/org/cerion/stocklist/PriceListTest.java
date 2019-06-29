@@ -21,5 +21,6 @@ public class PriceListTest {
 
 		assertEquals(0.0215, gain, 0.0001);
 	}
-	
+
+
 }

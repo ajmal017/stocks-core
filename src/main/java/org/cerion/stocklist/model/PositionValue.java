@@ -177,7 +177,7 @@ public class PositionValue {
 
         int start = 0;
         for (Price p : priceList) {
-            if (this.dateEquals(p.date, date)) {
+            if (this.dateEquals(p.getDate(), date)) {
                 start = p.pos;
                 break;
             }
