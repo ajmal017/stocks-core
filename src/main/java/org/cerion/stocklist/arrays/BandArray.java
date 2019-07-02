@@ -1,6 +1,6 @@
 package org.cerion.stocklist.arrays;
 
-public class BandArray extends ValueArray {
+public class BandArray extends ValueArray implements IBandArray {
 
 	private FloatArray mSource;
 	private FloatArray mAverage; //SimpleMovingAverage or ExpMovingAverage
@@ -13,7 +13,6 @@ public class BandArray extends ValueArray {
 	
 	@Override
 	public int size() { return mSource.size(); }
-	
 
 	/**
 	 * Bollinger Bands
@@ -25,7 +24,7 @@ public class BandArray extends ValueArray {
 		mAverage = arr.sma(period);
 		mRange = arr.std(period, mAverage);
 	}
-	
+
 	/**
 	 * Keltner Channel
 	 */
@@ -57,10 +56,6 @@ public class BandArray extends ValueArray {
 		return mAverage.mVal[pos]; 
 	}
 
-	public float source(int pos) {
-		return mSource.get(pos);
-	}
-	
 	public float lower(int pos)
 	{
 		if(bPriceChannel)

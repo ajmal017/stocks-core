@@ -9,7 +9,6 @@ import java.util.Date;
 
 public class Price implements IPrice
 {
-	//Core fields
 	private java.util.Date _date;
 	private float _open;
 	private float _high;
@@ -49,29 +48,6 @@ public class Price implements IPrice
 		Calendar c = Calendar.getInstance();
 		c.setTime(_date);
 		return c.get(Calendar.DAY_OF_WEEK);
-	}
-
-	@Deprecated
-	public float avgGain() {
-		return avgGain(1);
-	}
-
-	@Deprecated
-	public float avgGain(int days) {
-		float gain = 0;
-		int end = pos + days;
-		
-		for(int i = pos+1; i <= end; i++)
-		{
-			Price t = parent.get(i);
-			gain += t.getPercentDiff(this);
-		}
-		
-		gain /= days;	
-		
-		if(gain > 1000)
-			gain = 10; //Bug in PLL
-		return gain;
 	}
 
 	public float slope(int period) { return parent.slope(period, pos); } //Slope of closing price
