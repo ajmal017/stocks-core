@@ -10,7 +10,7 @@ public class DirectionalIndexTest extends FunctionTestBase {
     public void directionalIndex_defaults() {
         PairArray arr = new DirectionalIndex().eval(mPriceList);
 
-        int last = arr.size();
+        int last = arr.getSize();
 
         // TODO verify values online, just doing these pre-refactor
         assertEqual(30.29, arr.getNeg(last-1), "last");

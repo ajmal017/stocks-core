@@ -1,23 +1,13 @@
 package org.cerion.stocklist.arrays
 
 // Price Channels
-internal class PCBandArray(private val upper: FloatArray, private val lower: FloatArray) : IBandArray {
+internal class PCBandArray(private val upper: FloatArray, private val lower: FloatArray) : BandArray() {
 
-    override fun size(): Int {
-        return upper.size()
-    }
+    override val size = upper.size
 
-    override fun mid(pos: Int): Float {
-        return (upper(pos) + lower(pos)) / 2
-    }
-
-    override fun lower(pos: Int): Float {
-        return lower.get(pos)
-    }
-
-    override fun upper(pos: Int): Float {
-        return upper.get(pos)
-    }
+    override fun mid(pos: Int): Float = (upper(pos) + lower(pos)) / 2
+    override fun lower(pos: Int): Float = lower.get(pos)
+    override fun upper(pos: Int): Float = upper.get(pos)
 
     override fun bandwidth(pos: Int): Float {
         //(Upper Band - Lower Band)/Middle Band

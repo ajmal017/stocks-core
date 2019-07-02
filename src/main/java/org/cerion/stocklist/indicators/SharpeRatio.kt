@@ -28,7 +28,7 @@ class SharpeRatio(period: Int, riskFreeRate: Double) : IndicatorBase(Indicator.S
         val change = list.close.percentChange
         val riskFree = getFloat(1) / 100 / multiplier
 
-        for (i in 1 until change.size()) {
+        for (i in 1 until change.size) {
             change.mVal[i] = change.mVal[i] - riskFree
         }
 

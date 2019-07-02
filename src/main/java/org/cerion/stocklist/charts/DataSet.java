@@ -25,7 +25,7 @@ public class DataSet implements IDataSet {
     }
 
     public int size() {
-        return mValues.size() - 1;
+        return mValues.getSize() - 1;
     }
 
     public int getColor() {

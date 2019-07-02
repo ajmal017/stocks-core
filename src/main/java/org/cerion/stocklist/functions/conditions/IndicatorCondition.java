@@ -71,7 +71,7 @@ public class IndicatorCondition implements ICondition {
         ValueArray va = indicator1.eval(list);
         if (va instanceof BandArray) {
             BandArray bands = (BandArray)va;
-            int last = bands.size() - 1;
+            int last = bands.getSize() - 1;
             switch(condition)
             {
                 case ABOVE: return value > bands.upper(last);

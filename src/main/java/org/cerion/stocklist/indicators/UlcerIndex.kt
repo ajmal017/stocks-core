@@ -15,7 +15,7 @@ class UlcerIndex(period: Int = 14) : IndicatorBase(Indicator.ULCER_INDEX, period
 
     fun eval(arr: FloatArray): FloatArray {
         val period = getInt(0)
-        val size = arr.size()
+        val size = arr.size
         val result = FloatArray(size)
 
         //Percent-Drawdown = ((Close - 14-period Max Close)/14-period Max Close) x 100

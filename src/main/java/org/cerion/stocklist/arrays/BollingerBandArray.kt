@@ -1,20 +1,13 @@
 package org.cerion.stocklist.arrays
 
-internal class BollingerBandArray(private val arr: FloatArray, period: Int, private val multiplier: Float) : ValueArray(), IBandArray {
+internal class BollingerBandArray(private val source: FloatArray, period: Int, private val multiplier: Float) : BandArray() {
+    private val average = source.sma(period)
+    private val range = source.std(period, average)
 
-    private val average = arr.sma(period)
-    private val range = arr.std(period, average)
-
-    override fun size(): Int = arr.size()
+    override val size = source.size
     override fun mid(pos: Int): Float = average.mVal[pos]
-
-    override fun lower(pos: Int): Float {
-        return average.mVal[pos] - multiplier * range.mVal[pos]
-    }
-
-    override fun upper(pos: Int): Float {
-        return average.mVal[pos] + multiplier * range.mVal[pos]
-    }
+    override fun lower(pos: Int): Float = average.mVal[pos] - multiplier * range.mVal[pos]
+    override fun upper(pos: Int): Float = average.mVal[pos] + multiplier * range.mVal[pos]
 
     override fun bandwidth(pos: Int): Float {
         //(Upper Band - Lower Band)/Middle Band
@@ -23,7 +16,7 @@ internal class BollingerBandArray(private val arr: FloatArray, period: Int, priv
 
     override fun percent(pos: Int): Float {
         //%B = (Price - Lower Band)/(Upper Band - Lower Band)
-        return (arr.get(pos) - lower(pos)) / (upper(pos) - lower(pos))
+        return (source.get(pos) - lower(pos)) / (upper(pos) - lower(pos))
     }
 
 }

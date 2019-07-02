@@ -15,7 +15,7 @@ class RSI(period: Int = 14) : IndicatorBase(Indicator.RSI, period) {
 
     private fun rsi(list: PriceList, period: Int): FloatArray {
         val arr = list.mClose
-        val size = arr.size()
+        val size = arr.size
         val result = FloatArray(size)
 
         /*

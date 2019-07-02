@@ -14,7 +14,7 @@ public class KeltnerChannelsTest extends FunctionTestBase {
     public void keltnerChannels_defaults() {
         BandArray arr = new KeltnerChannels().eval(mPriceList);
 
-        int last = arr.size() - 1;
+        int last = arr.getSize() - 1;
         // TODO verify values online, just doing these pre-refactor
         assertEqual(4.62, arr.bandwidth(last), "bandwidth");
         assertEqual(2007.02, arr.lower(last), "lower");

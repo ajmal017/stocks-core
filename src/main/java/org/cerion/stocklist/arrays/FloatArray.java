@@ -1,12 +1,14 @@
 package org.cerion.stocklist.arrays;
 
+import org.cerion.stocklist.web.CombinedDataAPI;
+
 public class FloatArray extends ValueArray {
 
 	public float[] mVal;
 	
 	@Override
-	public int size() { return mVal.length; }
-	
+	public int getSize() { return mVal.length; }
+
 	public FloatArray(int size) {
 		mVal = new float[size];
 	}
@@ -96,7 +98,7 @@ public class FloatArray extends ValueArray {
 		for(int i = 0; i < size; i++)
 		{
 			//Take average of first i array elements when count is less than period size
-			int count = maxPeriod(i,period);
+			int count = Companion.maxPeriod(i,period);
 			
 			float total = 0;
 			for(int j = i-count+1; j <= i; j++)
@@ -151,7 +153,7 @@ public class FloatArray extends ValueArray {
 		FloatArray result = new FloatArray(size);
 
 		for(int i = 1; i < size; i++) {
-			int count = maxPeriod(i, period);
+			int count = Companion.maxPeriod(i, period);
 
 			float sma = arr_sma.mVal[i];
 			float total = 0;
@@ -174,11 +176,11 @@ public class FloatArray extends ValueArray {
 	 * @return
 	 */
 	public BandArray bb(int period, float multiplier) {
-		return new BandArray(this,period,multiplier);
+		return new BollingerBandArray(this,period,multiplier);
 	}
 
 	public float slope(int period, int pos) {
-		period = maxPeriod(pos,period);
+		period = Companion.maxPeriod(pos,period);
 		float[] ab = getLinearRegressionEquation(mVal, pos - period + 1, pos);
 
 		return ab[1];
@@ -239,7 +241,7 @@ public class FloatArray extends ValueArray {
 	*/
 
 	public float regressionLinePoint(int period, int pos) {
-		int count = maxPeriod(pos, period);
+		int count = Companion.maxPeriod(pos, period);
 		float slope = slope(period, pos);
 		float sumY = sum(pos - count + 1, pos);
 

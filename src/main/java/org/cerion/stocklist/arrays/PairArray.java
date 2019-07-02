@@ -7,9 +7,9 @@ public class PairArray extends ValueArray {
 	private FloatArray mNegative; //Lower value OR negative direction value  (DI-, VI-, Aroon Down)
 
 	@Override
-	public int size() 
+	public int getSize()
 	{ 
-		return mPositive.size();
+		return mPositive.getSize();
 	}
 
 	/** Pair of related lines with opposing directional meaning

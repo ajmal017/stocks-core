@@ -17,8 +17,8 @@ public class VortexTest extends FunctionTestBase {
         assertEqual(0.92, arr.getPos(27), "vortex (+) 2p-1");
         assertEqual(1.10, arr.getNeg(28), "vortex (-) 2p");
         assertEqual(0.96, arr.getPos(28), "vortex (+) 2p");
-        assertEqual(0.98, arr.getNeg(arr.size() - 1), "vortex (-) last");
-        assertEqual(0.94, arr.getPos(arr.size() - 1), "vortex (+) last");
-        assertEqual(-0.04, arr.diff(arr.size() - 1), "vortex diff last");
+        assertEqual(0.98, arr.getNeg(arr.getSize() - 1), "vortex (-) last");
+        assertEqual(0.94, arr.getPos(arr.getSize() - 1), "vortex (+) last");
+        assertEqual(-0.04, arr.diff(arr.getSize() - 1), "vortex diff last");
     }
 }

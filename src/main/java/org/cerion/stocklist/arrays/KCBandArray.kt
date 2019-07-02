@@ -1,23 +1,12 @@
 package org.cerion.stocklist.arrays
 
-internal class KCBandArray(private val source: FloatArray, private val multiplier: Float, private val ema: FloatArray, private val atr: FloatArray) : IBandArray {
+internal class KCBandArray(private val source: FloatArray, private val multiplier: Float, private val ema: FloatArray, private val atr: FloatArray) : BandArray() {
 
-    override fun size(): Int = source.size()
+    override val size = source.size
 
-    val average: FloatArray = ema
-    val range: FloatArray = atr
-
-    override fun mid(pos: Int): Float {
-        return average.mVal[pos]
-    }
-
-    override fun lower(pos: Int): Float {
-        return average.mVal[pos] - multiplier * range.mVal[pos]
-    }
-
-    override fun upper(pos: Int): Float {
-        return average.mVal[pos] + multiplier * range.mVal[pos]
-    }
+    override fun mid(pos: Int): Float = ema.mVal[pos]
+    override fun lower(pos: Int): Float = ema.mVal[pos] - multiplier * atr.mVal[pos]
+    override fun upper(pos: Int): Float = ema.mVal[pos] + multiplier * atr.mVal[pos]
 
     override fun bandwidth(pos: Int): Float {
         //(Upper Band - Lower Band)/Middle Band

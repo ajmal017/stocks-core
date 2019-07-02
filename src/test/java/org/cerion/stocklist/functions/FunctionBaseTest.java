@@ -1,6 +1,8 @@
 package org.cerion.stocklist.functions;
 
 import org.cerion.stocklist.Utils;
+import org.cerion.stocklist.arrays.BandArray;
+import org.cerion.stocklist.arrays.ValueArray;
 import org.cerion.stocklist.functions.types.IFunctionEnum;
 import org.cerion.stocklist.functions.types.Indicator;
 import org.cerion.stocklist.functions.types.Overlay;
@@ -12,7 +14,7 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 
-public class FunctionBaseTest {
+public class FunctionBaseTest extends FunctionTestBase {
 
     @Test
     public void hashCodeUniqueness() {
@@ -108,4 +110,51 @@ public class FunctionBaseTest {
         IFunction call = new BollingerBands(20, 2.0);
         call.setParams(20,10);
     }
+
+    @Test
+    public void verifyReturnTypes_simpleOverlays() {
+
+        for(Overlay o : Overlay.values()) {
+            ISimpleOverlay overlay = o.getInstance();
+            ValueArray arr = overlay.eval(mPriceList.getClose());
+
+            Class<?> c = arr.getClass();
+            if (arr instanceof BandArray)
+                c = BandArray.class;
+
+            assertEquals("'" + o.toString() + "' resultType() does not match eval() result", c, overlay.getResultType());
+
+            // Verify when called on both evals
+            arr = overlay.eval(mPriceList);
+            if (arr instanceof BandArray)
+                c = BandArray.class;
+            assertEquals("'" + o.toString() + "' resultType() does not match eval() result (2)", c, overlay.getResultType());
+        }
+    }
+
+    @Test
+    public void verifyReturnTypes_priceOverlays() {
+        for(PriceOverlay o : PriceOverlay.values()) {
+            IPriceOverlay overlay = o.getInstance();
+            ValueArray arr = overlay.eval(mPriceList);
+
+            Class<?> clazz = arr.getClass();
+            if (arr instanceof BandArray)
+                clazz = BandArray.class;
+
+            assertEquals("'" + o.toString() + "' resultType() does not match eval() result", clazz, overlay.getResultType());
+        }
+    }
+
+    @Test
+    public void verifyReturnTypes_indicators() {
+        for(Indicator i : Indicator.values()) {
+            IIndicator indicator = i.getInstance();
+            ValueArray arr = indicator.eval(mPriceList);
+
+            assertEquals("'" + i.toString() + "' resultType() does not match eval() result", arr.getClass(), indicator.getResultType());
+        }
+    }
+
+
 }

@@ -2,6 +2,7 @@ package org.cerion.stocklist.overlays
 
 import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.BandArray
+import org.cerion.stocklist.arrays.KCBandArray
 import org.cerion.stocklist.functions.types.PriceOverlay
 import org.cerion.stocklist.indicators.AverageTrueRange
 
@@ -20,6 +21,6 @@ class KeltnerChannels(period: Int, multiplier: Double, atr: Int) : PriceOverlayB
         //Middle Line: 20-day exponential moving average
         //Upper Channel Line: 20-day ExpMovingAverage + (2 x ATR(10))
         //Lower Channel Line: 20-day ExpMovingAverage - (2 x ATR(10))
-        return BandArray(list.mClose, multiplier, ema, AverageTrueRange(atrPeriod).eval(list))
+        return KCBandArray(list.mClose, multiplier, ema, AverageTrueRange(atrPeriod).eval(list))
     }
 }

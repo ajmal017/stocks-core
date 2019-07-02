@@ -20,11 +20,11 @@ class PercentagePriceOscillator(p1: Int, p2: Int, signal: Int) : IndicatorBase(I
 
         // Shared with PVO
         fun getPercentMACD(arr: FloatArray, p1: Int, p2: Int, signal: Int): MACDArray {
-            val result = MACDArray(arr.size())
+            val result = MACDArray(arr.size)
             val ema1 = arr.ema(p1)
             val ema2 = arr.ema(p2)
 
-            for (i in 0 until arr.size())
+            for (i in 0 until arr.size)
                 result.mVal[i] = 100 * (ema1.get(i) - ema2.get(i)) / ema2.get(i)
 
             result.setSignal(signal)

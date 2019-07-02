@@ -48,7 +48,7 @@ public class PriceCondition implements ICondition {
     }
 
     private boolean evalBandArray(BandArray arr) {
-        float percent = arr.percent(arr.size()-1);
+        float percent = arr.percent(arr.getSize()-1);
 
         if (condition == Condition.ABOVE && percent > 1)
             return true;

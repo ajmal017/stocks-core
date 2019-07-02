@@ -136,10 +136,10 @@ public abstract class StockChart implements Cloneable {
     }
 
     protected List<DataSet> getBandDataSet(BandArray values, String labelUpper, String labelLower, int color) {
-        FloatArray upper = new FloatArray(values.size());
-        FloatArray lower = new FloatArray(values.size());
+        FloatArray upper = new FloatArray(values.getSize());
+        FloatArray lower = new FloatArray(values.getSize());
 
-        for (int i = 0; i < values.size(); i++) {
+        for (int i = 0; i < values.getSize(); i++) {
             upper.mVal[i] = values.upper(i);
             lower.mVal[i] = values.lower(i);
         }
@@ -162,10 +162,10 @@ public abstract class StockChart implements Cloneable {
                                            String labelMACD, String labelSignal, String labelHist,
                                            int colorMACD, int colorSignal, int colorHist) {
 
-        FloatArray signal = new FloatArray(values.size());
-        FloatArray hist = new FloatArray(values.size());
+        FloatArray signal = new FloatArray(values.getSize());
+        FloatArray hist = new FloatArray(values.getSize());
 
-        for (int i = 0; i < values.size(); i++) {
+        for (int i = 0; i < values.getSize(); i++) {
             signal.mVal[i] = values.signal(i);
             hist.mVal[i] = values.hist(i);
         }

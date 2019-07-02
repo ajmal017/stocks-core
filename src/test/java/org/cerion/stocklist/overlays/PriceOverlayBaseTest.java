@@ -15,32 +15,6 @@ import static org.junit.Assert.*;
 public class PriceOverlayBaseTest extends FunctionTestBase {
 
     @Test
-    public void verifyReturnTypes() {
-        for(PriceOverlay o : PriceOverlay.values()) {
-            IPriceOverlay overlay = o.getInstance();
-            ValueArray arr = overlay.eval(mPriceList);
-
-            assertEquals("'" + o.toString() + "' resultType() does not match eval() result", arr.getClass(), overlay.getResultType());
-        }
-
-        for(Overlay o : Overlay.values()) {
-            ISimpleOverlay overlay = o.getInstance();
-            ValueArray arr = overlay.eval(mPriceList);
-            assertEquals("'" + o.toString() + "' resultType() does not match eval() result", arr.getClass(), overlay.getResultType());
-
-            arr = overlay.eval(mPriceList.mClose);
-            assertEquals("'" + o.toString() + "' resultType() does not match eval() result", arr.getClass(), overlay.getResultType());
-        }
-
-        for(Indicator i : Indicator.values()) {
-            IIndicator indicator = i.getInstance();
-            ValueArray arr = indicator.eval(mPriceList);
-
-            assertEquals("'" + i.toString() + "' resultType() does not match eval() result", arr.getClass(), indicator.getResultType());
-        }
-    }
-
-    @Test
     public void CorrectEnumReturned() {
         for(PriceOverlay o : PriceOverlay.values()) {
             IPriceOverlay overlay = o.getInstance();
