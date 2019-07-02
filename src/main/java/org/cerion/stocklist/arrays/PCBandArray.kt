@@ -1,7 +1,7 @@
 package org.cerion.stocklist.arrays
 
 // Price Channels
-internal class PCBandArray(private val upper: FloatArray, private val lower: FloatArray) : BandArray() {
+internal class PCBandArray(private val prices: FloatArray, private val upper: FloatArray, private val lower: FloatArray) : BandArray() {
 
     override val size = upper.size
 
@@ -15,6 +15,6 @@ internal class PCBandArray(private val upper: FloatArray, private val lower: Flo
     }
 
     override fun percent(pos: Int): Float {
-        return 0.5f // Not useful for Price channels since its always 50%
+        return (prices.get(pos) - lower(pos)) / (upper(pos) - lower(pos))
     }
 }

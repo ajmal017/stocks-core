@@ -30,6 +30,6 @@ class PriceChannels(period: Int = 20) : PriceOverlayBase(PriceOverlay.CHAN, peri
             lower.mVal[i] = list.low.min(start, i - 1)
         }
 
-        return PCBandArray(upper, lower)
+        return PCBandArray(list.close, upper, lower)
     }
 }
