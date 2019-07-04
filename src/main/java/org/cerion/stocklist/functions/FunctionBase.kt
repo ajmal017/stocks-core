@@ -93,7 +93,7 @@ abstract class FunctionBase protected constructor(override val id: IFunctionEnum
         val result = params.toMutableList()
 
         for (i in result.indices) {
-            if (result[i].javaClass == Double::class.java)
+            if (result[i]::class == Double::class)
                 result[i] = params[i].toFloat()
         }
 

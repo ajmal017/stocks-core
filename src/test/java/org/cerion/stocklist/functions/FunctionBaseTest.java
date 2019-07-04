@@ -1,18 +1,19 @@
 package org.cerion.stocklist.functions;
 
 import org.cerion.stocklist.Utils;
-import org.cerion.stocklist.arrays.BandArray;
 import org.cerion.stocklist.arrays.ValueArray;
 import org.cerion.stocklist.functions.types.IFunctionEnum;
 import org.cerion.stocklist.functions.types.Indicator;
 import org.cerion.stocklist.functions.types.Overlay;
 import org.cerion.stocklist.functions.types.PriceOverlay;
 import org.cerion.stocklist.overlays.BollingerBands;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class FunctionBaseTest extends FunctionTestBase {
 
@@ -85,30 +86,31 @@ public class FunctionBaseTest extends FunctionTestBase {
         call.eval(Utils.generateList(50));
     }
 
-    /* Type checked now so not necessary to test
     @Test(expected = IllegalArgumentException.class)
-    public void parametersVerified_MissingParameter() {
-        IFunction call = new BollingerBands(20);
-        call.eval(Utils.generateList(50));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void parametersVerified_TooManyParameters() {
-        IFunction call = new BollingerBands(20, 2.0, 10);
-        call.eval(Utils.generateList(50));
-    }
-    */
-
-    @Test(expected = IllegalArgumentException.class)
-    public void parametersVerified_setParams_countMismatch() {
+    public void setParams_tooMany() {
         IFunction call = new BollingerBands(20, 2.0);
         call.setParams(20,10,10);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void parametersVerified_setParams_typeMismatch() {
+    public void setParams_tooFew() {
+        IFunction call = new BollingerBands(20, 2.0);
+        call.setParams(20);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setParams_typeMismatch() {
         IFunction call = new BollingerBands(20, 2.0);
         call.setParams(20,10);
+    }
+
+    @Test
+    public void setParams_convertsDoubleToFloat() {
+        IFunction call = new BollingerBands();
+        Assert.assertEquals(Float.class, call.getParams().get(1).getClass());
+
+        call.setParams(20,2.0);
+        Assert.assertEquals(Float.class, call.getParams().get(1).getClass());
     }
 
     @Test
@@ -117,18 +119,11 @@ public class FunctionBaseTest extends FunctionTestBase {
         for(Overlay o : Overlay.values()) {
             ISimpleOverlay overlay = o.getInstance();
             ValueArray arr = overlay.eval(mPriceList.getClose());
-
-            Class<?> c = arr.getClass();
-            if (arr instanceof BandArray)
-                c = BandArray.class;
-
-            assertEquals("'" + o.toString() + "' resultType() does not match eval() result", c, overlay.getResultType());
+            assertEquals("'" + o.toString() + "' resultType() does not match eval() result", arr.getClass(), overlay.getResultType());
 
             // Verify when called on both evals
             arr = overlay.eval(mPriceList);
-            if (arr instanceof BandArray)
-                c = BandArray.class;
-            assertEquals("'" + o.toString() + "' resultType() does not match eval() result (2)", c, overlay.getResultType());
+            assertEquals("'" + o.toString() + "' resultType() does not match eval() result (2)", arr.getClass(), overlay.getResultType());
         }
     }
 
@@ -138,11 +133,7 @@ public class FunctionBaseTest extends FunctionTestBase {
             IPriceOverlay overlay = o.getInstance();
             ValueArray arr = overlay.eval(mPriceList);
 
-            Class<?> clazz = arr.getClass();
-            if (arr instanceof BandArray)
-                clazz = BandArray.class;
-
-            assertEquals("'" + o.toString() + "' resultType() does not match eval() result", clazz, overlay.getResultType());
+            assertEquals("'" + o.toString() + "' resultType() does not match eval() result", arr.getClass(), overlay.getResultType());
         }
     }
 

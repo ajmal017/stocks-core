@@ -6,6 +6,7 @@ import org.junit.BeforeClass;
 
 import static org.junit.Assert.assertEquals;
 
+@Deprecated
 public class FunctionTestBase {
 
     public static PriceList mPriceList;

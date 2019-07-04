@@ -1,14 +1,14 @@
 package org.cerion.stocklist.overlays
 
-import org.cerion.stocklist.functions.FunctionTestBase
+import org.cerion.stocklist.TestBase
 import org.junit.Test
 
-class BollingerBandsTest : FunctionTestBase() {
+class BollingerBandsTest : TestBase() {
 
     @Test
     fun bollingerBands_defaults() {
         val bands = BollingerBands()
-        val arr=  bands.eval(mPriceList)
+        val arr=  bands.eval(priceList)
 
         // TODO need to verify online
         assertEqual(4.32, arr.bandwidth(arr.size - 1), "bandwidth")
