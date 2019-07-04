@@ -1,10 +1,8 @@
 package org.cerion.stocklist.overlays
 
 import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.arrays.BandArray
+import org.cerion.stocklist.arrays.*
 import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.arrays.PCBandArray
-import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.PriceOverlay
 
 class PriceChannels(period: Int = 20) : PriceOverlayBase(PriceOverlay.CHAN, period) {
@@ -30,6 +28,6 @@ class PriceChannels(period: Int = 20) : PriceOverlayBase(PriceOverlay.CHAN, peri
             lower.mVal[i] = list.low.min(start, i - 1)
         }
 
-        return PCBandArray(list.close, upper, lower)
+        return BandArray(list.close, upper, lower)
     }
 }

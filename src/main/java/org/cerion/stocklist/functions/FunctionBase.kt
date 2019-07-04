@@ -1,6 +1,5 @@
 package org.cerion.stocklist.functions
 
-import org.cerion.stocklist.arrays.BandArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.IFunctionEnum
 import java.util.*
@@ -83,13 +82,7 @@ abstract class FunctionBase protected constructor(override val id: IFunctionEnum
         get() {
             try {
                 val methods = javaClass.methods.filter { it.name == "eval" && it.returnType.name != ValueArray::class.java.name }
-
-                if(methods.any { it.returnType.name == BandArray::class.java.name })
-                    return BandArray::class.java
-
                 return methods.first().returnType as Class<out ValueArray>
-                //val evalMethod = javaClass.getMethod("eval", FloatArray::class.java)
-                //return evalMethod.returnType as Class<out ValueArray>
             } catch (e: Exception) {
                 throw RuntimeException(e.message)
             }

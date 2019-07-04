@@ -1,5 +1,6 @@
 package org.cerion.stocklist.arrays;
 
+import org.cerion.stocklist.overlays.BollingerBands;
 import org.cerion.stocklist.web.CombinedDataAPI;
 
 public class FloatArray extends ValueArray {
@@ -176,7 +177,7 @@ public class FloatArray extends ValueArray {
 	 * @return
 	 */
 	public BandArray bb(int period, float multiplier) {
-		return new BollingerBandArray(this,period,multiplier);
+		return new BollingerBands(period, multiplier).eval(this);
 	}
 
 	public float slope(int period, int pos) {

@@ -11,6 +11,21 @@ class BollingerBands(period: Int, stddev: Double) : OverlayBase<BandArray>(Overl
     override val name: String = "Bollinger Bands"
 
     override fun eval(arr: FloatArray): BandArray {
-        return arr.bb(getInt(0), getFloat(1))
+        return eval(arr, getInt(0), getFloat(1))
+    }
+
+    private fun eval(arr: FloatArray, period: Int, multiplier: Float): BandArray {
+        val sma = arr.sma(getInt(0))
+        val std = arr.std(period, sma)
+
+        val upper = FloatArray(arr.size)
+        val lower = FloatArray(arr.size)
+
+        for (i in 1 until arr.size) {
+            upper[i] = sma[i] + multiplier * std[i]
+            lower[i] = sma[i] - multiplier * std[i]
+        }
+
+        return BandArray(arr, upper, lower)
     }
 }

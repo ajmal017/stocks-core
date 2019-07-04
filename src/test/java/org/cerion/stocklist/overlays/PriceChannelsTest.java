@@ -20,6 +20,7 @@ public class PriceChannelsTest extends FunctionTestBase {
         assertEqual(1478.0, arr.upper(19), "priceChannels 19");
         assertEqual(1350.14, arr.lower(20), "priceChannels 20");
 
+        // TODO add assert function that takes BandArray and position with 5 values
         // Last
         int p = mSize - 1;
         assertEqual(2104.27, arr.upper(p), "priceChannels upper last");
