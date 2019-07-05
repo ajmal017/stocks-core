@@ -10,6 +10,10 @@ open class TestBase {
         assertEquals(message, expected, actual.toDouble(), 0.005)
     }
 
+    fun assertEqual(expected: Double, actual: Float) {
+        assertEquals(expected, actual.toDouble(), 0.005)
+    }
+
     fun assertDateEquals(expected: Date, actual: Date) {
         Assert.assertEquals(expected.time / 1000, actual.time / 1000)
     }

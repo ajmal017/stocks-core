@@ -62,8 +62,7 @@ public class FloatArrayTest {
 	}
 	
 	@Test
-	public void sma_usesHighestAverage()
-	{
+	public void sma_usesHighestAverage() {
 		FloatArray sma20 = mArr.sma(20);
 		FloatArray sma100 = mArr.sma(100);
 		FloatArray sma200 = mArr.sma(200);
