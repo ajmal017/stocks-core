@@ -8,7 +8,7 @@ import org.junit.Test
 class OverlayBaseTest : TestBase() {
 
     @Test
-    fun CorrectEnumReturned() {
+    fun correctEnumReturned() {
         for (o in Overlay.values()) {
             val overlay = o.instance
             assertEquals("enum does not match instance", o, overlay.id)
