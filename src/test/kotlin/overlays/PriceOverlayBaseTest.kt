@@ -3,7 +3,6 @@ package org.cerion.stocklist.overlays
 import org.cerion.stocklist.TestBase
 import org.cerion.stocklist.functions.types.PriceOverlay
 import org.junit.Assert.assertEquals
-import org.junit.Assert.fail
 import org.junit.Test
 
 class PriceOverlayBaseTest : TestBase() {

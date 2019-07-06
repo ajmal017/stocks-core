@@ -19,9 +19,7 @@ open class TestBase {
     }
 
     companion object {
-        val priceList: PriceList by lazy {
-            Helper.sP500TestData!!
-        }
+        val priceList: PriceList = Utils.sP500TestData
 
         val size: Int by lazy {
             priceList.size
