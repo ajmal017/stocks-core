@@ -62,9 +62,9 @@ public class IndicatorCondition implements ICondition {
             FloatArray arr2 = (FloatArray) indicator2.eval(list);
 
             if (condition == Condition.ABOVE)
-                return arr1.last() > arr2.last();
+                return arr1.getLast() > arr2.getLast();
             else
-                return arr1.last() < arr2.last();
+                return arr1.getLast() < arr2.getLast();
         }
 
         // Value vs Indicator
@@ -83,9 +83,9 @@ public class IndicatorCondition implements ICondition {
         // FloatArray
         FloatArray arr = (FloatArray) indicator1.eval(list);
         if (condition == Condition.ABOVE)
-            return value > arr.last();
+            return value > arr.getLast();
         else
-            return value < arr.last();
+            return value < arr.getLast();
     }
 
     @Override

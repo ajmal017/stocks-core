@@ -15,6 +15,6 @@ class TrueStrengthIndexTest : TestBase() {
         assertEqual(-24.36, arr.get(19), "tsi p-1")
         assertEqual(-20.65, arr.get(20), "tsi p")
         assertEqual(-36.77, arr.get(200), "tsi 200")
-        assertEqual(-0.92, arr.last(), "tsi last")
+        assertEqual(-0.92, arr.last, "tsi last")
     }
 }

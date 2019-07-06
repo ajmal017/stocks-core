@@ -59,11 +59,11 @@ public class PriceList extends ArrayList<Price>
 			p.parent = this;
 
 			mDate[i] = p.getDate();
-			mOpen.mVal[i] = p.getOpen();
-			mHigh.mVal[i] = p.getHigh();
-			mLow.mVal[i] = p.getLow();
-			mClose.mVal[i] = p.getClose();
-			mVolume.mVal[i] = p.getVolume();
+			mOpen.set(i, p.getOpen());
+			mHigh.set(i, p.getHigh());
+			mLow.set(i, p.getLow());
+			mClose.set(i, p.getClose());
+			mVolume.set(i, p.getVolume());
 
 			this.add(p);
 		}

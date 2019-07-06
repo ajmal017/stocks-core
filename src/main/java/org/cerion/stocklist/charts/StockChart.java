@@ -140,8 +140,8 @@ public abstract class StockChart implements Cloneable {
         FloatArray lower = new FloatArray(values.getSize());
 
         for (int i = 0; i < values.getSize(); i++) {
-            upper.mVal[i] = values.upper(i);
-            lower.mVal[i] = values.lower(i);
+            upper.set(i, values.upper(i));
+            lower.set(i, values.lower(i));
         }
 
         List<DataSet> result = new ArrayList<>();
@@ -165,9 +165,10 @@ public abstract class StockChart implements Cloneable {
         FloatArray signal = new FloatArray(values.getSize());
         FloatArray hist = new FloatArray(values.getSize());
 
+        // TODO make function to get signal/hist arrays directly
         for (int i = 0; i < values.getSize(); i++) {
-            signal.mVal[i] = values.signal(i);
-            hist.mVal[i] = values.hist(i);
+            signal.set(i, values.signal(i));
+            hist.set(i, values.hist(i));
         }
 
         List<DataSet> result = new ArrayList<>();

@@ -1,6 +1,7 @@
 package org.cerion.stocklist.arrays;
 
 import org.cerion.stocklist.overlays.BollingerBands;
+import org.cerion.stocklist.overlays.ExpMovingAverage;
 import org.cerion.stocklist.overlays.LinearRegressionLine;
 import org.cerion.stocklist.overlays.SimpleMovingAverage;
 
@@ -25,21 +26,21 @@ public class FloatArray extends ValueArray {
 		return mVal[pos];
 	}
 	
-	public float first()
+	public float getFirst()
 	{
 		return mVal[0];
 	}
 
-	public float last()
+	public float getLast()
 	{
 		return mVal[mVal.length - 1];
 	}
 
 	/**
 	 * Find the highest value in the range [start,end]
-	 * @param start
-	 * @param end
-	 * @return
+	 * @param start first position to start looking
+	 * @param end last position to look
+	 * @return the maximum value in the range
 	 */
 	public float max(int start, int end) {
         return mVal[maxPos(start, end)];
@@ -47,9 +48,9 @@ public class FloatArray extends ValueArray {
 
 	/**
 	 * Find the lowest value in the range [start,end]
-	 * @param start
-	 * @param end
-	 * @return
+	 * @param start first position to start looking
+	 * @param end last position to look
+	 * @return the minimum value in the range
 	 */
 	public float min(int start, int end) {
         return mVal[minPos(start,end)];
@@ -100,18 +101,7 @@ public class FloatArray extends ValueArray {
 	}
 	
 	public FloatArray ema(int period) {
-		int size = size();
-		FloatArray result = new FloatArray(size);
-
-		if(size > 0) {
-			float mult = 2.0f / (1f + period); //ExpMovingAverage multiplier
-
-			result.mVal[0] = mVal[0]; //initialize with first value
-			for (int i = 1; i < size; i++)
-				result.mVal[i] = (mVal[i] - result.mVal[i - 1]) * mult + result.mVal[i - 1];
-		}
-
-		return result;
+		return new ExpMovingAverage(period).eval(this);
 	}
 
 	/**
@@ -128,8 +118,8 @@ public class FloatArray extends ValueArray {
 
 	/**
 	 * Standard deviation of period
-	 * @param period
-	 * @return
+	 * @param period The period to use for the average
+	 * @return standard deviation of the average in period
 	 */
 	public FloatArray std(int period) {
 		return std(period, sma(period));
@@ -156,20 +146,14 @@ public class FloatArray extends ValueArray {
 
 		return result;
 	}
-	
-	/**
-	 * Bollinger band
-	 * @param period
-	 * @param multiplier
-	 * @return
-	 */
+
 	public BandArray bb(int period, float multiplier) {
 		return new BollingerBands(period, multiplier).eval(this);
 	}
 
 	public float slope(int period, int pos) {
 		period = Companion.maxPeriod(pos,period);
-		float[] ab = getLinearRegressionEquation(mVal, pos - period + 1, pos);
+		float[] ab = getLinearRegressionEquation(pos - period + 1, pos);
 
 		return ab[1];
 	}
@@ -207,13 +191,13 @@ public class FloatArray extends ValueArray {
 	 * Finds linear regression equation "y = a + bx" for arr with start and end point positions
 	 * @return pair [a,b]
 	 */
-	public static float[] getLinearRegressionEquation(float[] arr, int start, int end) {
+	public float[] getLinearRegressionEquation(int start, int end) {
 		// http://www.statisticshowto.com/how-to-find-a-linear-regression-equation/
 		// TODO check this on fake data like a straight line to verify any 1 off issues
 		int count = end - start + 1;
 
 		if(count == 1)
-			return new float[] { arr[start], 0 };
+			return new float[] { mVal[start], 0 };
 
 		float sumY = 0;
 		float sumX = 0;
@@ -222,7 +206,7 @@ public class FloatArray extends ValueArray {
 
 		int x = 1;
 		for(int i = start; i <= end; i++) {
-			float y = arr[i];
+			float y = mVal[i];
 
 			sumY += y;
 			sumX += x;

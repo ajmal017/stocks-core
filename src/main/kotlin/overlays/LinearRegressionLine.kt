@@ -13,7 +13,7 @@ class LinearRegressionLine : OverlayBase<FloatArray>(Overlay.LINREG) {
         val pos = arr.size - 1
         val result = FloatArray(arr.size)
 
-        val ab = FloatArray.getLinearRegressionEquation(arr.mVal, 0, pos)
+        val ab = arr.getLinearRegressionEquation(0, pos)
         val slope = ab[1]
         result[0] = ab[0]
 

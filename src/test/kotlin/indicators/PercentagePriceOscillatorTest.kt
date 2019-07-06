@@ -10,6 +10,6 @@ class PercentagePriceOscillatorTest : TestBase() {
         // TODO temp to quick check PPO and PVO
 
         val arr = PercentagePriceOscillator(12, 26, 9).eval(priceList)
-        assertEqual(-0.082, arr.last(), "ppo last")
+        assertEqual(-0.082, arr.last, "ppo last")
     }
 }

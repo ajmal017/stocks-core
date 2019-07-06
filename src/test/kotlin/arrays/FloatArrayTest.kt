@@ -14,7 +14,7 @@ class FloatArrayTest : TestBase() {
         val arr1 = SimpleMovingAverage(13).eval(arr)
         val arr2 = arr.sma(13)
 
-        assertEquals("all elements should be equal", arr1.last().toDouble(), arr2.last().toDouble(), 0.00000001)
+        assertEquals("all elements should be equal", arr1.last.toDouble(), arr2.last.toDouble(), 0.00000001)
     }
 
     @Test
@@ -53,11 +53,11 @@ class FloatArrayTest : TestBase() {
         val period = 10
         val std = arr.std(period)
 
-        assertEqual(0.0, std.get(0), "standard deviation position 0")
+        assertEqual(0.0, std.first, "standard deviation position 0")
         assertEqual(27.90, std.get(1), "standard deviation position 1")
         assertEqual(23.34, std.get(period - 1), "standard deviation position p-1")
         assertEqual(23.33, std.get(period), "standard deviation position p")
-        assertEqual(20.78, std.last(), "standard deviation position last")
+        assertEqual(20.78, std.last, "standard deviation position last")
     }
 
     @Test

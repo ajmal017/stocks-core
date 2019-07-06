@@ -13,6 +13,6 @@ class MassIndexTest : TestBase() {
         assertEqual(20.93, ma.get(10), "massIndex p-2")
         assertEqual(21.85, ma.get(22), "massIndex p-1")
         assertEqual(21.75, ma.get(23), "massIndex p")
-        assertEqual(23.76, ma.last(), "massIndex last")
+        assertEqual(23.76, ma.last, "massIndex last")
     }
 }
