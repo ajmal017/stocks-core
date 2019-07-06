@@ -8,6 +8,14 @@ class Line(slope: Double = 1.0) : OverlayBase<FloatArray>(Overlay.LINE, slope) {
     override val name: String = "Line"
 
     override fun eval(arr: FloatArray): FloatArray {
-        return arr.line(getFloat(0))
+        val slope = getFloat(0)
+
+        val result = FloatArray(arr.size)
+        result.mVal[0] = arr[0]
+        for (i in 1 until arr.size) {
+            result.mVal[i] = result.mVal[i - 1] + slope
+        }
+
+        return result
     }
 }

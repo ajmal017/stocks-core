@@ -1,6 +1,7 @@
 package org.cerion.stocklist.overlays
 
 import org.cerion.stocklist.arrays.FloatArray
+import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.Overlay
 
 class SimpleMovingAverage(period: Int = 50) : OverlayBase<FloatArray>(Overlay.SMA, period) {
@@ -8,6 +9,20 @@ class SimpleMovingAverage(period: Int = 50) : OverlayBase<FloatArray>(Overlay.SM
     override val name: String = "Simple Moving Average"
 
     override fun eval(arr: FloatArray): FloatArray {
-        return arr.sma(getInt(0))
+        val period = getInt(0)
+        val result = FloatArray(arr.size)
+
+        for (i in 0 until arr.size) {
+            //Take average of first i array elements when count is less than period size
+            val count = ValueArray.maxPeriod(i, period)
+
+            var total = 0f
+            for (j in i - count + 1..i)
+                total += arr[j]
+
+            result[i] = total / count
+        }
+
+        return result
     }
 }

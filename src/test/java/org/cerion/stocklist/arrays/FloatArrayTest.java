@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.cerion.stocklist.Helper;
 import org.cerion.stocklist.TestBase;
+import org.cerion.stocklist.overlays.SimpleMovingAverage;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,67 +16,13 @@ public class FloatArrayTest extends TestBase {
 	public static void init() {
 		mArr = TestBase.Companion.getPriceList().getClose();
 	}
-	
+
 	@Test
-	public void sma_1()
-	{
-		FloatArray sma = mArr.sma(1);
-		assertEquals("Unexpected test arrays length", 4025, sma.size());
-		
-		for(int i = 0; i < sma.size(); i++)
-			assertEqual(mArr.get(i), sma.get(i), "position " + i);
-	}
-	
-	@Test
-	public void sma_2()
-	{
-		FloatArray sma = mArr.sma(2);
-		
-		assertEquals("Unexpected test arrays length", 4025, sma.size());
-		assertEqual(1455.22, sma.get(0), "position 0");
-		assertEqual(1427.32, sma.get(1), "position 1");
-		assertEqual(1429.40, sma.get(sma.size() / 2), "position " + (sma.size() / 2));
-		assertEqual(2053.65, sma.get(sma.size() - 1), "position last");
-	}
-	
-	@Test
-	public void sma_20()
-	{
-		FloatArray sma = mArr.sma(20);
-		
-		assertEquals("Unexpected test arrays length", 4025, sma.size());
-		assertEqual(1455.22, sma.get(0), "position 0");
-		assertEqual(1427.32, sma.get(1), "position 1");
-		assertEqual(1473.51, sma.get(sma.size() / 2), "position " + (sma.size() / 2));
-		assertEqual(2050.38, sma.get(sma.size() - 1), "position last");
-	}
-	
-	@Test
-	public void sma_200()
-	{
-		FloatArray sma = mArr.sma(200);
-		
-		assertEquals("Unexpected test arrays length", 4025, sma.size());
-		assertEqual(1455.22, sma.get(0), "position 0");
-		assertEqual(1427.32, sma.get(1), "position 1");
-		assertEqual(1490.95, sma.get(sma.size() / 2), "position " + (sma.size() / 2));
-		assertEqual(2061.15, sma.get(sma.size() - 1), "position last");
-	}
-	
-	@Test
-	public void sma_usesHighestAverage() {
-		FloatArray sma20 = mArr.sma(20);
-		FloatArray sma100 = mArr.sma(100);
-		FloatArray sma200 = mArr.sma(200);
-		
-		for(int i = 0; i < 20; i++)
-			assertEqual(sma20.get(i), sma100.get(i), "20 and 100 position " + i);
-	
-		for(int i = 0; i < 20; i++)
-			assertEqual(sma20.get(i), sma200.get(i), "20 and 200 position " + i);
-		
-		for(int i = 0; i < 100; i++)
-			assertEqual(sma100.get(i), sma200.get(i), "100 and 200 position " + i);
+	public void sma_callsSimpleMovingAverage() {
+		FloatArray arr1 = new SimpleMovingAverage(13).eval(mArr);
+		FloatArray arr2 = mArr.sma(13);
+
+		assertEquals("all elements should be equal", arr1.last(), arr2.last(), 0.00000001);
 	}
 
 	@Test

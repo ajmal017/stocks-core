@@ -1,7 +1,8 @@
 package org.cerion.stocklist.arrays;
 
 import org.cerion.stocklist.overlays.BollingerBands;
-import org.cerion.stocklist.web.CombinedDataAPI;
+import org.cerion.stocklist.overlays.LinearRegressionLine;
+import org.cerion.stocklist.overlays.SimpleMovingAverage;
 
 public class FloatArray extends ValueArray {
 
@@ -13,7 +14,12 @@ public class FloatArray extends ValueArray {
 	public FloatArray(int size) {
 		mVal = new float[size];
 	}
-	
+
+	// TODO make mVal private and use array notation directly on object
+	public void set(int i, float value) {
+		mVal[i] = value;
+	}
+
 	public float get(int pos)
 	{
 		return mVal[pos];
@@ -89,27 +95,8 @@ public class FloatArray extends ValueArray {
 		return sum;
 	}
 	
-	public FloatArray sma(int period)
-	{
-		int size = this.size();
-		FloatArray result = new FloatArray(size);
-
-		//Some slight float rounding errors above, look into it later
-		//This seems more accurate
-		for(int i = 0; i < size; i++)
-		{
-			//Take average of first i array elements when count is less than period size
-			int count = Companion.maxPeriod(i,period);
-			
-			float total = 0;
-			for(int j = i-count+1; j <= i; j++)
-				total += mVal[j];
-			
-			result.mVal[i] = total / count;
-			
-		}
-		
-		return result;
+	public FloatArray sma(int period) {
+		return new SimpleMovingAverage(period).eval(this);
 	}
 	
 	public FloatArray ema(int period) {
@@ -204,43 +191,6 @@ public class FloatArray extends ValueArray {
 		return (mVal[size() - 1] - mVal[index])/mVal[index];
 	}
 
-	/*
-	public float slope2(int period, int pos) {
-		//Following formula from http://austingwalters.com/introduction-to-linear-regression/
-		float sumX = 0;    
-		float sumY = 0;
-		float sumXY = 0;    //Sum of x*y
-		float sumX2 = 0;    //Sum(x^2)
-		
-		int count = maxPeriod(pos,period);
-		int i = 0;
-		for(int j = pos - count + 1; j <= pos; j++)
-		{
-			float y = mVal[j];
-			
-			sumX += j;
-			sumY += y;
-			sumXY += (j * y);
-			sumX2 += (j * j);
-		}
-		
-		//Numerator
-		float slope = (sumX * sumY) / count;
-		slope = sumXY - slope;
-		
-		//Denominator
-		float temp = (sumX * sumX) / count;
-		temp = sumX2 - temp;
-		
-		if(temp == 0)
-			slope = 0;
-		else
-			slope = slope / temp;
-
-		return slope;
-	}
-	*/
-
 	public float regressionLinePoint(int period, int pos) {
 		int count = Companion.maxPeriod(pos, period);
 		float slope = slope(period, pos);
@@ -250,26 +200,14 @@ public class FloatArray extends ValueArray {
 	}
 
 	public FloatArray linearRegressionLine() {
-		int count = size();
-		int pos = count - 1;
-		FloatArray result = new FloatArray(size());
-
-		float[] ab = getLinearRegressionEquation(mVal, 0, pos);
-		float slope = ab[1];
-		result.mVal[0] = ab[0];
-
-		for(int i = 1; i < size(); i++) {
-			result.mVal[i] = result.mVal[i-1] + slope;
-		}
-
-		return result;
+		return new LinearRegressionLine().eval(this);
 	}
 
 	/**
 	 * Finds linear regression equation "y = a + bx" for arr with start and end point positions
 	 * @return pair [a,b]
 	 */
-	private static float[] getLinearRegressionEquation(float[] arr, int start, int end) {
+	public static float[] getLinearRegressionEquation(float[] arr, int start, int end) {
 		// http://www.statisticshowto.com/how-to-find-a-linear-regression-equation/
 		// TODO check this on fake data like a straight line to verify any 1 off issues
 		int count = end - start + 1;
@@ -300,58 +238,6 @@ public class FloatArray extends ValueArray {
 		float b = (count * sumXY) - (sumX * sumY);
 
 		return new float[] { a / divideBy, b / divideBy };
-	}
-
-	public FloatArray kama(int p1, int p2, int p3)
-	{
-		FloatArray result = new FloatArray(size());
-		result.mVal[0] = get(0);
-		
-		//p1 Efficiency Ratio (ER)
-		//p2 Fastest ExpMovingAverage
-		//p3 Slowest ExpMovingAverage
-		
-		//ER = Change/Volatility
-		//Change = ABS(Close - Close (X periods ago))
-		//Volatility = SumX(ABS(Close - Prior Close))
-		for(int i = 1; i < size(); i++)
-		{
-			int start = i - p1;
-			if(start < 1)
-				start = 1;
-			
-			float change = Math.abs(get(i) - get(start));
-			float volatility = 0;
-			
-			//SumX
-			for(int j = start; j <= i; j++)
-				volatility += Math.abs(get(j) - get(j-1));
-			
-			float ER = change / volatility;
-			
-			//SC = [ER x (fastest SC - slowest SC) + slowest SC]^2
-			//SC = [ER x (2/(2+1) - 2/(30+1)) + 2/(2+1)]^2
-			float fastEMA = (float) (2.0 / (p2 + 1.0));
-			float slowEMA = (float) (2.0 / (p3 + 1.0));
-			float SC = ER * (fastEMA - slowEMA) + slowEMA;
-			SC *= SC;
-
-			//Current KAMA = Prior KAMA + SC x (Price - Prior KAMA)
-			float prior = result.mVal[i-1];
-			result.mVal[i] = prior + SC * (get(i) - prior);
-		}
-		
-		return result;
-	}
-
-	public FloatArray line(float slope) {
-		FloatArray result = new FloatArray(size());
-		result.mVal[0] = mVal[0];
-		for(int i = 1; i < size(); i++) {
-			result.mVal[i] = result.mVal[i-1] + slope;
-		}
-
-		return result;
 	}
 
 	public float correlation(FloatArray arr) {
@@ -465,10 +351,5 @@ public class FloatArray extends ValueArray {
 
 		result += "...}";
 		return result;
-	}
-
-	// TODO make mVal private and use array notation directly on object
-	public void set(int i, float value) {
-		mVal[i] = value;
 	}
 }

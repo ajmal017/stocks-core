@@ -2,6 +2,7 @@ package org.cerion.stocklist;
 
 import org.cerion.stocklist.arrays.FloatArray;
 import org.cerion.stocklist.model.Interval;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -25,6 +26,7 @@ public class PriceList extends ArrayList<Price>
 	
 	public Date[] getDates() { return mDate; }
 	public FloatArray getOpen() { return mOpen; }
+	@NotNull
 	public FloatArray getClose() { return mClose; }
 	public FloatArray getHigh() { return mHigh; }
 	public FloatArray getLow() { return mLow; }
