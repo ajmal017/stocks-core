@@ -18,14 +18,14 @@ class PriceChannels(period: Int = 20) : PriceOverlayBase(PriceOverlay.CHAN, peri
         val upper = FloatArray(size)
         val lower = FloatArray(size)
 
-        upper.mVal[0] = list.high.get(0)
-        lower.mVal[0] = list.low.get(0)
+        upper[0] = list.high.get(0)
+        lower[0] = list.low.get(0)
 
         for (i in 1 until size) {
             val p = ValueArray.maxPeriod(i, period)
             val start = Math.max(i - p, 0)
-            upper.mVal[i] = list.high.max(start, i - 1)
-            lower.mVal[i] = list.low.min(start, i - 1)
+            upper[i] = list.high.max(start, i - 1)
+            lower[i] = list.low.min(start, i - 1)
         }
 
         return BandArray(list.close, upper, lower)

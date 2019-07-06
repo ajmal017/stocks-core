@@ -40,7 +40,7 @@ class UlcerIndex(period: Int = 14) : IndicatorBase(Indicator.ULCER_INDEX, period
                 avg += percentD[j] * percentD[j] //Sum of squared
 
             avg /= period.toFloat()
-            result.mVal[i] = Math.sqrt(avg.toDouble()).toFloat()
+            result[i] = Math.sqrt(avg.toDouble()).toFloat()
         }
 
         return result

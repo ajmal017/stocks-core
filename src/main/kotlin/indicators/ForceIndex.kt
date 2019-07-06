@@ -24,7 +24,7 @@ class ForceIndex(period: Int = 13) : IndicatorBase(Indicator.FORCE_INDEX, period
             //Price prev = get(i-1);
 
             val fi = (close.get(i) - close.get(i - 1)) * list.mVolume.get(i)
-            result.mVal[i] = (fi - result.get(i - 1)) * mult + result.get(i - 1)
+            result[i] = (fi - result.get(i - 1)) * mult + result.get(i - 1)
             //System.out.println(p.date + "\t" + p.fi);
         }
 

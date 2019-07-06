@@ -15,10 +15,10 @@ class AccumulationDistributionLine : IndicatorBase(Indicator.ADL) {
     private fun accumulationDistributionLine(list: PriceList): FloatArray {
         val result = FloatArray(list.size)
 
-        result.mVal[0] = 0f
+        result[0] = 0f
         for (i in 1 until list.size) {
             //ADL = Previous ADL + Current Period's Money Flow Volume
-            result.mVal[i] = result.mVal[i - 1] + list.mfv(i)
+            result[i] = result[i - 1] + list.mfv(i)
         }
 
         return result

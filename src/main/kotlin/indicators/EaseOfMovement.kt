@@ -27,9 +27,9 @@ class EaseOfMovement(period: Int = 14) : IndicatorBase(Indicator.EMV, period) {
 
             val dm = (list.high(i) + list.low(i)) / 2 - (list.high(i - 1) + list.low(i - 1)) / 2
             val box = list.volume(i) / 100000.0f / diff //Volume is already divided by 1000 so removing 2 digits here
-            result.mVal[i] = dm / box
+            result[i] = dm / box
             if (box == 0f)
-                result.mVal[i] = 0f
+                result[i] = 0f
         }
 
         return result
@@ -48,7 +48,7 @@ class EaseOfMovement(period: Int = 14) : IndicatorBase(Indicator.EMV, period) {
             for (j in i - count + 1..i)
                 total += emv.get(j)
 
-            result.mVal[i] = total / count
+            result[i] = total / count
         }
 
         return result

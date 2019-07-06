@@ -23,7 +23,7 @@ class MassIndex(period: Int = 25) : IndicatorBase(Indicator.MASS_INDEX, period) 
 
         val highLowDiff = FloatArray(size)
         for (i in 0 until size) {
-            highLowDiff.mVal[i] = list.high(i) - list.low(i)
+            highLowDiff[i] = list.high(i) - list.low(i)
         }
 
         val ema = highLowDiff.ema(9)
@@ -32,19 +32,19 @@ class MassIndex(period: Int = 25) : IndicatorBase(Indicator.MASS_INDEX, period) 
 
         //X period sum
         for (i in 0 until size) {
-            emaRatio.mVal[i] = ema.get(i) / ema2.get(i)
+            emaRatio[i] = ema.get(i) / ema2.get(i)
 
             //int max = ValueArray.maxPeriod(i, period);
             if (i >= period - 1) {
-                result.mVal[i] = emaRatio.sum(i - period + 1, i)
+                result[i] = emaRatio.sum(i - period + 1, i)
             } else if (i == 0) {
-                result.mVal[i] = period.toFloat()
+                result[i] = period.toFloat()
             } else {
                 // Normalize, average ema ratio is 1
                 // X period sum of ratio is average of the period size
                 // Anything value before the period size will be normalized so the average stays the same
                 val mult = period / (1.0f + i)
-                result.mVal[i] = mult * emaRatio.sum(0, i)
+                result[i] = mult * emaRatio.sum(0, i)
             }
         }
 

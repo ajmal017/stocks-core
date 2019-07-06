@@ -27,8 +27,8 @@ class Vortex(period: Int = 14) : IndicatorBase(Indicator.VORTEX, period) {
         }
 
         // Start at 1 since that is the average value
-        posVI.mVal[0] = 1f
-        negVI.mVal[0] = 1f
+        posVI[0] = 1f
+        negVI[0] = 1f
 
         for (i in 1 until size) {
             val count = ValueArray.maxPeriod(i, period)
@@ -41,8 +41,8 @@ class Vortex(period: Int = 14) : IndicatorBase(Indicator.VORTEX, period) {
                 tr += list.tr(j)
             }
 
-            posVI.mVal[i] = vip / tr
-            negVI.mVal[i] = vin / tr
+            posVI[i] = vip / tr
+            negVI[i] = vin / tr
         }
 
         return PairArray(posVI, negVI)

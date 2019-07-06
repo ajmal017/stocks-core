@@ -32,7 +32,7 @@ class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverla
     }
 
     private fun sarRising(list: PriceList, result: FloatArray, start: Int, sar_start: Float, step: Float, max: Float) {
-        result.mVal[start] = sar_start
+        result[start] = sar_start
 
         var alpha = step
         var sar = sar_start
@@ -53,14 +53,14 @@ class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverla
                 return
             }
 
-            result.mVal[i] = sar
+            result[i] = sar
         }
 
     }
 
     private fun sarFalling(list: PriceList, result: FloatArray, start: Int, sar_start: Float, step: Float, max: Float) {
         //System.out.println(p.date + "\t" + sar_start + "\tFalling");
-        result.mVal[start] = sar_start
+        result[start] = sar_start
 
         var alpha = step
         var sar = sar_start
@@ -80,7 +80,7 @@ class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverla
                 return
             }
 
-            result.mVal[i] = sar
+            result[i] = sar
         }
     }
 }

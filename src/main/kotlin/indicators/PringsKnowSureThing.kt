@@ -39,10 +39,10 @@ class PringsKnowSureThing(p1: Int, p2: Int, p3: Int, p4: Int, p5: Int, p6: Int, 
 		KST = (RCMA1 x 1) + (RCMA2 x 2) + (RCMA3 x 3) + (RCMA4 x 4)
 		*/
         for (i in 0 until size) {
-            r1.mVal[i] = list.roc(i, roc1)
-            r2.mVal[i] = list.roc(i, roc2)
-            r3.mVal[i] = list.roc(i, roc3)
-            r4.mVal[i] = list.roc(i, roc4)
+            r1[i] = list.roc(i, roc1)
+            r2[i] = list.roc(i, roc2)
+            r3[i] = list.roc(i, roc3)
+            r4[i] = list.roc(i, roc4)
         }
 
         //Apply SimpleMovingAverage to arrays
@@ -52,7 +52,7 @@ class PringsKnowSureThing(p1: Int, p2: Int, p3: Int, p4: Int, p5: Int, p6: Int, 
         r4 = r4.sma(sma4)
 
         for (i in 0 until size)
-            result.mVal[i] = r1.get(i) + r2.get(i) * 2 + r3.get(i) * 3 + r4.get(i) * 4
+            result[i] = r1.get(i) + r2.get(i) * 2 + r3.get(i) * 3 + r4.get(i) * 4
 
         return result
     }

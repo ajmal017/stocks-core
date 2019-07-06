@@ -19,7 +19,7 @@ class CommodityChannelIndex(period: Int = 20) : IndicatorBase(Indicator.CCI, per
 
         val tp = FloatArray(size)
         for (i in 0 until size)
-            tp.mVal[i] = list.tp(i)
+            tp[i] = list.tp(i)
 
         val smaArr = tp.sma(period)
 
@@ -34,7 +34,7 @@ class CommodityChannelIndex(period: Int = 20) : IndicatorBase(Indicator.CCI, per
             dev /= count
 
             //CCI = (Typical Price  -  20-period SimpleMovingAverage of TP) / (.015 x Mean Deviation)
-            result.mVal[i] = (list.tp(i) - sma) / (0.015f * dev)
+            result[i] = (list.tp(i) - sma) / (0.015f * dev)
         }
 
         return result

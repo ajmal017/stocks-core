@@ -33,7 +33,7 @@ class Stochastic() : IndicatorBase(Indicator.STOCH, 14, 3, 3) {
             val low = lows.min(i - period + 1, i)
 
             //K = (Current Close - Lowest Low)/(Highest High - Lowest Low) * 100
-            result.mVal[i] = (list.close(i) - low) / (high - low) * 100
+            result[i] = (list.close(i) - low) / (high - low) * 100
         }
 
         return result

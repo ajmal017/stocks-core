@@ -30,7 +30,7 @@ class MoneyFlowIndex(period: Int = 14) : IndicatorBase(Indicator.MFI, period) {
             }
 
             val ratio = posflow / negflow
-            result.mVal[i] = 100 - 100 / (1 + ratio)
+            result[i] = 100 - 100 / (1 + ratio)
         }
 
         return result

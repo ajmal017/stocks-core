@@ -34,8 +34,8 @@ class TrueStrengthIndex(p1: Int, p2: Int) : IndicatorBase(Indicator.TSI, p1, p2)
         var PC = FloatArray(size)
         var PCabs = FloatArray(size)
         for (i in 1 until size) {
-            PC.mVal[i] = list.close(i) - list.close(i - 1)
-            PCabs.mVal[i] = Math.abs(PC.get(i))
+            PC[i] = list.close(i) - list.close(i - 1)
+            PCabs[i] = Math.abs(PC.get(i))
         }
 
         // Smoothing
@@ -44,7 +44,7 @@ class TrueStrengthIndex(p1: Int, p2: Int) : IndicatorBase(Indicator.TSI, p1, p2)
 
         // Let first 2 values be 0
         for (i in 2 until size) {
-            result.mVal[i] = 100 * (PC.get(i) / PCabs.get(i))
+            result[i] = 100 * (PC.get(i) / PCabs.get(i))
         }
 
         return result

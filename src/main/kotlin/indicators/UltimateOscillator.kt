@@ -65,7 +65,7 @@ class UltimateOscillator(p1: Int, p2: Int, p3: Int) : IndicatorBase(Indicator.UO
             val avg1 = average[i][0]
             val avg2 = average[i][1]
             val avg3 = average[i][2]
-            result.mVal[i] = 100 * (4 * avg1 + 2 * avg2 + avg3) / (4 + 2 + 1)
+            result[i] = 100 * (4 * avg1 + 2 * avg2 + avg3) / (4 + 2 + 1)
         }
 
         return result

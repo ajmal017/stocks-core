@@ -27,7 +27,7 @@ class WilliamsPercentR(period: Int = 14) : IndicatorBase(Indicator.WPR, period) 
                 l = Math.min(l, list.low(j))
             }
 
-            result.mVal[i] = (h - list.close(i)) / (h - l) * -100
+            result[i] = (h - list.close(i)) / (h - l) * -100
         }
 
         return result

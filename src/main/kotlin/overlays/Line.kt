@@ -11,9 +11,9 @@ class Line(slope: Double = 1.0) : OverlayBase<FloatArray>(Overlay.LINE, slope) {
         val slope = getFloat(0)
 
         val result = FloatArray(arr.size)
-        result.mVal[0] = arr[0]
+        result[0] = arr[0]
         for (i in 1 until arr.size) {
-            result.mVal[i] = result.mVal[i - 1] + slope
+            result[i] = result[i - 1] + slope
         }
 
         return result

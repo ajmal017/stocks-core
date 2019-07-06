@@ -17,14 +17,14 @@ class OnBalanceVolume : IndicatorBase(Indicator.OBV) {
         val volume = list.mVolume
         val result = FloatArray(list.size)
 
-        result.mVal[0] = 0f
+        result[0] = 0f
         for (i in 1 until list.size) {
             if (close.get(i) > close.get(i - 1))
-                result.mVal[i] = result.get(i - 1) + volume.get(i)
+                result[i] = result.get(i - 1) + volume.get(i)
             else if (close.get(i) < close.get(i - 1))
-                result.mVal[i] = result.get(i - 1) - volume.get(i)
+                result[i] = result.get(i - 1) - volume.get(i)
             else
-                result.mVal[i] = result.get(i - 1)
+                result[i] = result.get(i - 1)
         }
 
         return result

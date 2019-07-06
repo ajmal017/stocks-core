@@ -25,7 +25,7 @@ class VolumeWeightedMovingAverage(period: Int = 20) : PriceOverlayBase(PriceOver
                 total += list.close(j) * list.volume(j)
             }
 
-            result.mVal[i] = total / volume
+            result[i] = total / volume
 
         }
 

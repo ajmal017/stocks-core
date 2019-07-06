@@ -38,8 +38,8 @@ class DirectionalIndex(period: Int = 14) : IndicatorBase(Indicator.DI, period) {
             trdm14[i][1] = trdm14[i - 1][1] - trdm14[i - 1][1] / period + trdm[i][0]
             trdm14[i][2] = trdm14[i - 1][2] - trdm14[i - 1][2] / period + trdm[i][1]
 
-            pDI.mVal[i] = 100 * (trdm14[i][1] / trdm14[i][0])
-            mDI.mVal[i] = 100 * (trdm14[i][2] / trdm14[i][0])
+            pDI[i] = 100 * (trdm14[i][1] / trdm14[i][0])
+            mDI[i] = 100 * (trdm14[i][2] / trdm14[i][0])
         }
 
         return PairArray(pDI, mDI)

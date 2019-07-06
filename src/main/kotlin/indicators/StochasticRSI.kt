@@ -32,9 +32,9 @@ class StochasticRSI(period: Int = 14) : IndicatorBase(Indicator.STOCHRSI, period
 
             //StochRSI = (RSI - Lowest Low RSI) / (Highest High RSI - Lowest Low RSI)
             if (high == low)
-                result.mVal[i] = 1f
+                result[i] = 1f
             else
-                result.mVal[i] = (rsi_arr.get(i) - low) / (high - low)
+                result[i] = (rsi_arr.get(i) - low) / (high - low)
         }
 
         return result

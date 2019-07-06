@@ -29,7 +29,7 @@ class SharpeRatio(period: Int, riskFreeRate: Double) : IndicatorBase(Indicator.S
         val riskFree = getFloat(1) / 100 / multiplier
 
         for (i in 1 until change.size) {
-            change.mVal[i] = change.mVal[i] - riskFree
+            change[i] = change[i] - riskFree
         }
 
         val avg = change.sma(years * multiplier)
@@ -38,10 +38,10 @@ class SharpeRatio(period: Int, riskFreeRate: Double) : IndicatorBase(Indicator.S
         val result = FloatArray(list.size)
         for (i in list.indices) {
             if (i >= multiplier) {
-                result.mVal[i] = avg.get(i) / std.get(i)
-                result.mVal[i] *= Math.sqrt(multiplier.toDouble()).toFloat()
+                result[i] = avg.get(i) / std.get(i)
+                result[i] *= Math.sqrt(multiplier.toDouble()).toFloat()
             } else
-                result.mVal[i] = java.lang.Float.NaN
+                result[i] = java.lang.Float.NaN
         }
 
         return result

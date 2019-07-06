@@ -68,8 +68,8 @@ class RSI(period: Int = 14) : IndicatorBase(Indicator.RSI, period) {
         //System.out.println(get(period).date + "\t" + get(period).rsi);
 
         // Start in middle range with averages as the first difference
-        result.mVal[0] = 50f
-        var avgGain = Math.abs(arr.mVal[1] - arr.mVal[0])
+        result[0] = 50f
+        var avgGain = Math.abs(arr[1] - arr[0])
         var avgLoss = avgGain
 
         for (i in 1 until size) {
@@ -77,7 +77,7 @@ class RSI(period: Int = 14) : IndicatorBase(Indicator.RSI, period) {
             var loss = 0f
             val p = ValueArray.maxPeriod(i, period)
 
-            val diff = arr.mVal[i] - arr.mVal[i - 1]
+            val diff = arr[i] - arr[i - 1]
             if (diff > 0)
                 gain = diff
             else
@@ -87,12 +87,12 @@ class RSI(period: Int = 14) : IndicatorBase(Indicator.RSI, period) {
             avgLoss = (avgLoss * (p - 1) + loss) / p
 
             if (avgLoss == 0f)
-                result.mVal[i] = 100f
+                result[i] = 100f
             else if (avgGain == 0f)
-                result.mVal[i] = 0f
+                result[i] = 0f
             else {
                 val RS = avgGain / avgLoss
-                result.mVal[i] = 100 - 100 / (1 + RS)
+                result[i] = 100 - 100 / (1 + RS)
             }
         }
 

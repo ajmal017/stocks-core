@@ -34,18 +34,18 @@ class ZigZag(percent: Double = 5.0) : PriceOverlayBase(PriceOverlay.ZIGZAG, perc
                 if (zzPercent(high, currLow) > percent) {
                     direction = 1
                     currPos = i
-                    result.mVal[0] = currLow
+                    result[0] = currLow
                 } else if (zzPercent(low, currHigh) < -percent) {
                     direction = 0
                     currPos = i
-                    result.mVal[0] = currHigh
+                    result[0] = currHigh
                 }
             } else if (direction == 0) {
 
                 if (low < currLow)
                     currPos = i
                 else if (zzPercent(high, currLow) > percent) {
-                    result.mVal[currPos] = currLow
+                    result[currPos] = currLow
                     direction = 1
                     currPos = i
                 }
@@ -53,7 +53,7 @@ class ZigZag(percent: Double = 5.0) : PriceOverlayBase(PriceOverlay.ZIGZAG, perc
                 if (high > currHigh)
                     currPos = i
                 else if (zzPercent(low, currHigh) < -percent) {
-                    result.mVal[currPos] = currHigh
+                    result[currPos] = currHigh
                     direction = 0
                     currPos = i
                 }
@@ -62,16 +62,16 @@ class ZigZag(percent: Double = 5.0) : PriceOverlayBase(PriceOverlay.ZIGZAG, perc
 
         // Add current position as the last point
         if (direction == 0)
-            result.mVal[currPos] = list.low(currPos)
+            result[currPos] = list.low(currPos)
         else if (direction == 1)
-            result.mVal[currPos] = list.high(currPos)
+            result[currPos] = list.high(currPos)
 
         // Add last point as the reverse direction
         val last = size - 1
         if (direction == 0)
-            result.mVal[last] = list.high(last)
+            result[last] = list.high(last)
         else if (direction == 1)
-            result.mVal[last] = list.low(last)
+            result[last] = list.low(last)
 
         // Fix by adding straight lines to connect points
         var start = 0
@@ -84,7 +84,7 @@ class ZigZag(percent: Double = 5.0) : PriceOverlayBase(PriceOverlay.ZIGZAG, perc
                 val inc = (b - a) / (end - start)
 
                 for (j in start + 1 until end) {
-                    result.mVal[j] = result.mVal[j - 1] + inc
+                    result[j] = result[j - 1] + inc
                 }
 
                 start = end

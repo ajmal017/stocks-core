@@ -15,12 +15,12 @@ class NegativeVolumeIndex : IndicatorBase(Indicator.NVI) {
     private fun negativeVolumeIndex(list: PriceList): FloatArray {
         val result = FloatArray(list.size)
 
-        result.mVal[0] = 1000f
+        result[0] = 1000f
         for (i in 1 until list.size) {
             if (list.volume(i) < list.volume(i - 1))
-                result.mVal[i] = result.mVal[i - 1] + list.roc(i, 1)
+                result[i] = result[i - 1] + list.roc(i, 1)
             else
-                result.mVal[i] = result.mVal[i - 1]
+                result[i] = result[i - 1]
 
         }
 

@@ -22,7 +22,7 @@ class ChaikinOscillator(p1: Int, p2: Int) : IndicatorBase(Indicator.CO, p1, p2) 
         val ema2 = adl.ema(p2)
 
         for (i in list.indices)
-            result.mVal[i] = ema1.get(i) - ema2.get(i)
+            result[i] = ema1.get(i) - ema2.get(i)
 
         return result
     }

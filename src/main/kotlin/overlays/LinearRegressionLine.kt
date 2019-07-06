@@ -15,10 +15,10 @@ class LinearRegressionLine : OverlayBase<FloatArray>(Overlay.LINREG) {
 
         val ab = FloatArray.getLinearRegressionEquation(arr.mVal, 0, pos)
         val slope = ab[1]
-        result.mVal[0] = ab[0]
+        result[0] = ab[0]
 
         for (i in 1 until arr.size) {
-            result.mVal[i] = result.mVal[i - 1] + slope
+            result[i] = result[i - 1] + slope
         }
 
         return result

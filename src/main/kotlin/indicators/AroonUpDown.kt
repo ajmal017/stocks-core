@@ -25,8 +25,8 @@ class AroonUpDown(period: Int = 25) : IndicatorBase(Indicator.AROON, period) {
             val high = i - list.mClose.maxPos(i - period + 1, i) + 1
             val low = i - list.mClose.minPos(i - period + 1, i) + 1
 
-            up.mVal[i] = (100 * (period - high) / period).toFloat()
-            down.mVal[i] = (100 * (period - low) / period).toFloat()
+            up[i] = (100 * (period - high) / period).toFloat()
+            down[i] = (100 * (period - low) / period).toFloat()
         }
 
         return PairArray(up, down)

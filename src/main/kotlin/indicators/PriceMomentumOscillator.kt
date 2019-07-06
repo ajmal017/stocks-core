@@ -27,7 +27,7 @@ class PriceMomentumOscillator(p1: Int, p2: Int) : IndicatorBase(Indicator.PMO, p
             ema = roc * m1 + ema * (1 - m1)
 
             val e = ema * 10
-            result.mVal[i] = (e - result.get(i - 1)) * m2 + result.get(i - 1)
+            result[i] = (e - result.get(i - 1)) * m2 + result.get(i - 1)
         }
 
         return result

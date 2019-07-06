@@ -16,9 +16,9 @@ class AverageTrueRange(period: Int = 14) : IndicatorBase(Indicator.ATR, period) 
         val result = FloatArray(list.size)
 
         //Current ATR = [(Prior ATR x 13) + Current TR] / 14
-        result.mVal[0] = list.tr(0)
+        result[0] = list.tr(0)
         for (i in 1 until list.size)
-            result.mVal[i] = (result.get(i - 1) * (period - 1) + list.tr(i)) / period
+            result[i] = (result.get(i - 1) * (period - 1) + list.tr(i)) / period
 
         return result
     }

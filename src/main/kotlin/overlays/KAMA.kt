@@ -16,7 +16,7 @@ class KAMA(er: Int, fast: Int, slow: Int) : OverlayBase<FloatArray>(Overlay.KAMA
 
 
         val result = FloatArray(arr.size)
-        result.mVal[0] = arr[0]
+        result[0] = arr[0]
 
         //p1 Efficiency Ratio (ER)
         //p2 Fastest ExpMovingAverage
@@ -47,8 +47,8 @@ class KAMA(er: Int, fast: Int, slow: Int) : OverlayBase<FloatArray>(Overlay.KAMA
             SC *= SC
 
             //Current KAMA = Prior KAMA + SC x (Price - Prior KAMA)
-            val prior = result.mVal[i - 1]
-            result.mVal[i] = prior + SC * (arr[i] - prior)
+            val prior = result[i - 1]
+            result[i] = prior + SC * (arr[i] - prior)
         }
 
         return result

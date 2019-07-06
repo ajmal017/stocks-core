@@ -30,8 +30,8 @@ class ChandelierExit(period: Int, multiplier: Double) : PriceOverlayBase(PriceOv
             val h = list.mHigh.max(i - p + 1, i) // highest high
             val l = list.mLow.min(i - p + 1, i) // lowest low
 
-            high.mVal[i] = h - atr.get(i) * multiplier
-            low.mVal[i] = l + atr.get(i) * multiplier
+            high[i] = h - atr.get(i) * multiplier
+            low[i] = l + atr.get(i) * multiplier
         }
 
         return PairArray(high, low)

@@ -35,12 +35,12 @@ class IchimokuClouds(p1: Int, p2: Int, p3: Int) : PriceOverlayBase(PriceOverlay.
             val baseLine = (high + low) / 2
 
             //Leading Span A
-            spanA.mVal[i] = (conversionLine + baseLine) / 2
+            spanA[i] = (conversionLine + baseLine) / 2
 
             //Leading Span B
             high = highs.max(i - span + 1, i)
             low = lows.min(i - span + 1, i)
-            spanB.mVal[i] = (high + low) / 2
+            spanB[i] = (high + low) / 2
         }
 
         return PairArray(spanA, spanB)

@@ -20,7 +20,7 @@ class MACD(p1: Int, p2: Int, signal: Int) : IndicatorBase(Indicator.MACD, p1, p2
         val ema2 = list.mClose.ema(p2)
 
         for (i in list.indices)
-            result.mVal[i] = ema1.get(i) - ema2.get(i)
+            result[i] = ema1.get(i) - ema2.get(i)
 
         return result
     }
