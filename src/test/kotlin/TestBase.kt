@@ -20,7 +20,7 @@ open class TestBase {
 
     companion object {
         val priceList: PriceList by lazy {
-            Helper.getSP500TestData()
+            Helper.sP500TestData!!
         }
 
         val size: Int by lazy {

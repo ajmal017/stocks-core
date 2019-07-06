@@ -3,16 +3,17 @@ package org.cerion.stocklist.arrays;
 import static org.junit.Assert.*;
 
 import org.cerion.stocklist.Helper;
+import org.cerion.stocklist.TestBase;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class FloatArrayTest {
+public class FloatArrayTest extends TestBase {
 
 	static FloatArray mArr;
 	
 	@BeforeClass
 	public static void init() {
-		mArr = Helper.getSP500TestData().getClose();
+		mArr = TestBase.Companion.getPriceList().getClose();
 	}
 	
 	@Test
@@ -126,8 +127,8 @@ public class FloatArrayTest {
 		assertEqual(1.0, corr, "correlation self");
 		assertEquals("correlation self", 1.0, corr, 0.000001);
 
-		FloatArray volume = Helper.getSP500TestData().getVolume();
-		FloatArray high = Helper.getSP500TestData().getHigh();
+		FloatArray volume = TestBase.Companion.getPriceList().getVolume();
+		FloatArray high = TestBase.Companion.getPriceList().getHigh();
 
 		corr = mArr.correlation(high);
 		assertEquals("correlation high", 0.999527, corr, 0.000001);
@@ -135,9 +136,4 @@ public class FloatArrayTest {
 		corr = mArr.correlation(volume);
 		assertEquals("correlation volume", 0.069388, corr, 0.000001);
 	}
-
-	private static void assertEqual(double expected, float actual, String message) {
-		assertEquals(message, expected, actual, 0.005);
-	}
-
 }
