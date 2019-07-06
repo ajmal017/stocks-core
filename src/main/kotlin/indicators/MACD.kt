@@ -15,14 +15,13 @@ class MACD(p1: Int, p2: Int, signal: Int) : IndicatorBase(Indicator.MACD, p1, p2
     }
 
     private fun macd(list: PriceList, p1: Int, p2: Int, signal: Int): MACDArray {
-        val result = MACDArray(list.size)
+        val result = MACDArray(list.size, signal)
         val ema1 = list.mClose.ema(p1)
         val ema2 = list.mClose.ema(p2)
 
         for (i in list.indices)
             result.mVal[i] = ema1.get(i) - ema2.get(i)
 
-        result.setSignal(signal)
         return result
     }
 }
