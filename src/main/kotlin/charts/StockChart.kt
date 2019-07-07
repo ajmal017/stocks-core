@@ -27,9 +27,13 @@ abstract class StockChart : Cloneable {
             return Overlay.values().toList().toTypedArray()
         }
 
-    val overlayCount: Int = mOverlays.size
+    val overlayCount: Int
+        get() = mOverlays.size
+
     abstract val dataSets: List<IDataSet>
-    val dates: Array<Date> = mList!!.dates
+
+    val dates: Array<Date>
+        get() = mList!!.dates
 
     var priceList: PriceList?
         get() = getPriceList(false)
