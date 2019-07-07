@@ -7,39 +7,26 @@ import org.cerion.stocklist.functions.IOverlay
 import org.cerion.stocklist.functions.ISimpleOverlay
 import org.cerion.stocklist.functions.types.IFunctionEnum
 import org.cerion.stocklist.functions.types.Overlay
-import org.cerion.stocklist.model.Interval
 import java.util.*
 
 abstract class StockChart : Cloneable {
 
     //protected List<FunctionCall> mOverlays = new ArrayList<>();
     protected var mOverlays: MutableList<IOverlay> = ArrayList()
-
     private var nextColor = 0
-    private var mList: PriceList? = null
-    var interval = Interval.DAILY
 
     protected var mPrimaryColors = intArrayOf(0, 0, 0, 0) // TODO add colors that don't use any java libraries, android overrides them all anyway
     protected var mSecondaryColors = intArrayOf(0)
 
     open val overlays: Array<IFunctionEnum>
-        get() {
-            return Overlay.values().toList().toTypedArray()
-        }
+        get() = Overlay.values().toList().toTypedArray()
 
     val overlayCount: Int
         get() = mOverlays.size
 
-    abstract val dataSets: List<IDataSet>
+    abstract fun getDataSets(priceList: PriceList): List<IDataSet>
 
-    val dates: Array<Date>
-        get() = mList!!.dates
-
-    var priceList: PriceList?
-        get() = getPriceList(false)
-        set(list) {
-            mList = list
-        }
+    fun getDates(list: PriceList): Array<Date> = list.dates.sliceArray(1 until list.dates.size)
 
     @Throws(CloneNotSupportedException::class)
     public override fun clone(): Any {
@@ -82,9 +69,9 @@ abstract class StockChart : Cloneable {
         mSecondaryColors = colors
     }
 
-    protected fun getPriceList(logScale: Boolean): PriceList {
-        return if (logScale) mList!!.toLogScale() else mList!!
-    }
+    //protected fun getPriceList(logScale: Boolean): PriceList {
+    //    return if (logScale) mList!!.toLogScale() else mList!!
+    //}
 
     protected fun getNextColor(): Int {
         return mSecondaryColors[nextColor++ % mSecondaryColors.size]

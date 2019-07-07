@@ -1,5 +1,6 @@
 package org.cerion.stocklist.charts
 
+import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.BandArray
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.MACDArray
@@ -13,6 +14,7 @@ import org.cerion.stocklist.functions.types.Indicator
 import java.util.ArrayList
 
 class IndicatorChart(private var mIndicator: IIndicator) : StockChart() {
+
     private val extra = ArrayList<IIndicator>()
 
     var indicator: IIndicator
@@ -51,24 +53,21 @@ class IndicatorChart(private var mIndicator: IIndicator) : StockChart() {
         extra.add(indicator)
     }
 
-    override val dataSets: List<IDataSet>
-        get() {
-            val result = ArrayList<IDataSet>()
+    override fun getDataSets(priceList: PriceList): List<IDataSet> {
+        val result = ArrayList<IDataSet>()
 
-            //DataSet data = new DataSet(mList.getVolume(), mIndicator.toString(), colorBlack());
-            //result.addAll(Arrays.asList(data) );
-            val arr = mIndicator.eval(priceList!!)
-            result.addAll(getIndicatorDataSets(arr, mIndicator))
+        val arr = mIndicator.eval(priceList)
+        result.addAll(getIndicatorDataSets(arr, mIndicator))
 
-            // TODO set color on these
-            for (indicator in extra) {
-                val va = indicator.eval(priceList!!)
-                result.addAll(getIndicatorDataSets(va, indicator))
-            }
-
-            result.addAll(getOverlayDataSets(arr))
-            return result
+        // TODO set color on these
+        for (indicator in extra) {
+            val va = indicator.eval(priceList)
+            result.addAll(getIndicatorDataSets(va, indicator))
         }
+
+        result.addAll(getOverlayDataSets(arr))
+        return result
+    }
 
     private fun getOverlayDataSets(arr: ValueArray): List<DataSet> {
         resetNextColor()
