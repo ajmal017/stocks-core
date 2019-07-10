@@ -24,21 +24,21 @@ public class GoogleFinance {
         JsonObject obj = arr.getObject(0);
 
         Quote quote = new Quote(obj.getString("symbol"));
-        quote.name = obj.getString("name");
-        quote.exchange = obj.getString("exchange");
+        quote.setName(obj.getString("name"));
+        quote.setExchange(obj.getString("exchange"));
 
-        quote.lastTrade = obj.getFloat("l");
-        quote.change = obj.getFloat("c");
-        quote.changePercent = obj.getFloat("cp");
+        quote.setLastTrade(obj.getFloat("l"));
+        quote.setChange(obj.getFloat("c"));
+        quote.setChangePercent(obj.getFloat("cp"));
 
-        quote.marketCap = obj.getString("mc");
-        quote.peRatio = obj.getFloat("pe");
-        quote.dividendYield = obj.getFloat("dy");
-        quote.high52 = obj.getFloat("hi52");
-        quote.low52 = obj.getFloat("lo52");
-        quote.beta = obj.getFloat("beta");
-        quote.sector = obj.getString("sname");
-        quote.eps = obj.getFloat("eps");
+        quote.setMarketCap(obj.getString("mc"));
+        quote.setPeRatio(obj.getFloat("pe"));
+        quote.setDividendYield(obj.getFloat("dy"));
+        quote.setHigh52(obj.getFloat("hi52"));
+        quote.setLow52(obj.getFloat("lo52"));
+        quote.setBeta(obj.getFloat("beta"));
+        quote.setSector(obj.getString("sname"));
+        quote.setEps(obj.getFloat("eps"));
 
         String volume = obj.getString("vo");
         int mult = 1;
@@ -46,7 +46,7 @@ public class GoogleFinance {
             mult = 1000000;
         volume = volume.replace("M","");
         Double v = Double.parseDouble(volume) * mult;
-        quote.volume = v.longValue();
+        quote.setVolume(v.longValue());
 
         return quote;
     }

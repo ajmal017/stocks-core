@@ -46,12 +46,12 @@ public class RepositoryCachedAPI implements CachedDataAPI {
             update = true;
         } else {
             Date now = new Date();
-            long diff = now.getTime() - dates.LastUpdated.getTime();
+            long diff = now.getTime() - dates.getLastUpdated().getTime();
             diff /= 1000 * 60 * 60;
             long hours = diff;
             long days = diff / 24;
 
-            System.out.println(symbol + " " + interval.name() + " last updated " + dates.LastUpdated + " (" + diff + " days ago)");
+            System.out.println(symbol + " " + interval.name() + " last updated " + dates.getLastUpdated() + " (" + diff + " days ago)");
 
             // TODO, smarter updates based on last price obtained and weekends
             if(interval == Interval.DAILY && hours >= 12)
@@ -65,7 +65,7 @@ public class RepositoryCachedAPI implements CachedDataAPI {
             // Incremental update, not sure if all this is necessary but start a few data points earlier to be safe
             if (update) {
                 Calendar cal = Calendar.getInstance();
-                cal.setTime(dates.LastDate);
+                cal.setTime(dates.getLastDate());
                 switch(interval)
                 {
                     case DAILY: cal.add(Calendar.DAY_OF_MONTH, -1); break;
@@ -104,7 +104,7 @@ public class RepositoryCachedAPI implements CachedDataAPI {
             update = true;
         } else {
             Date now = new Date();
-            long diff = now.getTime() - dates.LastUpdated.getTime();
+            long diff = now.getTime() - dates.getLastUpdated().getTime();
             diff /= 1000 * 60 * 60 * 24;
             //Log.d(TAG, symbol + " " + interval.name() + " last updated " + dates.LastUpdated + " (" + diff + " days ago)");
 

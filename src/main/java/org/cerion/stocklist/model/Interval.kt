@@ -1,6 +1,6 @@
-package org.cerion.stocklist.model;
+package org.cerion.stocklist.model
 
-public enum Interval {
+enum class Interval {
     DAILY,
     WEEKLY,
     MONTHLY,

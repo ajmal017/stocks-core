@@ -229,51 +229,51 @@ public class YahooFinance {
 					if(!s.contentEquals(symbol))
 						throw new IllegalStateException("parameter should match symbol");
 					break;
-				case "x": quote.exchange = parseString(value); break;
-				case "n": quote.name = parseString(value); break;
+				case "x": quote.setExchange(parseString(value)); break;
+				case "n": quote.setName(parseString(value)); break;
 
-				case "p": quote.prevClose = parseFloat(value); break;
-				case "o": quote.open = parseFloat(value); break;
-				case "g": quote.low = parseFloat(value); break;
-				case "h": quote.high = parseFloat(value); break;
-				case "l1": quote.lastTrade = parseFloat(value); break;
-				case "c1": quote.change = parseFloat(value); break;
-				case "p2": quote.changePercent = parseFloat(value); break;
-				case "v": quote.volume = parseLong(value); break;
-				case "d1": quote.lastTradeDate = parseDate(value); break;
+				case "p": quote.setPrevClose(parseFloat(value)); break;
+				case "o": quote.setOpen(parseFloat(value)); break;
+				case "g": quote.setLow(parseFloat(value)); break;
+				case "h": quote.setHigh(parseFloat(value)); break;
+				case "l1": quote.setLastTrade(parseFloat(value)); break;
+				case "c1": quote.setChange(parseFloat(value)); break;
+				case "p2": quote.setChangePercent(parseFloat(value)); break;
+				case "v": quote.setVolume(parseLong(value)); break;
+				case "d1": quote.setLastTradeDate(parseDate(value)); break;
 
-				case "e": quote.eps = parseFloat(value); break;
+				case "e": quote.setEps(parseFloat(value)); break;
 				//case "e7": quote.epsEstCurrentYear = parseFloat(value); break;
 				//case "e8": quote.epsEstNextYear = parseFloat(value); break;
 				//case "e9": quote.epsEstNextQuarter = parseFloat(value); break;
 
-				case "b4": quote.bookValue = parseFloat(value); break;
-				case "j4": quote.ebitda = parseString(value); break;
-				case "p5": quote.priceSalesRatio = parseFloat(value); break;
-				case "p6": quote.priceBookRatio = parseFloat(value); break;
+				case "b4": quote.setBookValue(parseFloat(value)); break;
+				case "j4": quote.setEbitda(parseString(value)); break;
+				case "p5": quote.setPriceSalesRatio(parseFloat(value)); break;
+				case "p6": quote.setPriceBookRatio(parseFloat(value)); break;
 
-				case "r": quote.peRatio = parseFloat(value); break;
-				case "r5": quote.pegRatio = parseFloat(value); break;
+				case "r": quote.setPeRatio(parseFloat(value)); break;
+				case "r5": quote.setPegRatio(parseFloat(value)); break;
 				//case "r6": quote.priceEPSEstCurrentYear = parseFloat(value); break;
 				//case "r7": quote.priceEPSEstNextYear = parseFloat(value); break;
-				case "s7": quote.shortRatio = parseFloat(value); break;
-				case "s6": quote.revenue = parseString(value); break;
+				case "s7": quote.setShortRatio(parseFloat(value)); break;
+				case "s6": quote.setRevenue(parseString(value)); break;
 
-				case "a2": quote.averageVolume = parseLong(value); break;
-				case "t8": quote.oneYearTarget = parseFloat(value); break;
-				case "k": quote.high52 = parseFloat(value); break;
-				case "j": quote.low52 = parseFloat(value); break;
+				case "a2": quote.setAverageVolume(parseLong(value)); break;
+				case "t8": quote.setOneYearTarget(parseFloat(value)); break;
+				case "k": quote.setHigh52(parseFloat(value)); break;
+				case "j": quote.setLow52(parseFloat(value)); break;
 
-				case "m3": quote.sma50 = parseFloat(value); break;
-				case "m4": quote.sma200 = parseFloat(value); break;
+				case "m3": quote.setSma50(parseFloat(value)); break;
+				case "m4": quote.setSma200(parseFloat(value)); break;
 
-				case "j1": quote.marketCap = parseString(value); break;
-				case "j2": quote.sharesTotal = parseLong(value); break;
-				case "f6": quote.sharesFloat = parseLong(value); break;
+				case "j1": quote.setMarketCap(parseString(value)); break;
+				case "j2": quote.setSharesTotal(parseLong(value)); break;
+				case "f6": quote.setSharesFloat(parseLong(value)); break;
 
-				case "y": quote.dividendYield = parseFloat(value); break;
-				case "q": quote.dividendDate = parseDate(value); break;
-				case "d": quote.dividendsPerShare = parseFloat(value); break;
+				case "y": quote.setDividendYield(parseFloat(value)); break;
+				case "q": quote.setDividendDate(parseDate(value)); break;
+				case "d": quote.setDividendsPerShare(parseFloat(value)); break;
 
 			}
 		}

@@ -66,7 +66,7 @@ public class PositionValue {
 
     public double getCurrPrice() {
         if (quote != null)
-            return quote.lastTrade;
+            return quote.getLastTrade();
         if (priceList != null)
             return priceList.getLast().getClose();
 
