@@ -19,7 +19,7 @@ class PositionValueTest {
         q.lastTrade = 2352.95f
         q.change = 1.1f
         q.changePercent = 2.2f
-        position.setQuote(q)
+        position.quote = q
 
         // Check dividend values before adding them
         assertEquals(0.0, position.dividendProfit, 0.005)
@@ -58,7 +58,7 @@ class PositionValueTest {
         val list = PriceList("FRIFX", prices)
 
         val position = PositionValue(pos, list)
-        position.setQuote(q)
+        position.quote = q
 
         // Gains
         assertEquals(0.0156316852, position.percentChanged, 0.000005)
@@ -82,7 +82,7 @@ class PositionValueTest {
         val position = PositionValue(pos, null)
         val q = Quote("SPY")
         q.lastTrade = 123.45f
-        position.setQuote(q)
+        position.quote = q
         position.addDividends(getDividends(9.1f, 2.2f, 3.56f))
 
         assertEquals(0.0, position.profit, 0.005)

@@ -230,7 +230,7 @@ public class PriceList extends ArrayList<Price>
 	public Price getLast(int prev) {
 		return get(size()-1-prev);
 	}
-	public Price getLast() {
+	public @NotNull Price getLast() {
 		return getLast(0);
 	}
 	
