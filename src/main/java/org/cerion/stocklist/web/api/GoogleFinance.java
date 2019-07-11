@@ -84,6 +84,6 @@ public class GoogleFinance {
             i++;
         }
 
-        return Json.parse(data.substring(i));
+        return Json.Companion.parse(data.substring(i));
     }
 }

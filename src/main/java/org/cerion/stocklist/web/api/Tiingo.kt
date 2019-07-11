@@ -13,7 +13,7 @@ class Tiingo {
     fun getSymbol(symbol: String): Symbol? {
         val url = "https://api.tiingo.com/tiingo/daily/$symbol"
         val data = getData(url)
-        val json = Json.parse(data) as JsonObject
+        val json = Json.parse(data!!) as JsonObject
 
         return Symbol(symbol, json["name"].toString(), json["exchangeCode"].toString())
     }

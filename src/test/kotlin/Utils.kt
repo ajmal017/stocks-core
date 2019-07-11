@@ -8,12 +8,14 @@ import java.util.*
 
 object Utils {
 
-    //grab the contents at the URL
-    // Nothing
     val sP500TestData: PriceList by lazy {
+        val data = resourceToString("sp500_2000-2015.csv")
+        PriceList("^GSPC", YahooFinance.getPricesFromTable(data))
+    }
+
+    fun resourceToString(fileName: String): String {
         val classloader = Thread.currentThread().contextClassLoader
-        //val res = classloader.getResource(".")
-        val inputStream = classloader.getResourceAsStream("sp500_2000-2015.csv")
+        val inputStream = classloader.getResourceAsStream(fileName)
 
         val isr = InputStreamReader(inputStream)
         val br = BufferedReader(isr)
@@ -21,8 +23,7 @@ object Utils {
         for(line in br.lines())
             sb.append(line + "\r\n")
 
-        val data = sb.toString()
-        PriceList("^GSPC", YahooFinance.getPricesFromTable(data))
+        return sb.toString()
     }
 
     fun generateList(size: Int): PriceList {
