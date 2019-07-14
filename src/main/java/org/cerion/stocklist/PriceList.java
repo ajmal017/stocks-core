@@ -55,8 +55,8 @@ public class PriceList extends ArrayList<Price>
 
 		for(int i = 0; i < size; i++) {
 			Price p = list.get(i);
-			p.pos = i;
-			p.parent = this;
+			p.setPos(i);
+			p.setParent(this);
 
 			mDate[i] = p.getDate();
 			mOpen.set(i, p.getOpen());
