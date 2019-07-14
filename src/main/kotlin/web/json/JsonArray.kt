@@ -7,7 +7,7 @@ class JsonArray(json: String, start: Int) : Json() {
     private val values = ArrayList<Json>()
 
     init {
-        var i = Json.getFirstNonWhitespacePosition(json, start)
+        var i = getFirstNonWhitespacePosition(json, start)
         if (json[i] != '[')
             throw RuntimeException()
 
@@ -18,12 +18,12 @@ class JsonArray(json: String, start: Int) : Json() {
                 break
             } else if (c == ',') {
                 // continue
-            } else if (Json.isWhiteSpace(c)) {
+            } else if (isWhiteSpace(c)) {
                 // continue
             } else {
-                val value = Json.parse(json, i)
+                val value = parse(json, i)
                 values.add(value!!)
-                i += value!!.parsedLength - 1
+                i += value.parsedLength - 1
             }
 
             i++

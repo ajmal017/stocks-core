@@ -26,11 +26,10 @@ class Tiingo {
             val url: URL
             var code = 0
 
-            var connection: HttpURLConnection? = null
             try {
                 //Create connection
                 url = URL(targetURL)
-                connection = url.openConnection() as HttpURLConnection
+                val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
                 connection.useCaches = false
                 connection.doInput = true

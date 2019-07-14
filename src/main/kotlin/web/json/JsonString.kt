@@ -7,7 +7,7 @@ class JsonString internal constructor(json: String, start: Int) : Json() {
 
     init {
         //val debug = json.substring(start)
-        var i = Json.getFirstNonWhitespacePosition(json, start)
+        var i = getFirstNonWhitespacePosition(json, start)
         if (json[i] != '"')
             throw JsonException()
 
@@ -19,7 +19,7 @@ class JsonString internal constructor(json: String, start: Int) : Json() {
             // TODO handle escaped quotes
             if (c == '"') {
                 break
-            } else if (Json.isWhiteSpace(c)) {
+            } else if (isWhiteSpace(c)) {
                 // continue
             }
 

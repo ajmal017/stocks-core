@@ -7,7 +7,7 @@ class JsonObject internal constructor(json: String, start: Int) : Json() {
     private val values = HashMap<String, Json>()
 
     init {
-        var i = Json.getFirstNonWhitespacePosition(json, start)
+        var i = getFirstNonWhitespacePosition(json, start)
         if (json[i] != '{')
             throw RuntimeException()
 
@@ -16,7 +16,7 @@ class JsonObject internal constructor(json: String, start: Int) : Json() {
             val c = json[i]
             if (c == '}') {
                 break
-            } else if (Json.isWhiteSpace(c)) {
+            } else if (isWhiteSpace(c)) {
                 // continue
             } else if (c == ',') {
                 // continue
@@ -28,7 +28,7 @@ class JsonObject internal constructor(json: String, start: Int) : Json() {
                 beginIndex = endIndex + 1
                 beginIndex = json.indexOf(":", beginIndex) + 1
 
-                val value = Json.parse(json, beginIndex)
+                val value = parse(json, beginIndex)
 
                 i = beginIndex + value!!.parsedLength
 

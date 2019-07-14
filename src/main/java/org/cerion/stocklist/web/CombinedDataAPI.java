@@ -1,7 +1,6 @@
 package org.cerion.stocklist.web;
 
 import org.cerion.stocklist.Price;
-import org.cerion.stocklist.PriceList;
 import org.cerion.stocklist.model.Dividend;
 import org.cerion.stocklist.model.Interval;
 import org.cerion.stocklist.model.Quote;
@@ -22,7 +21,7 @@ public class CombinedDataAPI implements DataAPI {
     private Tiingo tiingo;
 
     public CombinedDataAPI() {
-        yahoo = YahooFinance.getInstance();
+        yahoo = YahooFinance.Companion.getInstance();
         google = new GoogleFinance();
         tiingo = new Tiingo();
     }
