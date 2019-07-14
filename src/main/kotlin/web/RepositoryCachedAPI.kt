@@ -115,7 +115,7 @@ class RepositoryCachedAPI(private val mAPI: DataAPI, private val mPriceRepo: Pri
         return mAPI.getQuotes(symbols)
     }
 
-    override fun getQuote(symbol: String): Quote {
+    override fun getQuote(symbol: String): Quote? {
         return mAPI.getQuote(symbol)
     }
 

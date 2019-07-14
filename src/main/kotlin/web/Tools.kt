@@ -56,11 +56,12 @@ object Tools {
 
             result.headers = conn.headerFields
 
-            for (line in reader.lines()) {
-                if (sb.isNotEmpty())
-                    sb.append("\r\n" + line)
+            while (true) {
+                val line = reader.readLine()
+                if (line != null)
+                    sb.append(line + "\r\n")
                 else
-                    sb.append(line)
+                    break
             }
 
             result.result = sb.toString()

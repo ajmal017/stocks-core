@@ -8,8 +8,7 @@ import org.cerion.stocklist.model.Symbol
 import org.cerion.stocklist.web.api.GoogleFinance
 import org.cerion.stocklist.web.api.Tiingo
 import org.cerion.stocklist.web.api.YahooFinance
-
-import java.util.Date
+import java.util.*
 
 class CombinedDataAPI : DataAPI {
 
@@ -44,7 +43,7 @@ class CombinedDataAPI : DataAPI {
         throw UnsupportedOperationException()
     }
 
-    override fun getQuote(symbol: String): Quote {
-        return google.getQuote(symbol)!!
+    override fun getQuote(symbol: String): Quote? {
+        return google.getQuote(symbol)
     }
 }

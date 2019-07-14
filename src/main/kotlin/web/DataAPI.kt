@@ -19,5 +19,5 @@ interface DataAPI {
     fun getSymbol(symbol: String): Symbol?
 
     fun getQuotes(symbols: Set<String>): Map<String, Quote>
-    fun getQuote(symbol: String): Quote
+    fun getQuote(symbol: String): Quote?
 }
