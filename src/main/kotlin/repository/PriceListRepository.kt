@@ -7,7 +7,8 @@ import org.cerion.stocklist.model.Interval
 
 interface PriceListRepository {
     fun add(list: PriceList)
-    fun getHistoricalDates(symbol: String, interval: Interval): HistoricalDates
+
+    fun getHistoricalDates(symbol: String, interval: Interval): HistoricalDates?
     fun get(symbol: String, interval: Interval): List<Price>
     fun deleteAll()
     

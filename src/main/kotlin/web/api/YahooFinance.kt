@@ -115,7 +115,7 @@ class YahooFinance private constructor() {
         var i = 0
         for (symbol in symbols) {
             val line = lines[i]
-            if (line.length > 0)
+            if (line.isNotEmpty())
                 result[symbol] = parseQuote(symbol, line)
             else
                 result[symbol] = Quote(symbol)
