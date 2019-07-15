@@ -27,9 +27,9 @@ object Utils {
     }
 
     fun generateList(size: Int): PriceList {
-        val prices = ArrayList<Price>()
+        val prices = ArrayList<PriceRow>()
         for (i in 0 until size)
-            prices.add(Price(Date(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat()))
+            prices.add(PriceRow(Date(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat()))
 
         return PriceList("TEST", prices)
     }

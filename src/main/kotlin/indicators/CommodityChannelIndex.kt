@@ -24,7 +24,7 @@ class CommodityChannelIndex(period: Int = 20) : IndicatorBase(Indicator.CCI, per
         val smaArr = tp.sma(period)
 
         for (i in 1 until size) {
-            val sma = smaArr.get(i)
+            val sma = smaArr[i]
             val count = ValueArray.maxPeriod(i, period)
 
             //Mean deviation is different than standard deviation

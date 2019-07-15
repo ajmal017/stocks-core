@@ -52,7 +52,7 @@ class PringsKnowSureThing(p1: Int, p2: Int, p3: Int, p4: Int, p5: Int, p6: Int, 
         r4 = r4.sma(sma4)
 
         for (i in 0 until size)
-            result[i] = r1.get(i) + r2.get(i) * 2 + r3.get(i) * 3 + r4.get(i) * 4
+            result[i] = r1[i] + r2[i] * 2 + r3[i] * 3 + r4[i] * 4
 
         return result
     }

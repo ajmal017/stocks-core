@@ -2,6 +2,7 @@ package org.cerion.stocklist.web
 
 import org.cerion.stocklist.Price
 import org.cerion.stocklist.PriceList
+import org.cerion.stocklist.PriceRow
 import org.cerion.stocklist.model.Dividend
 import org.cerion.stocklist.model.Interval
 import org.cerion.stocklist.model.Quote
@@ -18,7 +19,7 @@ class RepositoryCachedAPI(private val mAPI: DataAPI, private val mPriceRepo: Pri
     }
 
     @Throws(Exception::class)
-    override fun getPrices(symbol: String, interval: Interval, start: Date, forceUpdate: Boolean): List<Price> {
+    override fun getPrices(symbol: String, interval: Interval, start: Date, forceUpdate: Boolean): List<PriceRow> {
 
         val dates = mPriceRepo.getHistoricalDates(symbol, interval)
         var update = forceUpdate
@@ -70,7 +71,7 @@ class RepositoryCachedAPI(private val mAPI: DataAPI, private val mPriceRepo: Pri
     }
 
     @Throws(Exception::class)
-    override fun getPrices(symbol: String, interval: Interval, start: Date): List<Price> {
+    override fun getPrices(symbol: String, interval: Interval, start: Date): List<PriceRow> {
         return getPrices(symbol, interval, start, false)
     }
 
@@ -142,7 +143,7 @@ class RepositoryCachedAPI(private val mAPI: DataAPI, private val mPriceRepo: Pri
         }
 
         if (merge) {
-            val mergedList = ArrayList<Price>()
+            val mergedList = ArrayList<PriceRow>()
             for (p in currPrices) {
                 if (p.date == first.date) {
                     mergedList.addAll(newPrices)

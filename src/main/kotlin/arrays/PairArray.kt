@@ -15,12 +15,12 @@ class PairArray(val positive: FloatArray, val negative: FloatArray) : ValueArray
     /*
 	 * Get upper or positive direction value
 	 */
-    fun pos(pos: Int): Float = positive.get(pos)
+    fun pos(pos: Int): Float = positive[pos]
 
     /*
 	 * Get lower or negative direction value
 	 */
-    fun neg(pos: Int): Float = negative.get(pos)
+    fun neg(pos: Int): Float = negative[pos]
 
-    fun diff(pos: Int): Float = positive.get(pos) - negative.get(pos)
+    fun diff(pos: Int): Float = positive[pos] - negative[pos]
 }

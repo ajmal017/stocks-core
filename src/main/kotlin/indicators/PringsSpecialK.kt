@@ -38,7 +38,7 @@ class PringsSpecialK : IndicatorBase(Indicator.SPECIALK) {
         val kst3 = PringsKnowSureThing(195, 265, 390, 530, 130, 130, 130, 195).eval(list)
 
         for (i in list.indices)
-            result[i] = kst1.get(i) + kst2.get(i) + kst3.get(i)
+            result[i] = kst1[i] + kst2[i] + kst3[i]
 
         return result
     }

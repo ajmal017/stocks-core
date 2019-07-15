@@ -38,7 +38,7 @@ class SharpeRatio(period: Int, riskFreeRate: Double) : IndicatorBase(Indicator.S
         val result = FloatArray(list.size)
         for (i in list.indices) {
             if (i >= multiplier) {
-                result[i] = avg.get(i) / std.get(i)
+                result[i] = avg[i] / std[i]
                 result[i] *= Math.sqrt(multiplier.toDouble()).toFloat()
             } else
                 result[i] = java.lang.Float.NaN

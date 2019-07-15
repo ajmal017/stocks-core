@@ -46,7 +46,7 @@ class EaseOfMovement(period: Int = 14) : IndicatorBase(Indicator.EMV, period) {
             val count = ValueArray.maxPeriod(i, period)
             var total = 0f
             for (j in i - count + 1..i)
-                total += emv.get(j)
+                total += emv[j]
 
             result[i] = total / count
         }

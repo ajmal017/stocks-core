@@ -25,7 +25,7 @@ class AverageDirectionalIndex(period: Int = 14) : IndicatorBase(Indicator.ADX, p
             val sum = di.pos(i) + di.neg(i)
 
             val dx = 100 * (Math.abs(diff) / sum)
-            result[i] = (result.get(i - 1) * (count - 1) + dx) / count
+            result[i] = (result[i - 1] * (count - 1) + dx) / count
         }
 
         return result

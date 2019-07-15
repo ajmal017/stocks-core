@@ -21,7 +21,7 @@ class TRIX(period: Int = 15) : IndicatorBase(Indicator.TRIX, period) {
 
         for (i in 1 until list.size) {
             //1-Day percent change in Triple ExpMovingAverage
-            result[i] = (ema3.get(i) - ema3.get(i - 1)) / ema3.get(i - 1) * 100
+            result[i] = (ema3[i] - ema3[i - 1]) / ema3[i - 1] * 100
         }
 
         return result

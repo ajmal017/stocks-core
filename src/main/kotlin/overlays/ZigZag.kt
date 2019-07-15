@@ -77,10 +77,10 @@ class ZigZag(percent: Double = 5.0) : PriceOverlayBase(PriceOverlay.ZIGZAG, perc
         var start = 0
         var end: Int
         for (i in 1 until size) {
-            if (result.get(i) != 0f) {
+            if (result[i] != 0f) {
                 end = i
-                val a = result.get(start)
-                val b = result.get(end)
+                val a = result[start]
+                val b = result[end]
                 val inc = (b - a) / (end - start)
 
                 for (j in start + 1 until end) {

@@ -18,7 +18,7 @@ class AverageTrueRange(period: Int = 14) : IndicatorBase(Indicator.ATR, period) 
         //Current ATR = [(Prior ATR x 13) + Current TR] / 14
         result[0] = list.tr(0)
         for (i in 1 until list.size)
-            result[i] = (result.get(i - 1) * (period - 1) + list.tr(i)) / period
+            result[i] = (result[i - 1] * (period - 1) + list.tr(i)) / period
 
         return result
     }

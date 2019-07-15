@@ -2,6 +2,7 @@ package org.cerion.stocklist.model
 
 import org.cerion.stocklist.Price
 import org.cerion.stocklist.PriceList
+import org.cerion.stocklist.PriceRow
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.*
@@ -51,10 +52,10 @@ class PositionValueTest {
         q.lastTrade = 12.13f
 
         //val api = YahooFinance.getInstance()
-        val prices = ArrayList<Price>()
-        prices.add(Price(GregorianCalendar(2017, 2, 8).time, 1f, 1f, 1f, 1f, 10000000.0f))
-        prices.add(Price(GregorianCalendar(2017, 2, 9).time, 11.99f, 11.99f, 11.90f, 11.943306f, 10000000.0f))
-        prices.add(Price(GregorianCalendar(2017, 2, 10).time, 2f, 2f, 2f, 2f, 10000000.0f))
+        val prices = ArrayList<PriceRow>()
+        prices.add(PriceRow(GregorianCalendar(2017, 2, 8).time, 1f, 1f, 1f, 1f, 10000000.0f))
+        prices.add(PriceRow(GregorianCalendar(2017, 2, 9).time, 11.99f, 11.99f, 11.90f, 11.943306f, 10000000.0f))
+        prices.add(PriceRow(GregorianCalendar(2017, 2, 10).time, 2f, 2f, 2f, 2f, 10000000.0f))
         val list = PriceList("FRIFX", prices)
 
         val position = PositionValue(pos, list)

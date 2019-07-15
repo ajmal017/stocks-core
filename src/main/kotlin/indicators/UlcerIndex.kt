@@ -28,9 +28,9 @@ class UlcerIndex(period: Int = 14) : IndicatorBase(Indicator.ULCER_INDEX, period
             var max = 0f //Max close
             val count = ValueArray.maxPeriod(i, period)
             for (j in i - count + 1..i)
-                max = Math.max(max, arr.get(j))
+                max = Math.max(max, arr[j])
 
-            percentD[i] = (arr.get(i) - max) / max * 100
+            percentD[i] = (arr[i] - max) / max * 100
         }
 
         for (i in 0 until size) {

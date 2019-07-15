@@ -18,12 +18,12 @@ class StochasticRSI(period: Int = 14) : IndicatorBase(Indicator.STOCHRSI, period
         val rsi_arr = RSI(period).eval(list)
 
         for (i in list.indices) {
-            var high = rsi_arr.get(i)
-            var low = rsi_arr.get(i)
+            var high = rsi_arr[i]
+            var low = rsi_arr[i]
 
             val count = ValueArray.maxPeriod(i, period)
             for (j in i - count + 1 until i) {
-                val rsi = rsi_arr.get(j)
+                val rsi = rsi_arr[j]
                 if (rsi > high)
                     high = rsi
                 if (rsi < low)
@@ -34,7 +34,7 @@ class StochasticRSI(period: Int = 14) : IndicatorBase(Indicator.STOCHRSI, period
             if (high == low)
                 result[i] = 1f
             else
-                result[i] = (rsi_arr.get(i) - low) / (high - low)
+                result[i] = (rsi_arr[i] - low) / (high - low)
         }
 
         return result

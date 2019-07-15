@@ -32,7 +32,7 @@ class MassIndex(period: Int = 25) : IndicatorBase(Indicator.MASS_INDEX, period) 
 
         //X period sum
         for (i in 0 until size) {
-            emaRatio[i] = ema.get(i) / ema2.get(i)
+            emaRatio[i] = ema[i] / ema2[i]
 
             //int max = ValueArray.maxPeriod(i, period);
             if (i >= period - 1) {

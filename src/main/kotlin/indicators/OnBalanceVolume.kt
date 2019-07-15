@@ -19,12 +19,12 @@ class OnBalanceVolume : IndicatorBase(Indicator.OBV) {
 
         result[0] = 0f
         for (i in 1 until list.size) {
-            if (close.get(i) > close.get(i - 1))
-                result[i] = result.get(i - 1) + volume.get(i)
-            else if (close.get(i) < close.get(i - 1))
-                result[i] = result.get(i - 1) - volume.get(i)
+            if (close[i] > close[i - 1])
+                result[i] = result[i - 1] + volume[i]
+            else if (close[i] < close[i - 1])
+                result[i] = result[i - 1] - volume[i]
             else
-                result[i] = result.get(i - 1)
+                result[i] = result[i - 1]
         }
 
         return result

@@ -5,7 +5,7 @@ import org.cerion.stocklist.model.Interval
 
 import java.util.*
 
-class PriceList(val symbol: String, list: List<Price>) : ArrayList<Price>() {
+class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
 
     private var logScale = false
     var dates: Array<Date>
@@ -52,9 +52,17 @@ class PriceList(val symbol: String, list: List<Price>) : ArrayList<Price>() {
     fun volume(pos: Int): Float = volume[pos]
 
     init {
-        val sortedList = list.sortedBy { it.date }
+        val sorted = list.sortedBy { it.date }
         val size = list.size
         val dateList = mutableListOf<Date>()
+
+        // Temp
+        val sortedList = mutableListOf<Price>()
+
+        for(i in 0 until size) {
+            val p = Price(sorted[i])
+            sortedList.add(p)
+        }
 
         open = FloatArray(size)
         high = FloatArray(size)
@@ -109,10 +117,10 @@ class PriceList(val symbol: String, list: List<Price>) : ArrayList<Price>() {
         if (logScale)
             return this
 
-        val logPrices = ArrayList<Price>()
+        val logPrices = ArrayList<PriceRow>()
         for (i in 0 until size) {
             val p = get(i)
-            logPrices.add(Price(p.date, Math.log(p.open.toDouble()).toFloat(), Math.log(p.high.toDouble()).toFloat(), Math.log(p.low.toDouble()).toFloat(), Math.log(p.close.toDouble()).toFloat(), Math.log(p.volume.toDouble()).toFloat()))
+            logPrices.add(PriceRow(p.date, Math.log(p.open.toDouble()).toFloat(), Math.log(p.high.toDouble()).toFloat(), Math.log(p.low.toDouble()).toFloat(), Math.log(p.close.toDouble()).toFloat(), Math.log(p.volume.toDouble()).toFloat()))
         }
 
         val result = PriceList(symbol, logPrices)
@@ -128,7 +136,7 @@ class PriceList(val symbol: String, list: List<Price>) : ArrayList<Price>() {
         if (interval !== Interval.DAILY)
             throw RuntimeException("Interval must be daily")
 
-        val prices = ArrayList<Price>()
+        val prices = ArrayList<PriceRow>()
 
         var i = 0
         while (i < size - 1) {
@@ -162,7 +170,7 @@ class PriceList(val symbol: String, list: List<Price>) : ArrayList<Price>() {
                 close = p.close
             }
 
-            val p = Price(start.date, open, high, low, close, volume)
+            val p = PriceRow(start.date, open, high, low, close, volume)
             prices.add(p)
         }
 
@@ -173,14 +181,14 @@ class PriceList(val symbol: String, list: List<Price>) : ArrayList<Price>() {
         if (interval !== Interval.MONTHLY)
             throw RuntimeException("Interval must be monthly")
 
-        val prices = ArrayList<Price>()
+        val prices = ArrayList<PriceRow>()
         var i = size - 1
         while (i >= 2) {
             val p1 = get(i)
             val p2 = get(i - 1)
             val p3 = get(i - 2)
 
-            val p = Price(p1.date,
+            val p = PriceRow(p1.date,
                     p3.open,
                     Math.max(Math.max(p1.high, p2.high), p3.high),
                     Math.min(Math.min(p1.low, p2.low), p3.low),
@@ -198,7 +206,7 @@ class PriceList(val symbol: String, list: List<Price>) : ArrayList<Price>() {
         if (interval !== Interval.MONTHLY)
             throw RuntimeException("Interval must be monthly")
 
-        val prices = ArrayList<Price>()
+        val prices = ArrayList<PriceRow>()
         var i = size - 1
         while (i >= 11) {
             val start = get(i - 11)
@@ -218,7 +226,7 @@ class PriceList(val symbol: String, list: List<Price>) : ArrayList<Price>() {
                     low = q.low
             }
 
-            val p = Price(get(i).date, open, high, low, close, volume)
+            val p = PriceRow(get(i).date, open, high, low, close, volume)
             prices.add(p)
             i -= 12
         }

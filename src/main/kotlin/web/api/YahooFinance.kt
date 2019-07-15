@@ -2,6 +2,7 @@ package org.cerion.stocklist.web.api
 
 import org.cerion.stocklist.Price
 import org.cerion.stocklist.PriceList
+import org.cerion.stocklist.PriceRow
 import org.cerion.stocklist.model.Dividend
 import org.cerion.stocklist.model.Interval
 import org.cerion.stocklist.model.Quote
@@ -31,7 +32,7 @@ class YahooFinance private constructor() {
         return result
     }
 
-    fun getPrices(symbol: String, interval: Interval, start: Date): MutableList<Price> {
+    fun getPrices(symbol: String, interval: Interval, start: Date): MutableList<PriceRow> {
         if (!setCookieCrumb())
             throw RuntimeException("Failed to get cookie")
 
@@ -203,13 +204,13 @@ class YahooFinance private constructor() {
          * @param tableData file contents as string
          * @return PriceList
          */
-        fun getPricesFromTable(tableData: String): MutableList<Price> {
+        fun getPricesFromTable(tableData: String): MutableList<PriceRow> {
             val lines = tableData.split("\\r\\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
             if (DEBUG)
                 println("Table lines = " + lines.size)
 
-            val prices = ArrayList<Price>()
+            val prices = ArrayList<PriceRow>()
             for (i in 1 until lines.size) {
                 if (!lines[i].contains("null"))
                     prices.add(parseLine(lines[i]))
@@ -360,7 +361,7 @@ class YahooFinance private constructor() {
             return result
         }
 
-        fun parseLine(sLine: String): Price {
+        fun parseLine(sLine: String): PriceRow {
             val fields = sLine.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (fields.size == 7) {
                 //TODO fix this for S&P large numbers
@@ -401,7 +402,7 @@ class YahooFinance private constructor() {
                     volume /= 1000
                     val date = mDateFormat.parse(fields[0])
 
-                    return Price(date, open, high, low, adjClose, volume.toFloat())
+                    return PriceRow(date, open, high, low, adjClose, volume.toFloat())
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

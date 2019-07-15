@@ -44,7 +44,7 @@ class Price(override val date: Date, override val open: Float, override val high
     }
 
     companion object {
-        private val mDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val mDateFormat = SimpleDateFormat("yyyy-MM-dd")
 
         fun getDecimal(value: Float): String {
             return String.format("%.2f", value)

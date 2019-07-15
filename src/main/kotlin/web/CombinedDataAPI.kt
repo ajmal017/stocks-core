@@ -1,6 +1,7 @@
 package org.cerion.stocklist.web
 
 import org.cerion.stocklist.Price
+import org.cerion.stocklist.PriceRow
 import org.cerion.stocklist.model.Dividend
 import org.cerion.stocklist.model.Interval
 import org.cerion.stocklist.model.Quote
@@ -17,7 +18,7 @@ class CombinedDataAPI : DataAPI {
     private val tiingo: Tiingo = Tiingo()
 
     @Throws(Exception::class)
-    override fun getPrices(symbol: String, interval: Interval, start: Date): List<Price> {
+    override fun getPrices(symbol: String, interval: Interval, start: Date): List<PriceRow> {
         return yahoo.getPrices(symbol, interval, start)
     }
 

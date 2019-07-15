@@ -2,6 +2,7 @@ package org.cerion.stocklist.web
 
 
 import org.cerion.stocklist.Price
+import org.cerion.stocklist.PriceRow
 import org.cerion.stocklist.model.Dividend
 import org.cerion.stocklist.model.Interval
 import org.cerion.stocklist.model.Quote
@@ -11,7 +12,7 @@ import java.util.*
 interface DataAPI {
 
     @Throws(Exception::class)
-    fun getPrices(symbol: String, interval: Interval, start: Date): List<Price>
+    fun getPrices(symbol: String, interval: Interval, start: Date): List<PriceRow>
 
     fun getDividends(symbol: String): List<Dividend>
 

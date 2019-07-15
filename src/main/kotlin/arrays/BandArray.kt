@@ -15,6 +15,6 @@ class BandArray(private val source: FloatArray, private val upper: FloatArray, p
 
     fun percent(pos: Int): Float {
         //%B = (Price - Lower Band)/(Upper Band - Lower Band)
-        return (source.get(pos) - lower(pos)) / (upper(pos) - lower(pos))
+        return (source[pos] - lower(pos)) / (upper(pos) - lower(pos))
     }
 }

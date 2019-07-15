@@ -7,8 +7,8 @@ class MACDArray(size: Int, private val signalPeriod: Int) : FloatArray(size) {
     }
 
     //Signal line
-    fun signal(pos: Int) : Float = signal.get(pos)
+    fun signal(pos: Int) : Float = signal[pos]
 
     //Histogram
-    fun hist(pos: Int) : Float = this[pos] - signal.get(pos)
+    fun hist(pos: Int) : Float = this[pos] - signal[pos]
 }

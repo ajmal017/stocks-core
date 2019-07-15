@@ -25,7 +25,7 @@ class PercentagePriceOscillator(p1: Int, p2: Int, signal: Int) : IndicatorBase(I
             val ema2 = arr.ema(p2)
 
             for (i in 0 until arr.size)
-                result[i] = 100 * (ema1.get(i) - ema2.get(i)) / ema2.get(i)
+                result[i] = 100 * (ema1[i] - ema2[i]) / ema2[i]
 
             return result
         }

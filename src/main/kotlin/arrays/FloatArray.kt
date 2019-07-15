@@ -5,13 +5,9 @@ import org.cerion.stocklist.overlays.ExpMovingAverage
 import org.cerion.stocklist.overlays.LinearRegressionLine
 import org.cerion.stocklist.overlays.SimpleMovingAverage
 
-// This deprecation is until mVal can be made private
-@Suppress("DEPRECATION")
 open class FloatArray(length: Int) : ValueArray() {
 
-    @Deprecated("use get/set methods")
-    @JvmField
-    val mVal: kotlin.FloatArray = kotlin.FloatArray(length)
+    private val mVal: kotlin.FloatArray = kotlin.FloatArray(length)
 
     override val size: Int = mVal.size
 

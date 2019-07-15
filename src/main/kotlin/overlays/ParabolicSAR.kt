@@ -19,12 +19,12 @@ class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverla
         val close = list.close
         var start = 1
 
-        while (close.get(start - 1) == close.get(start))
+        while (close[start - 1] == close[start])
             start++
 
         when {
-            close.get(start - 1) > close.get(start) -> sarFalling(list, result, start, list.high(start - 1), step, max)
-            close.get(start - 1) < close.get(start) -> sarRising(list, result, start, list.low(start - 1), step, max)
+            close[start - 1] > close[start] -> sarFalling(list, result, start, list.high(start - 1), step, max)
+            close[start - 1] < close[start] -> sarRising(list, result, start, list.low(start - 1), step, max)
             else -> println("error")
         } //above should fix this
 
