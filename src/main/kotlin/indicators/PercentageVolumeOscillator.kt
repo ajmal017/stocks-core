@@ -11,6 +11,6 @@ class PercentageVolumeOscillator(p1: Int, p2: Int, signal: Int) : IndicatorBase(
     override val name: String = "Percentage Volume Oscillator"
 
     override fun eval(list: PriceList): MACDArray {
-        return PercentagePriceOscillator.getPercentMACD(list.mVolume, getInt(0), getInt(1), getInt(2))
+        return PercentagePriceOscillator.getPercentMACD(list.volume, getInt(0), getInt(1), getInt(2))
     }
 }

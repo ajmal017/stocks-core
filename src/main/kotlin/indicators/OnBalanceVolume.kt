@@ -13,8 +13,8 @@ class OnBalanceVolume : IndicatorBase(Indicator.OBV) {
     }
 
     private fun onBalanceVolume(list: PriceList): FloatArray {
-        val close = list.mClose
-        val volume = list.mVolume
+        val close = list.close
+        val volume = list.volume
         val result = FloatArray(list.size)
 
         result[0] = 0f

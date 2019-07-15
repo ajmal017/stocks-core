@@ -1,0 +1,265 @@
+package org.cerion.stocklist
+
+import org.cerion.stocklist.arrays.FloatArray
+import org.cerion.stocklist.model.Interval
+
+import java.util.*
+
+class PriceList(val symbol: String, list: List<Price>) : ArrayList<Price>() {
+
+    private var logScale = false
+    var dates: Array<Date>
+    var open: FloatArray
+    var high: FloatArray
+    var low: FloatArray
+    var close: FloatArray
+    var volume: FloatArray
+
+    // Skip first instance
+    // the first month of a fund may only have a few days worth of arrays depending on its first trading date, example SPY
+    val interval: Interval
+        get() {
+            if (size > 1) {
+                var diff = dates[2].time - dates[1].time
+                diff /= (1000 * 60 * 60 * 24).toLong()
+
+                if (diff > 200)
+                    return Interval.YEARLY
+                else if (diff > 45)
+                    return Interval.QUARTERLY
+                else if (diff > 10)
+                    return Interval.MONTHLY
+                else if (diff > 5)
+                    return Interval.WEEKLY
+            }
+
+            return Interval.DAILY
+        }
+
+    val last: Price
+        get() = getLast(0)
+
+    val change: Float
+        get() = close[size - 1] - close[size - 2]
+
+    val percentChange: Float
+        get() = close.getPercentChange(size - 2)
+
+    // These may not be needed if accessing arrays directly
+    fun high(pos: Int): Float = high[pos]
+    fun low(pos: Int): Float = low[pos]
+    fun close(pos: Int): Float = close[pos]
+    fun volume(pos: Int): Float = volume[pos]
+
+    init {
+        val sortedList = list.sortedBy { it.date }
+        val size = list.size
+        val dateList = mutableListOf<Date>()
+
+        open = FloatArray(size)
+        high = FloatArray(size)
+        low = FloatArray(size)
+        close = FloatArray(size)
+        volume = FloatArray(size)
+
+        for (i in 0 until size) {
+            val p = sortedList[i]
+            p.pos = i
+            p.parent = this
+
+            //dates[i] = p.date
+            dateList.add(p.date)
+            open[i] = p.open
+            high[i] = p.high
+            low[i] = p.low
+            close[i] = p.close
+            volume[i] = p.volume
+
+            this.add(p)
+        }
+
+        this.dates = dateList.toTypedArray()
+    }
+
+    //Typical price
+    fun tp(pos: Int): Float = (close[pos] + high[pos] + low[pos]) / 3
+
+    //Money flow volume
+    fun mfv(pos: Int) : Float {
+        var mult = (close(pos) - low(pos) - (high(pos) - close(pos))) / (high(pos) - low(pos))
+        if (close(pos) == low(pos))
+            mult = -1f
+        if (low(pos) == high(pos))
+        //divide by zero
+            mult = 0f
+
+        return mult * volume(pos)
+    }
+
+    //Rate of change
+    fun roc(pos: Int, period: Int): Float {
+        var x = 0 //If period goes beyond start then set to first element
+        if (pos >= period)
+            x = pos - period
+
+        return (close(pos) - close(x)) * 100 / close(x)
+    }
+
+    fun toLogScale(): PriceList {
+        if (logScale)
+            return this
+
+        val logPrices = ArrayList<Price>()
+        for (i in 0 until size) {
+            val p = get(i)
+            logPrices.add(Price(p.date, Math.log(p.open.toDouble()).toFloat(), Math.log(p.high.toDouble()).toFloat(), Math.log(p.low.toDouble()).toFloat(), Math.log(p.close.toDouble()).toFloat(), Math.log(p.volume.toDouble()).toFloat()))
+        }
+
+        val result = PriceList(symbol, logPrices)
+        result.logScale = true
+        return result
+    }
+
+    fun `is`(symbol: String): Boolean {
+        return this.symbol.contentEquals(symbol)
+    }
+
+    fun toWeekly(): PriceList {
+        if (interval !== Interval.DAILY)
+            throw RuntimeException("Interval must be daily")
+
+        val prices = ArrayList<Price>()
+
+        var i = 0
+        while (i < size - 1) {
+            val start = get(i)
+
+            val open = start.open
+            var close = start.close
+            var high = start.high
+            var low = start.low
+            var volume = start.volume
+
+            while (i < size - 1) {
+                i++
+                val p = get(i)
+
+                val t1 = get(i - 1).date.time
+                val t2 = p.date.time
+                var diff = t2 - t1
+                diff /= (1000 * 60 * 60 * 24).toLong()
+
+                // New week
+                if (diff > 2)
+                    break
+
+                volume += p.volume
+                if (p.high > high)
+                    high = p.high
+                if (p.low < low)
+                    low = p.low
+
+                close = p.close
+            }
+
+            val p = Price(start.date, open, high, low, close, volume)
+            prices.add(p)
+        }
+
+        return PriceList(symbol, prices)
+    }
+
+    fun toQuarterly(): PriceList {
+        if (interval !== Interval.MONTHLY)
+            throw RuntimeException("Interval must be monthly")
+
+        val prices = ArrayList<Price>()
+        var i = size - 1
+        while (i >= 2) {
+            val p1 = get(i)
+            val p2 = get(i - 1)
+            val p3 = get(i - 2)
+
+            val p = Price(p1.date,
+                    p3.open,
+                    Math.max(Math.max(p1.high, p2.high), p3.high),
+                    Math.min(Math.min(p1.low, p2.low), p3.low),
+                    p1.close,
+                    p1.volume + p2.volume + p3.volume)
+
+            prices.add(p)
+            i -= 3
+        }
+
+        return PriceList(symbol, prices)
+    }
+
+    fun toYearly(): PriceList {
+        if (interval !== Interval.MONTHLY)
+            throw RuntimeException("Interval must be monthly")
+
+        val prices = ArrayList<Price>()
+        var i = size - 1
+        while (i >= 11) {
+            val start = get(i - 11)
+
+            val open = start.open
+            val close = get(i).close
+            var high = 0f
+            var low = open
+            var volume = 0f
+
+            for (j in i - 11..i) {
+                val q = get(j)
+                volume += q.volume
+                if (q.high > high)
+                    high = q.high
+                if (q.low < low)
+                    low = q.low
+            }
+
+            val p = Price(get(i).date, open, high, low, close, volume)
+            prices.add(p)
+            i -= 12
+        }
+
+        return PriceList(symbol, prices)
+    }
+
+    fun getLast(prev: Int): Price {
+        return get(size - 1 - prev)
+    }
+
+    fun tr(pos: Int): Float {
+        return if (pos > 0) Math.max(high[pos], close[pos - 1]) - Math.min(low[pos], close[pos - 1]) else high[0] - low[0]
+    }
+
+    fun slope(period: Int, pos: Int): Float {
+        return this.close.slope(period, pos)
+    }
+
+    fun averageYearlyGain(): Float {
+        val count = (size - 1).toFloat()
+        val years = count / pricesPerYear()
+
+        // Simple Return = (Current Price-Purchase Price) / Purchase Price
+        // Annual Return = (Simple Return +1) ^ (1 / Years Held)-1
+
+        val simpleReturn = last.getPercentDiff(get(0))
+        val a = (simpleReturn / 100 + 1).toDouble()
+        val b = (1 / years).toDouble()
+
+        val annualReturn = Math.pow(a, b) - 1
+        return annualReturn.toFloat()
+    }
+
+    private fun pricesPerYear(): Int {
+        val interval = interval
+        when (interval) {
+            Interval.DAILY -> return 252
+            Interval.WEEKLY -> return 52
+            else -> return 12
+        }
+    }
+}
+

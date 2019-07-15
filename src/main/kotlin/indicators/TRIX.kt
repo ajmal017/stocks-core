@@ -15,7 +15,7 @@ class TRIX(period: Int = 15) : IndicatorBase(Indicator.TRIX, period) {
     private fun trix(list: PriceList, period: Int): FloatArray {
         val result = FloatArray(list.size)
 
-        val ema1 = list.mClose.ema(period)
+        val ema1 = list.close.ema(period)
         val ema2 = ema1.ema(period)
         val ema3 = ema2.ema(period)
 

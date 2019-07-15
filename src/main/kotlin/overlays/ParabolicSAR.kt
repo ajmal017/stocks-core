@@ -16,7 +16,7 @@ class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverla
 
     private fun parabolicSAR(list: PriceList, step: Float, max: Float): FloatArray {
         val result = FloatArray(list.size)
-        val close = list.mClose
+        val close = list.close
         var start = 1
 
         while (close.get(start - 1) == close.get(start))

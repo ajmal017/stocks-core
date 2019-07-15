@@ -13,7 +13,7 @@ class PercentagePriceOscillator(p1: Int, p2: Int, signal: Int) : IndicatorBase(I
 
     override fun eval(list: PriceList): MACDArray {
         //Percentage version of MACD
-        return getPercentMACD(list.mClose, getInt(0), getInt(1), getInt(2))
+        return getPercentMACD(list.close, getInt(0), getInt(1), getInt(2))
     }
 
     companion object {

@@ -157,7 +157,7 @@ class PositionValue(private val purchase: Position, private val priceList: Price
         if (list.interval === Interval.DAILY) {
             if (dividendsReinvested) {
                 for (i in list.indices) {
-                    val date = list.mDate[i]
+                    val date = list.dates[i]
                     // If entered today then currrent date may not be present so just use last entry
                     // TODO add unit test to check this value
                     if (dateEquals(date, this.date) || origPriceAdjusted == 0.0 && i == list.size - 1) {

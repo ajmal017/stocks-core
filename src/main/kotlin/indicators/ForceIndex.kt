@@ -13,7 +13,7 @@ class ForceIndex(period: Int = 13) : IndicatorBase(Indicator.FORCE_INDEX, period
     }
 
     private fun forceIndex(list: PriceList, period: Int): FloatArray {
-        val close = list.mClose
+        val close = list.close
         val size = list.size
         val result = FloatArray(size)
 
@@ -23,7 +23,7 @@ class ForceIndex(period: Int = 13) : IndicatorBase(Indicator.FORCE_INDEX, period
             //Price p = get(i);
             //Price prev = get(i-1);
 
-            val fi = (close.get(i) - close.get(i - 1)) * list.mVolume.get(i)
+            val fi = (close.get(i) - close.get(i - 1)) * list.volume.get(i)
             result[i] = (fi - result.get(i - 1)) * mult + result.get(i - 1)
             //System.out.println(p.date + "\t" + p.fi);
         }

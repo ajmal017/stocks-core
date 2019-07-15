@@ -22,8 +22,8 @@ class AroonUpDown(period: Int = 25) : IndicatorBase(Indicator.AROON, period) {
         //Aroon Oscillator = Aroon-Up  -  Aroon-Down
 
         for (i in period - 1 until size) {
-            val high = i - list.mClose.maxPos(i - period + 1, i) + 1
-            val low = i - list.mClose.minPos(i - period + 1, i) + 1
+            val high = i - list.close.maxPos(i - period + 1, i) + 1
+            val low = i - list.close.minPos(i - period + 1, i) + 1
 
             up[i] = (100 * (period - high) / period).toFloat()
             down[i] = (100 * (period - low) / period).toFloat()
