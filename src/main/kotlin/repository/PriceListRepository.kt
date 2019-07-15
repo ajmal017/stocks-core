@@ -1,6 +1,5 @@
 package org.cerion.stocklist.repository
 
-import org.cerion.stocklist.Price
 import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.PriceRow
 import org.cerion.stocklist.model.HistoricalDates

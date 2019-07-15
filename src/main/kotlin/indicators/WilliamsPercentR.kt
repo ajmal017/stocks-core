@@ -4,6 +4,8 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.Indicator
+import kotlin.math.max
+import kotlin.math.min
 
 class WilliamsPercentR(period: Int = 14) : IndicatorBase(Indicator.WPR, period) {
 
@@ -23,8 +25,8 @@ class WilliamsPercentR(period: Int = 14) : IndicatorBase(Indicator.WPR, period) 
 
             val count = ValueArray.maxPeriod(i, period)
             for (j in i - count + 1 until i) {
-                h = Math.max(h, list.high[j])
-                l = Math.min(l, list.low[j])
+                h = max(h, list.high[j])
+                l = min(l, list.low[j])
             }
 
             result[i] = (h - list.close[i]) / (h - l) * -100

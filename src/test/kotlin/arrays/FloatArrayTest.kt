@@ -54,9 +54,9 @@ class FloatArrayTest : TestBase() {
         val std = arr.std(period)
 
         assertEqual(0.0, std.first, "standard deviation position 0")
-        assertEqual(27.90, std.get(1), "standard deviation position 1")
-        assertEqual(23.34, std.get(period - 1), "standard deviation position p-1")
-        assertEqual(23.33, std.get(period), "standard deviation position p")
+        assertEqual(27.90, std[1], "standard deviation position 1")
+        assertEqual(23.34, std[period - 1], "standard deviation position p-1")
+        assertEqual(23.33, std[period], "standard deviation position p")
         assertEqual(20.78, std.last, "standard deviation position last")
     }
 

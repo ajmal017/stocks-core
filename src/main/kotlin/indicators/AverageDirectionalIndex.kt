@@ -4,6 +4,7 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.Indicator
+import kotlin.math.abs
 
 class AverageDirectionalIndex(period: Int = 14) : IndicatorBase(Indicator.ADX, period) {
 
@@ -24,7 +25,7 @@ class AverageDirectionalIndex(period: Int = 14) : IndicatorBase(Indicator.ADX, p
             val diff = di.pos(i) - di.neg(i)
             val sum = di.pos(i) + di.neg(i)
 
-            val dx = 100 * (Math.abs(diff) / sum)
+            val dx = 100 * (abs(diff) / sum)
             result[i] = (result[i - 1] * (count - 1) + dx) / count
         }
 

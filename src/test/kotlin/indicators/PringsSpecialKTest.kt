@@ -11,8 +11,8 @@ class PringsSpecialKTest : TestBase() {
 
         // TODO verify values online, just doing these pre-refactor
         assertEqual(0.0, arr.first, "first")
-        assertEqual(-57.52, arr.get(1), "position 1")
-        assertEqual(-74.84, arr.get(2), "position 2")
+        assertEqual(-57.52, arr[1], "position 1")
+        assertEqual(-74.84, arr[2], "position 2")
         assertEqual(112.63, arr.last, "last")
     }
 }

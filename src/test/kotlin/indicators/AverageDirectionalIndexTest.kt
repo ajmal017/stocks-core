@@ -10,8 +10,8 @@ class AverageDirectionalIndexTest : TestBase() {
         val adx = AverageDirectionalIndex().eval(priceList) // period is 14 by default
 
         assertEqual(0.0, adx.first, "first")
-        assertEqual(50.0, adx.get(1), "position 1")
-        assertEqual(66.67, adx.get(2), "position 2")
+        assertEqual(50.0, adx[1], "position 1")
+        assertEqual(66.67, adx[2], "position 2")
         assertEqual(15.04, adx.last, "last")
     }
 
@@ -20,8 +20,8 @@ class AverageDirectionalIndexTest : TestBase() {
         val adx = AverageDirectionalIndex(7).eval(priceList)
 
         assertEqual(0.0, adx.first, "first")
-        assertEqual(50.0, adx.get(1), "position 1")
-        assertEqual(66.67, adx.get(2), "position 2")
+        assertEqual(50.0, adx[1], "position 1")
+        assertEqual(66.67, adx[2], "position 2")
         assertEqual(18.20, adx.last, "last")
     }
 

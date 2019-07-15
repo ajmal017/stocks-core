@@ -61,7 +61,7 @@ class JsonObject internal constructor(json: String, start: Int) : Json() {
         val str = (get(key) as JsonString).value
 
         // TODO this should be something else
-        return if (str.length > 0)
+        return if (str.isNotEmpty())
             java.lang.Float.parseFloat(str)
         else
             java.lang.Float.NaN

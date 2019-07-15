@@ -1,7 +1,6 @@
 package org.cerion.stocklist.web
 
 
-import org.cerion.stocklist.Price
 import org.cerion.stocklist.PriceRow
 import org.cerion.stocklist.model.Dividend
 import org.cerion.stocklist.model.Interval

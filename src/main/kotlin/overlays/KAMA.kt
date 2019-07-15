@@ -2,6 +2,7 @@ package org.cerion.stocklist.overlays
 
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Overlay
+import kotlin.math.abs
 
 class KAMA(er: Int, fast: Int, slow: Int) : OverlayBase<FloatArray>(Overlay.KAMA, er, fast, slow) {
 
@@ -30,12 +31,12 @@ class KAMA(er: Int, fast: Int, slow: Int) : OverlayBase<FloatArray>(Overlay.KAMA
             if (start < 1)
                 start = 1
 
-            val change = Math.abs(arr[i] - arr[start])
+            val change = abs(arr[i] - arr[start])
             var volatility = 0f
 
             //SumX
             for (j in start..i)
-                volatility += Math.abs(arr[j] - arr[j - 1])
+                volatility += abs(arr[j] - arr[j - 1])
 
             val ER = change / volatility
 

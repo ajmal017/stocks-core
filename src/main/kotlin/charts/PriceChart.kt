@@ -19,9 +19,9 @@ class PriceChart : StockChart() {
         if (!showPrice) {
             // Don't add price data
         } else if (candleData && canShowCandleData(list)) {
-            result.addAll(Arrays.asList(CandleDataSet(list, "Price", colorBlack())))
+            result.addAll(listOf(CandleDataSet(list, "Price", colorBlack())))
         } else {
-            result.addAll(Arrays.asList(DataSet(list.close, "Price", colorBlack())))
+            result.addAll(listOf(DataSet(list.close, "Price", colorBlack())))
         }
 
         result.addAll(getOverlayDataSets(list))
@@ -49,8 +49,8 @@ class PriceChart : StockChart() {
 
     override val overlays: Array<IFunctionEnum>
         get() {
-        val overlay = Arrays.asList(*super.overlays)
-        val priceOverlay = Arrays.asList(*PriceOverlay.values())
+        val overlay = listOf(*super.overlays)
+        val priceOverlay = listOf(*PriceOverlay.values())
 
         val combined = ArrayList<IFunctionEnum>()
         combined.addAll(overlay)

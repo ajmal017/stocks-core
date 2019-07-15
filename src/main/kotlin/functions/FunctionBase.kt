@@ -43,10 +43,11 @@ abstract class FunctionBase protected constructor(override val id: IFunctionEnum
 
         var i = 0
         for (n in _params) {
-            if (i > 0)
-                join += ","
+            join += if (i > 0)
+                ","
             else
-                join += " "
+                " "
+
             join += n
             i++
         }

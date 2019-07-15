@@ -5,6 +5,7 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
 import org.cerion.stocklist.model.Interval
+import kotlin.math.sqrt
 
 class SharpeRatio(period: Int, riskFreeRate: Double) : IndicatorBase(Indicator.SHARPE, period, riskFreeRate) {
 
@@ -16,13 +17,13 @@ class SharpeRatio(period: Int, riskFreeRate: Double) : IndicatorBase(Indicator.S
     override fun eval(list: PriceList): FloatArray {
         val years = getInt(0)
         val multiplier: Int
-        when (list.interval) {
-            Interval.DAILY -> multiplier = 252
-            Interval.WEEKLY -> multiplier = 52
-            Interval.MONTHLY -> multiplier = 12
-            Interval.QUARTERLY -> multiplier = 4
-            Interval.YEARLY -> multiplier = 1
-            else -> throw RuntimeException("unexpected interval " + list.interval)
+
+        multiplier = when (list.interval) {
+            Interval.DAILY -> 252
+            Interval.WEEKLY -> 52
+            Interval.MONTHLY -> 12
+            Interval.QUARTERLY -> 4
+            Interval.YEARLY -> 1
         }
 
         val change = list.close.percentChange
@@ -39,7 +40,7 @@ class SharpeRatio(period: Int, riskFreeRate: Double) : IndicatorBase(Indicator.S
         for (i in list.indices) {
             if (i >= multiplier) {
                 result[i] = avg[i] / std[i]
-                result[i] *= Math.sqrt(multiplier.toDouble()).toFloat()
+                result[i] *= sqrt(multiplier.toFloat())
             } else
                 result[i] = java.lang.Float.NaN
         }

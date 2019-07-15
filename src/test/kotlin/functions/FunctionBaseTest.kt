@@ -7,7 +7,6 @@ import org.cerion.stocklist.functions.types.Indicator
 import org.cerion.stocklist.functions.types.Overlay
 import org.cerion.stocklist.functions.types.PriceOverlay
 import org.cerion.stocklist.overlays.BollingerBands
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
@@ -18,9 +17,9 @@ class FunctionBaseTest : TestBase() {
     @Test
     fun hashCodeUniqueness() {
         val values = ArrayList<IFunctionEnum>()
-        values.addAll(Arrays.asList(*Overlay.values()))
-        values.addAll(Arrays.asList(*PriceOverlay.values()))
-        values.addAll(Arrays.asList(*Indicator.values()))
+        values.addAll(listOf(*Overlay.values()))
+        values.addAll(listOf(*PriceOverlay.values()))
+        values.addAll(listOf(*Indicator.values()))
 
         val size = values.size
         val map = HashMap<IFunction, String>()
@@ -105,10 +104,10 @@ class FunctionBaseTest : TestBase() {
     @Test
     fun setParams_convertsDoubleToFloat() {
         val call = BollingerBands()
-        Assert.assertEquals(Float::class, call.params[1]::class)
+        assertEquals(Float::class, call.params[1]::class)
 
         call.setParams(20, 2.0)
-        Assert.assertEquals(Float::class, call.params[1]::class)
+        assertEquals(Float::class, call.params[1]::class)
     }
 
     @Test
@@ -117,11 +116,11 @@ class FunctionBaseTest : TestBase() {
         for (o in Overlay.values()) {
             val overlay = o.instance
             var arr = overlay.eval(priceList.close)
-            assertEquals("'" + o.toString() + "' resultType() does not match eval() result", arr.javaClass, overlay.resultType)
+            assertEquals("'$o' resultType() does not match eval() result", arr.javaClass, overlay.resultType)
 
             // Verify when called on both evals
             arr = overlay.eval(priceList)
-            assertEquals("'" + o.toString() + "' resultType() does not match eval() result (2)", arr.javaClass, overlay.resultType)
+            assertEquals("'$o' resultType() does not match eval() result (2)", arr.javaClass, overlay.resultType)
         }
     }
 
@@ -131,7 +130,7 @@ class FunctionBaseTest : TestBase() {
             val overlay = o.instance
             val arr = overlay.eval(priceList)
 
-            assertEquals("'" + o.toString() + "' resultType() does not match eval() result", arr.javaClass, overlay.resultType)
+            assertEquals("'$o' resultType() does not match eval() result", arr.javaClass, overlay.resultType)
         }
     }
 
@@ -141,7 +140,7 @@ class FunctionBaseTest : TestBase() {
             val indicator = i.instance
             val arr = indicator.eval(priceList)
 
-            assertEquals("'" + i.toString() + "' resultType() does not match eval() result", arr.javaClass, indicator.resultType)
+            assertEquals("'$i' resultType() does not match eval() result", arr.javaClass, indicator.resultType)
         }
     }
 }

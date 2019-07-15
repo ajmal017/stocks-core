@@ -53,7 +53,7 @@ class YahooFinanceTest {
 
                 if (i < 12) {
                     if (list == null || list.size != size)
-                        throw Exception("priceHistory failed at i = " + i);
+                        throw Exception("priceHistory failed at i = $i")
                 }
 
                 Thread.sleep(500);

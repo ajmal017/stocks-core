@@ -3,6 +3,8 @@ package org.cerion.stocklist.indicators
 import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.Indicator
+import kotlin.math.max
+import kotlin.math.min
 
 class UltimateOscillator(p1: Int, p2: Int, p3: Int) : IndicatorBase(Indicator.UO, p1, p2, p3) {
 
@@ -20,7 +22,7 @@ class UltimateOscillator(p1: Int, p2: Int, p3: Int) : IndicatorBase(Indicator.UO
 
         val bp = kotlin.FloatArray(size)
         for (i in 1 until size)
-            bp[i] = list.close[i] - Math.min(list.low[i], list.close[i - 1])
+            bp[i] = list.close[i] - min(list.low[i], list.close[i - 1])
 
         val average = Array(size) { kotlin.FloatArray(3) }
 
@@ -60,7 +62,7 @@ class UltimateOscillator(p1: Int, p2: Int, p3: Int) : IndicatorBase(Indicator.UO
         }
 
         //Parameters should be ordered lowest to highest, but just in-case
-        val max = Math.max(Math.max(p1, p2), p3)
+        val max = max(max(p1, p2), p3)
         for (i in max until size) {
             val avg1 = average[i][0]
             val avg2 = average[i][1]

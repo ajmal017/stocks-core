@@ -4,6 +4,7 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.PairArray
 import org.cerion.stocklist.functions.types.Indicator
+import kotlin.math.max
 
 class DirectionalIndex(period: Int = 14) : IndicatorBase(Indicator.DI, period) {
 
@@ -25,10 +26,10 @@ class DirectionalIndex(period: Int = 14) : IndicatorBase(Indicator.DI, period) {
 
             //TODO, add DM function to PriceList so this can be calculated directly
             if (list.high[i] - list.high[prev] > list.low[prev] - list.low[i])
-                trdm[i][0] = Math.max(list.high[i] - list.high[prev], 0f)
+                trdm[i][0] = max(list.high[i] - list.high[prev], 0f)
 
             if (list.low[prev] - list.low[i] > list.high[i] - list.high[prev])
-                trdm[i][1] = Math.max(list.low[prev] - list.low[i], 0f)
+                trdm[i][1] = max(list.low[prev] - list.low[i], 0f)
         }
 
         val trdm14 = Array(size) { kotlin.FloatArray(3) } //TR14 / +DM14 / -DM14

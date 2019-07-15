@@ -91,7 +91,7 @@ abstract class StockChart : Cloneable {
     }
 
     protected fun getSingleDataSet(values: FloatArray, label: String, color: Int): List<DataSet> {
-        return ArrayList(Arrays.asList(DataSet(values, label, color)))
+        return ArrayList(listOf(DataSet(values, label, color)))
     }
 
     protected fun getBandDataSet(values: BandArray, labelUpper: String, labelLower: String, color: Int): List<DataSet> {

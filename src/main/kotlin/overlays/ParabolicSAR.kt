@@ -3,6 +3,8 @@ package org.cerion.stocklist.overlays
 import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.PriceOverlay
+import kotlin.math.max
+import kotlin.math.min
 
 class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverlay.PSAR, step, maxStep) {
 
@@ -39,7 +41,7 @@ class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverla
         var ep = list.high[start]
 
         for (i in start + 1 until list.size) {
-            ep = Math.max(ep, list.high[i])
+            ep = max(ep, list.high[i])
             if (ep == list.high[i] && alpha + step <= max)
                 alpha += step
 
@@ -67,7 +69,7 @@ class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverla
         var ep = list.low[start]
 
         for (i in start + 1 until list.size) {
-            ep = Math.min(ep, list.low[i])
+            ep = min(ep, list.low[i])
             if (ep == list.low[i] && alpha + step <= max)
                 alpha += step
 

@@ -14,7 +14,7 @@ class VolumeChart : StockChart() {
 
         val data = DataSet(volume, "Volume", colorBlack())
         data.lineType = LineType.BAR
-        result.addAll(Arrays.asList(data))
+        result.addAll(listOf(data))
 
         val sets = getOverlayDataSets(volume)
         result.addAll(sets)

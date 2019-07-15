@@ -1,6 +1,5 @@
 package org.cerion.stocklist.web.api
 
-import org.cerion.stocklist.Price
 import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.PriceRow
 import org.cerion.stocklist.model.Dividend
@@ -102,7 +101,7 @@ class YahooFinance private constructor() {
         // String.join isn't working on android with a Set, possibly java v7/8 issue
         var symbols_join = ""
         for (s in symbols) {
-            if (symbols_join.length > 0)
+            if (symbols_join.isNotEmpty())
                 symbols_join += "+"
             symbols_join += s
         }
@@ -128,7 +127,7 @@ class YahooFinance private constructor() {
     }
 
     fun getQuote(symbol: String): Quote? {
-        val symbols = HashSet(Arrays.asList(symbol))
+        val symbols = HashSet(listOf(symbol))
         val map = getQuotes(symbols)
 
         return map[symbol]
@@ -197,7 +196,7 @@ class YahooFinance private constructor() {
 
         val instance = YahooFinance()
 
-        private val DEBUG = true
+        private const val DEBUG = true
 
         /***
          * Gets PriceList from csv formatted file that API would return

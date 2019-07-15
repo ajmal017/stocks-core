@@ -1,6 +1,5 @@
 package org.cerion.stocklist
 
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import java.util.*
 
@@ -19,7 +18,7 @@ open class TestBase {
     }
 
     fun assertDateEquals(expected: Date, actual: Date) {
-        Assert.assertEquals(expected.time / 1000, actual.time / 1000)
+        assertEquals(expected.time / 1000, actual.time / 1000)
     }
 
     companion object {

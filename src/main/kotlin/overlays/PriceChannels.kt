@@ -4,6 +4,7 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.*
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.functions.types.PriceOverlay
+import kotlin.math.max
 
 class PriceChannels(period: Int = 20) : PriceOverlayBase(PriceOverlay.CHAN, period) {
 
@@ -23,7 +24,7 @@ class PriceChannels(period: Int = 20) : PriceOverlayBase(PriceOverlay.CHAN, peri
 
         for (i in 1 until size) {
             val p = ValueArray.maxPeriod(i, period)
-            val start = Math.max(i - p, 0)
+            val start = max(i - p, 0)
             upper[i] = list.high.max(start, i - 1)
             lower[i] = list.low.min(start, i - 1)
         }

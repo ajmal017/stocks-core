@@ -4,6 +4,10 @@ import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.model.Interval
 
 import java.util.*
+import kotlin.math.ln
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.pow
 
 class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
 
@@ -99,7 +103,7 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
         val logPrices = ArrayList<PriceRow>()
         for (i in 0 until size) {
             val p = get(i)
-            logPrices.add(PriceRow(p.date, Math.log(p.open.toDouble()).toFloat(), Math.log(p.high.toDouble()).toFloat(), Math.log(p.low.toDouble()).toFloat(), Math.log(p.close.toDouble()).toFloat(), Math.log(p.volume.toDouble()).toFloat()))
+            logPrices.add(PriceRow(p.date, ln(p.open), ln(p.high), ln(p.low), ln(p.close), ln(p.volume)))
         }
 
         val result = PriceList(symbol, logPrices)
@@ -169,8 +173,8 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
 
             val p = PriceRow(p1.date,
                     p3.open,
-                    Math.max(Math.max(p1.high, p2.high), p3.high),
-                    Math.min(Math.min(p1.low, p2.low), p3.low),
+                    max(max(p1.high, p2.high), p3.high),
+                    min(min(p1.low, p2.low), p3.low),
                     p1.close,
                     p1.volume + p2.volume + p3.volume)
 
@@ -218,7 +222,7 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
     }
 
     fun tr(pos: Int): Float {
-        return if (pos > 0) Math.max(high[pos], close[pos - 1]) - Math.min(low[pos], close[pos - 1]) else high[0] - low[0]
+        return if (pos > 0) max(high[pos], close[pos - 1]) - min(low[pos], close[pos - 1]) else high[0] - low[0]
     }
 
     fun slope(period: Int, pos: Int): Float {
@@ -236,16 +240,17 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
         val a = (simpleReturn / 100 + 1).toDouble()
         val b = (1 / years).toDouble()
 
-        val annualReturn = Math.pow(a, b) - 1
+        val annualReturn = a.pow(b) - 1
         return annualReturn.toFloat()
     }
 
     private fun pricesPerYear(): Int {
-        val interval = interval
-        when (interval) {
-            Interval.DAILY -> return 252
-            Interval.WEEKLY -> return 52
-            else -> return 12
+        return when (interval) {
+            Interval.DAILY -> 252
+            Interval.WEEKLY -> 52
+            Interval.MONTHLY -> 12
+            Interval.QUARTERLY -> 4
+            else -> 1
         }
     }
 }

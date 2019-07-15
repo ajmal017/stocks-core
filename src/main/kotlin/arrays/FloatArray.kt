@@ -4,6 +4,8 @@ import org.cerion.stocklist.overlays.BollingerBands
 import org.cerion.stocklist.overlays.ExpMovingAverage
 import org.cerion.stocklist.overlays.LinearRegressionLine
 import org.cerion.stocklist.overlays.SimpleMovingAverage
+import kotlin.math.ln
+import kotlin.math.sqrt
 
 open class FloatArray(length: Int) : ValueArray() {
 
@@ -102,7 +104,7 @@ open class FloatArray(length: Int) : ValueArray() {
     fun log(): FloatArray {
         val result = FloatArray(size)
         for (i in 0 until size)
-            result[i] = Math.log(get(i).toDouble()).toFloat()
+            result[i] = ln(get(i).toDouble()).toFloat()
 
         return result
     }
@@ -127,7 +129,7 @@ open class FloatArray(length: Int) : ValueArray() {
                 total += diff * diff
             }
 
-            result[i] = Math.sqrt((total / count).toDouble()).toFloat()
+            result[i] = sqrt((total / count).toDouble()).toFloat()
         }
 
         return result
@@ -195,7 +197,7 @@ open class FloatArray(length: Int) : ValueArray() {
     }
 
     fun correlation(arr: FloatArray): Float {
-        val size = Math.min(size, arr.size).toFloat()
+        val size = kotlin.math.min(size, arr.size).toFloat()
 
         var sumXX = 0f
         var sumX = 0f
@@ -221,7 +223,7 @@ open class FloatArray(length: Int) : ValueArray() {
         val Syy = sumYY - sumY * sumY / size
         val Sxy = sumXY - sumX * sumY / size
 
-        return Sxy / Math.sqrt((Sxx * Syy).toDouble()).toFloat()
+        return Sxy / sqrt((Sxx * Syy).toDouble()).toFloat()
     }
 
 

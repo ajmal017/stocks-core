@@ -4,6 +4,7 @@ import org.cerion.stocklist.PriceList
 import org.cerion.stocklist.arrays.FloatArray
 import org.cerion.stocklist.arrays.ValueArray
 import org.cerion.stocklist.functions.types.Indicator
+import kotlin.math.abs
 
 class RSI(period: Int = 14) : IndicatorBase(Indicator.RSI, period) {
 
@@ -69,7 +70,7 @@ class RSI(period: Int = 14) : IndicatorBase(Indicator.RSI, period) {
 
         // Start in middle range with averages as the first difference
         result[0] = 50f
-        var avgGain = Math.abs(arr[1] - arr[0])
+        var avgGain = abs(arr[1] - arr[0])
         var avgLoss = avgGain
 
         for (i in 1 until size) {
