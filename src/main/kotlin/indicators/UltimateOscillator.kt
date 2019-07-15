@@ -20,7 +20,7 @@ class UltimateOscillator(p1: Int, p2: Int, p3: Int) : IndicatorBase(Indicator.UO
 
         val bp = kotlin.FloatArray(size)
         for (i in 1 until size)
-            bp[i] = list.close(i) - Math.min(list.low(i), list.close(i - 1))
+            bp[i] = list.close[i] - Math.min(list.low[i], list.close[i - 1])
 
         val average = Array(size) { kotlin.FloatArray(3) }
 

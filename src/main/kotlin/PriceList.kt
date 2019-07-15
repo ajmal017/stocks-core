@@ -8,12 +8,12 @@ import java.util.*
 class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
 
     private var logScale = false
-    var dates: Array<Date>
-    var open: FloatArray
-    var high: FloatArray
-    var low: FloatArray
-    var close: FloatArray
-    var volume: FloatArray
+    val dates: Array<Date>
+    val open: FloatArray = FloatArray(list.size)
+    val high: FloatArray = FloatArray(list.size)
+    val low: FloatArray = FloatArray(list.size)
+    val close: FloatArray = FloatArray(list.size)
+    val volume: FloatArray = FloatArray(list.size)
 
     // Skip first instance
     // the first month of a fund may only have a few days worth of arrays depending on its first trading date, example SPY
@@ -45,35 +45,14 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
     val percentChange: Float
         get() = close.getPercentChange(size - 2)
 
-    // These may not be needed if accessing arrays directly
-    fun high(pos: Int): Float = high[pos]
-    fun low(pos: Int): Float = low[pos]
-    fun close(pos: Int): Float = close[pos]
-    fun volume(pos: Int): Float = volume[pos]
-
     init {
-        val sorted = list.sortedBy { it.date }
+        val sortedList = list.sortedBy { it.date }
         val size = list.size
         val dateList = mutableListOf<Date>()
 
-        // Temp
-        val sortedList = mutableListOf<Price>()
-
-        for(i in 0 until size) {
-            val p = Price(sorted[i])
-            sortedList.add(p)
-        }
-
-        open = FloatArray(size)
-        high = FloatArray(size)
-        low = FloatArray(size)
-        close = FloatArray(size)
-        volume = FloatArray(size)
-
         for (i in 0 until size) {
             val p = sortedList[i]
-            p.pos = i
-            p.parent = this
+            val entry = Price(this, i)
 
             //dates[i] = p.date
             dateList.add(p.date)
@@ -83,7 +62,7 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
             close[i] = p.close
             volume[i] = p.volume
 
-            this.add(p)
+            this.add(entry)
         }
 
         this.dates = dateList.toTypedArray()
@@ -94,14 +73,14 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
 
     //Money flow volume
     fun mfv(pos: Int) : Float {
-        var mult = (close(pos) - low(pos) - (high(pos) - close(pos))) / (high(pos) - low(pos))
-        if (close(pos) == low(pos))
+        var mult = (close[pos] - low[pos] - (high[pos] - close[pos])) / (high[pos] - low[pos])
+        if (close[pos] == low[pos])
             mult = -1f
-        if (low(pos) == high(pos))
+        if (low[pos] == high[pos])
         //divide by zero
             mult = 0f
 
-        return mult * volume(pos)
+        return mult * volume[pos]
     }
 
     //Rate of change
@@ -110,7 +89,7 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
         if (pos >= period)
             x = pos - period
 
-        return (close(pos) - close(x)) * 100 / close(x)
+        return (close[pos] - close[x]) * 100 / close[x]
     }
 
     fun toLogScale(): PriceList {

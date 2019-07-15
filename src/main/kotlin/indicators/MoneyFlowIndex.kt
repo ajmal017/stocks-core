@@ -24,9 +24,9 @@ class MoneyFlowIndex(period: Int = 14) : IndicatorBase(Indicator.MFI, period) {
             var negflow = 0f
             for (j in i - period + 1..i) {
                 if (list.tp(j) > list.tp(j - 1))
-                    posflow += list.tp(j) * list.volume(j)
+                    posflow += list.tp(j) * list.volume[j]
                 else
-                    negflow += list.tp(j) * list.volume(j)
+                    negflow += list.tp(j) * list.volume[j]
             }
 
             val ratio = posflow / negflow

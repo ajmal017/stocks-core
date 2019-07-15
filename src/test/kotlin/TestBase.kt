@@ -6,6 +6,10 @@ import java.util.*
 
 open class TestBase {
 
+    fun assertEqual(expected: Float, actual: Float, message: String) {
+        assertEquals(message, expected, actual, 0.005f)
+    }
+
     fun assertEqual(expected: Double, actual: Float, message: String) {
         assertEquals(message, expected, actual.toDouble(), 0.005)
     }

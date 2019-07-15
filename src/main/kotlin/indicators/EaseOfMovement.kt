@@ -21,12 +21,12 @@ class EaseOfMovement(period: Int = 14) : IndicatorBase(Indicator.EMV, period) {
         //Box Ratio = ((V/100,000,000)/(H - L))
         //1-Period EMV = dm / box
         for (i in 1 until list.size) {
-            var diff = list.high(i) - list.low(i) //Need to divide by this
+            var diff = list.high[i] - list.low[i] //Need to divide by this
             if (diff == 0f)
                 diff = 0.01f
 
-            val dm = (list.high(i) + list.low(i)) / 2 - (list.high(i - 1) + list.low(i - 1)) / 2
-            val box = list.volume(i) / 100000.0f / diff //Volume is already divided by 1000 so removing 2 digits here
+            val dm = (list.high[i] + list.low[i]) / 2 - (list.high[i - 1] + list.low[i - 1]) / 2
+            val box = list.volume[i] / 100000.0f / diff //Volume is already divided by 1000 so removing 2 digits here
             result[i] = dm / box
             if (box == 0f)
                 result[i] = 0f

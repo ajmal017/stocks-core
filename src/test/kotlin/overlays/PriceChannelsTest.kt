@@ -9,8 +9,8 @@ class PriceChannelsTest : TestBase() {
     fun priceChannels_defaults() {
         val arr = PriceChannels().eval(priceList)
 
-        assertEqual(priceList.high(0).toDouble(), arr.upper(0), "priceChannels 0")
-        assertEqual(priceList.low(0).toDouble(), arr.lower(0), "priceChannels 0")
+        assertEqual(priceList.high[0], arr.upper(0), "priceChannels 0")
+        assertEqual(priceList.low[0], arr.lower(0), "priceChannels 0")
         assertEqual(1478.0, arr.upper(1), "priceChannels 1 upper")
         assertEqual(1438.36, arr.lower(1), "priceChannels 1 lower")
         assertEqual(1478.0, arr.upper(18), "priceChannels 18")

@@ -3,11 +3,15 @@ package org.cerion.stocklist
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Price(override val date: Date, override val open: Float, override val high: Float, override val low: Float, override val close: Float, override val volume: Float) : IPrice {
+class Price(val parent: PriceList, val pos: Int) : IPrice {
 
-    //Fields used in list
-    var parent: PriceList? = null
-    var pos: Int = 0
+    override val date: Date get() = parent.dates[pos]
+    override val open: Float get() = parent.open[pos]
+    override val close: Float get() = parent.close[pos]
+    override val high: Float get() = parent.high[pos]
+    override val low: Float get() = parent.low[pos]
+    override val volume: Float get() = parent.volume[pos]
+
     val formattedDate: String
         get() = mDateFormat.format(date) //When it needs to be formatted properly
 
@@ -18,21 +22,13 @@ class Price(override val date: Date, override val open: Float, override val high
             return c.get(Calendar.DAY_OF_WEEK)
         }
 
-    constructor(p: IPrice) : this(p.date, p.open, p.high, p.low, p.close, p.volume)
-
-    init {
-        //Error checking
-        if (open < low || close < low || open > high || close > high)
-            throw RuntimeException("Price range inconsistency " + String.format("%s,%f,%f,%f,%f", formattedDate, open, high, low, close))
-    }
-
     //Slope of closing price
     fun slope(period: Int): Float {
-        return parent!!.slope(period, pos)
+        return parent.slope(period, pos)
     }
 
     //Typical price
-    fun tp(): Float = parent!!.tp(pos)
+    fun tp(): Float = parent.tp(pos)
     fun change(prev: Price): Float = getPercentDiff(prev)
 
     fun getPercentDiff(old: Price): Float {

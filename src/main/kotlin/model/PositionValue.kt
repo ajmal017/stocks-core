@@ -161,7 +161,7 @@ class PositionValue(private val purchase: Position, private val priceList: Price
                     // If entered today then currrent date may not be present so just use last entry
                     // TODO add unit test to check this value
                     if (dateEquals(date, this.date) || origPriceAdjusted == 0.0 && i == list.size - 1) {
-                        origPriceAdjusted = list.close(i).toDouble()
+                        origPriceAdjusted = list.close[i].toDouble()
                     }
                 }
             }

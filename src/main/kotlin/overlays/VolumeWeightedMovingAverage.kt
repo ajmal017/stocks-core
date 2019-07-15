@@ -21,8 +21,8 @@ class VolumeWeightedMovingAverage(period: Int = 20) : PriceOverlayBase(PriceOver
             var total = 0f
             var volume = 0f
             for (j in i - count + 1..i) {
-                volume += list.volume(j)
-                total += list.close(j) * list.volume(j)
+                volume += list.volume[j]
+                total += list.close[j] * list.volume[j]
             }
 
             result[i] = total / volume

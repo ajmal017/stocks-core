@@ -23,7 +23,7 @@ class ChaikinMoneyFlow(period: Int = 20) : IndicatorBase(Indicator.CMF, period) 
             var volume = 0f
             for (j in start..i) {
                 mfvolume += list.mfv(j)
-                volume += list.volume(j)
+                volume += list.volume[j]
             }
 
             result[i] = mfvolume / volume

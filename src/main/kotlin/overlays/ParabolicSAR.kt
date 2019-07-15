@@ -23,8 +23,8 @@ class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverla
             start++
 
         when {
-            close[start - 1] > close[start] -> sarFalling(list, result, start, list.high(start - 1), step, max)
-            close[start - 1] < close[start] -> sarRising(list, result, start, list.low(start - 1), step, max)
+            close[start - 1] > close[start] -> sarFalling(list, result, start, list.high[start - 1], step, max)
+            close[start - 1] < close[start] -> sarRising(list, result, start, list.low[start - 1], step, max)
             else -> println("error")
         } //above should fix this
 
@@ -36,11 +36,11 @@ class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverla
 
         var alpha = step
         var sar = sar_start
-        var ep = list.high(start)
+        var ep = list.high[start]
 
         for (i in start + 1 until list.size) {
-            ep = Math.max(ep, list.high(i))
-            if (ep == list.high(i) && alpha + step <= max)
+            ep = Math.max(ep, list.high[i])
+            if (ep == list.high[i] && alpha + step <= max)
                 alpha += step
 
             if (ep - sar < 0)
@@ -48,7 +48,7 @@ class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverla
 
             sar += alpha * (ep - sar)
 
-            if (sar > list.low(i)) {
+            if (sar > list.low[i]) {
                 sarFalling(list, result, i, ep, step, max)
                 return
             }
@@ -64,18 +64,18 @@ class ParabolicSAR(step: Double, maxStep: Double) : PriceOverlayBase(PriceOverla
 
         var alpha = step
         var sar = sar_start
-        var ep = list.low(start)
+        var ep = list.low[start]
 
         for (i in start + 1 until list.size) {
-            ep = Math.min(ep, list.low(i))
-            if (ep == list.low(i) && alpha + step <= max)
+            ep = Math.min(ep, list.low[i])
+            if (ep == list.low[i] && alpha + step <= max)
                 alpha += step
 
             if (sar - ep < 0)
                 println("sarFalling error")
 
             sar -= alpha * (sar - ep)
-            if (sar < list.high(i)) {
+            if (sar < list.high[i]) {
                 sarRising(list, result, i, ep, step, max)
                 return
             }

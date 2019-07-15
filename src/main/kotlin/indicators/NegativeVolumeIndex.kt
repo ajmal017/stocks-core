@@ -17,7 +17,7 @@ class NegativeVolumeIndex : IndicatorBase(Indicator.NVI) {
 
         result[0] = 1000f
         for (i in 1 until list.size) {
-            if (list.volume(i) < list.volume(i - 1))
+            if (list.volume[i] < list.volume[i - 1])
                 result[i] = result[i - 1] + list.roc(i, 1)
             else
                 result[i] = result[i - 1]

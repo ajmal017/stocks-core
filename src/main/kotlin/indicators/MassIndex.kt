@@ -23,7 +23,7 @@ class MassIndex(period: Int = 25) : IndicatorBase(Indicator.MASS_INDEX, period) 
 
         val highLowDiff = FloatArray(size)
         for (i in 0 until size) {
-            highLowDiff[i] = list.high(i) - list.low(i)
+            highLowDiff[i] = list.high[i] - list.low[i]
         }
 
         val ema = highLowDiff.ema(9)

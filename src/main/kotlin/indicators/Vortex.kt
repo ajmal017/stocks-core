@@ -22,8 +22,8 @@ class Vortex(period: Int = 14) : IndicatorBase(Indicator.VORTEX, period) {
         val vm = Array(size) { kotlin.FloatArray(2) } // +VM/-VM
 
         for (i in 1 until size) {
-            vm[i][0] = Math.abs(list.high(i) - list.low(i - 1))
-            vm[i][1] = Math.abs(list.low(i) - list.high(i - 1))
+            vm[i][0] = Math.abs(list.high[i] - list.low[i - 1])
+            vm[i][1] = Math.abs(list.low[i] - list.high[i - 1])
         }
 
         // Start at 1 since that is the average value

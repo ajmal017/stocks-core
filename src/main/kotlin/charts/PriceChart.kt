@@ -73,7 +73,7 @@ class PriceChart : StockChart() {
             return true
 
         for (i in list.indices) {
-            if (list.high(i) != list.low(i))
+            if (list.high[i] != list.low[i])
                 return true
         }
 

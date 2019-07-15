@@ -25,10 +25,10 @@ class ZigZag(percent: Double = 5.0) : PriceOverlayBase(PriceOverlay.ZIGZAG, perc
         var currPos = 0
 
         for (i in list.indices) {
-            val high = list.high(i)
-            val low = list.low(i)
-            val currHigh = list.high(currPos)
-            val currLow = list.low(currPos)
+            val high = list.high[i]
+            val low = list.low[i]
+            val currHigh = list.high[currPos]
+            val currLow = list.low[currPos]
 
             if (direction == -1) {
                 if (zzPercent(high, currLow) > percent) {
@@ -62,16 +62,16 @@ class ZigZag(percent: Double = 5.0) : PriceOverlayBase(PriceOverlay.ZIGZAG, perc
 
         // Add current position as the last point
         if (direction == 0)
-            result[currPos] = list.low(currPos)
+            result[currPos] = list.low[currPos]
         else if (direction == 1)
-            result[currPos] = list.high(currPos)
+            result[currPos] = list.high[currPos]
 
         // Add last point as the reverse direction
         val last = size - 1
         if (direction == 0)
-            result[last] = list.high(last)
+            result[last] = list.high[last]
         else if (direction == 1)
-            result[last] = list.low(last)
+            result[last] = list.low[last]
 
         // Fix by adding straight lines to connect points
         var start = 0
