@@ -1,4 +1,4 @@
-package indicators
+package org.cerion.stocklist.indicators
 
 import org.cerion.stocklist.TestBase
 import org.cerion.stocklist.indicators.MACD

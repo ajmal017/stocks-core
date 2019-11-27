@@ -1,4 +1,4 @@
-package overlays
+package org.cerion.stocklist.overlays
 
 import org.cerion.stocklist.TestBase
 import org.cerion.stocklist.overlays.ExpMovingAverage

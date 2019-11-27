@@ -1,4 +1,4 @@
-package charts
+package org.cerion.stocklist.charts
 
 import org.cerion.stocklist.TestBase
 import org.cerion.stocklist.charts.IndicatorChart
