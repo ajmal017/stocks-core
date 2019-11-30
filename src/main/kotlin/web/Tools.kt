@@ -3,10 +3,54 @@ package org.cerion.stocklist.web
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
 
 object Tools {
+
+    fun getUrl(urlString: String, headers: Map<String, String>?): Response {
+        val res = Response()
+
+        try {
+            //Create connection
+            val url = URL(urlString)
+            val connection = url.openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            connection.useCaches = false
+            connection.doInput = true
+
+            headers?.forEach { connection.setRequestProperty(it.key, it.value) }
+            //connection.setRequestProperty("Content-type", "application/json")
+            //connection.setRequestProperty("Authorization", "Token ${Tiingo.API_TOKEN}")
+
+            //Get Response
+            res.code = connection.responseCode
+            res.headers = connection.headerFields
+            val stream = connection.inputStream
+            val rd = BufferedReader(InputStreamReader(stream))
+            var line: String?
+            val response = StringBuffer()
+            while (true) {
+                line = rd.readLine()
+                if (line == null)
+                    break
+
+                response.append(line)
+                response.append('\r')
+            }
+            rd.close()
+            res.result = response.toString()
+
+        } catch (e: Exception) {
+            //println("Response code = $code")
+            //e.printStackTrace()
+        } finally {
+            //connection?.disconnect()
+        }
+
+        return res
+    }
 
     fun getURL(theUrl: String): String? {
         var sResult: String? = null
