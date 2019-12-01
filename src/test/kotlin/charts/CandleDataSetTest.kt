@@ -1,6 +1,6 @@
-package org.cerion.stocklist.charts
+package org.cerion.stocks.core.charts
 
-import org.cerion.stocklist.Utils
+import org.cerion.stocks.core.Utils
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

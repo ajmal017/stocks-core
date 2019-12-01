@@ -1,6 +1,6 @@
-package org.cerion.stocklist.integrationTests
+package org.cerion.stocks.core.integrationTests
 
-import org.cerion.stocklist.web.api.TDAmeritrade
+import org.cerion.stocks.core.web.api.TDAmeritrade
 
 class TDAmeritradeTest {
 

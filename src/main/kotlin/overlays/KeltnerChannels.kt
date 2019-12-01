@@ -1,10 +1,10 @@
-package org.cerion.stocklist.overlays
+package org.cerion.stocks.core.overlays
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.arrays.BandArray
-import org.cerion.stocklist.functions.types.PriceOverlay
-import org.cerion.stocklist.indicators.AverageTrueRange
-import org.cerion.stocklist.arrays.FloatArray
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.arrays.BandArray
+import org.cerion.stocks.core.functions.types.PriceOverlay
+import org.cerion.stocks.core.indicators.AverageTrueRange
+import org.cerion.stocks.core.arrays.FloatArray
 
 class KeltnerChannels(period: Int, multiplier: Double, atr: Int) : PriceOverlayBase(PriceOverlay.KC, period, multiplier, atr) {
 

@@ -1,8 +1,8 @@
-package org.cerion.stocklist.indicators
+package org.cerion.stocks.core.indicators
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.functions.types.Indicator
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.functions.types.Indicator
 
 class PringsKnowSureThing(p1: Int, p2: Int, p3: Int, p4: Int, p5: Int, p6: Int, p7: Int, p8: Int)
     : IndicatorBase(Indicator.KST, p1, p2, p3, p4, p5, p6, p7, p8) {

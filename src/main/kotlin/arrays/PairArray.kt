@@ -1,4 +1,4 @@
-package org.cerion.stocklist.arrays
+package org.cerion.stocks.core.arrays
 
 /** Pair of related lines with opposing directional meaning
  * @param positive Higher value or positive directional value

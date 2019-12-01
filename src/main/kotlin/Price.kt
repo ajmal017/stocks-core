@@ -1,4 +1,4 @@
-package org.cerion.stocklist
+package org.cerion.stocks.core
 
 import java.text.SimpleDateFormat
 import java.util.*

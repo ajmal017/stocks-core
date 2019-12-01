@@ -1,7 +1,7 @@
-package org.cerion.stocklist
+package org.cerion.stocks.core
 
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.model.Interval
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.model.Interval
 
 import java.util.*
 import kotlin.math.ln

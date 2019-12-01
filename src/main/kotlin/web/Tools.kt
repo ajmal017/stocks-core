@@ -1,4 +1,4 @@
-package org.cerion.stocklist.web
+package org.cerion.stocks.core.web
 
 import java.io.BufferedReader
 import java.io.IOException

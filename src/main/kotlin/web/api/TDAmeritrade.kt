@@ -1,6 +1,6 @@
-package org.cerion.stocklist.web.api
+package org.cerion.stocks.core.web.api
 
-import org.cerion.stocklist.web.Tools
+import org.cerion.stocks.core.web.Tools
 import org.json.JSONArray
 import org.json.JSONObject
 

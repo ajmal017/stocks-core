@@ -1,10 +1,10 @@
-package org.cerion.stocklist.charts
+package org.cerion.stocks.core.charts
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.functions.IOverlay
-import org.cerion.stocklist.functions.types.IFunctionEnum
-import org.cerion.stocklist.functions.types.PriceOverlay
-import org.cerion.stocklist.model.Interval
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.functions.IOverlay
+import org.cerion.stocks.core.functions.types.IFunctionEnum
+import org.cerion.stocks.core.functions.types.PriceOverlay
+import org.cerion.stocks.core.model.Interval
 import java.util.*
 
 class PriceChart : StockChart() {

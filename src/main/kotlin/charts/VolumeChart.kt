@@ -1,8 +1,8 @@
-package org.cerion.stocklist.charts
+package org.cerion.stocks.core.charts
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.functions.ISimpleOverlay
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.functions.ISimpleOverlay
 import java.util.*
 
 class VolumeChart : StockChart() {

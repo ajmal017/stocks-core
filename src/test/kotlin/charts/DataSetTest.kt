@@ -1,6 +1,6 @@
-package org.cerion.stocklist.charts
+package org.cerion.stocks.core.charts
 
-import org.cerion.stocklist.arrays.FloatArray
+import org.cerion.stocks.core.arrays.FloatArray
 import org.junit.Test
 
 import org.junit.Assert.*

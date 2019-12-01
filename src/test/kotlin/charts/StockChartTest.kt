@@ -1,14 +1,14 @@
-package org.cerion.stocklist.charts
+package org.cerion.stocks.core.charts
 
-import org.cerion.stocklist.TestBase
-import org.cerion.stocklist.charts.IndicatorChart
-import org.cerion.stocklist.charts.PriceChart
-import org.cerion.stocklist.charts.VolumeChart
-import org.cerion.stocklist.indicators.Vortex
-import org.cerion.stocklist.overlays.BollingerBands
-import org.cerion.stocklist.overlays.ExpMovingAverage
-import org.cerion.stocklist.overlays.PriceChannels
-import org.cerion.stocklist.overlays.SimpleMovingAverage
+import org.cerion.stocks.core.TestBase
+import org.cerion.stocks.core.charts.IndicatorChart
+import org.cerion.stocks.core.charts.PriceChart
+import org.cerion.stocks.core.charts.VolumeChart
+import org.cerion.stocks.core.indicators.Vortex
+import org.cerion.stocks.core.overlays.BollingerBands
+import org.cerion.stocks.core.overlays.ExpMovingAverage
+import org.cerion.stocks.core.overlays.PriceChannels
+import org.cerion.stocks.core.overlays.SimpleMovingAverage
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

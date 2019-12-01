@@ -1,9 +1,9 @@
-package org.cerion.stocklist.indicators
+package org.cerion.stocks.core.indicators
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.arrays.PairArray
-import org.cerion.stocklist.functions.types.Indicator
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.arrays.PairArray
+import org.cerion.stocks.core.functions.types.Indicator
 
 class AroonUpDown(period: Int = 25) : IndicatorBase(Indicator.AROON, period) {
 

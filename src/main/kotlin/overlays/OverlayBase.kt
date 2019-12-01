@@ -1,13 +1,13 @@
-package org.cerion.stocklist.overlays
+package org.cerion.stocks.core.overlays
 
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.arrays.ValueArray
-import org.cerion.stocklist.functions.FunctionBase
-import org.cerion.stocklist.functions.IPriceOverlay
-import org.cerion.stocklist.functions.ISimpleOverlay
-import org.cerion.stocklist.functions.types.IFunctionEnum
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.arrays.ValueArray
+import org.cerion.stocks.core.functions.FunctionBase
+import org.cerion.stocks.core.functions.IPriceOverlay
+import org.cerion.stocks.core.functions.ISimpleOverlay
+import org.cerion.stocks.core.functions.types.IFunctionEnum
 
 abstract class PriceOverlayBase internal constructor(id: IFunctionEnum, vararg params: Number) : FunctionBase(id, *params), IPriceOverlay
 

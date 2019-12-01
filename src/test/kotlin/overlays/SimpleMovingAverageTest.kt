@@ -1,6 +1,6 @@
-package org.cerion.stocklist.overlays
+package org.cerion.stocks.core.overlays
 
-import org.cerion.stocklist.TestBase
+import org.cerion.stocks.core.TestBase
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

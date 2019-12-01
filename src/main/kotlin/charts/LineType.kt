@@ -1,4 +1,4 @@
-package org.cerion.stocklist.charts
+package org.cerion.stocks.core.charts
 
 enum class LineType {
     LINE,

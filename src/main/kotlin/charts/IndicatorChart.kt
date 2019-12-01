@@ -1,15 +1,15 @@
-package org.cerion.stocklist.charts
+package org.cerion.stocks.core.charts
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.arrays.BandArray
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.arrays.MACDArray
-import org.cerion.stocklist.arrays.PairArray
-import org.cerion.stocklist.arrays.ValueArray
-import org.cerion.stocklist.functions.IIndicator
-import org.cerion.stocklist.functions.IOverlay
-import org.cerion.stocklist.functions.ISimpleOverlay
-import org.cerion.stocklist.functions.types.Indicator
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.arrays.BandArray
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.arrays.MACDArray
+import org.cerion.stocks.core.arrays.PairArray
+import org.cerion.stocks.core.arrays.ValueArray
+import org.cerion.stocks.core.functions.IIndicator
+import org.cerion.stocks.core.functions.IOverlay
+import org.cerion.stocks.core.functions.ISimpleOverlay
+import org.cerion.stocks.core.functions.types.Indicator
 
 import java.util.ArrayList
 

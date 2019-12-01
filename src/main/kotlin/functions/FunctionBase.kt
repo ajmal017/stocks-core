@@ -1,7 +1,7 @@
-package org.cerion.stocklist.functions
+package org.cerion.stocks.core.functions
 
-import org.cerion.stocklist.arrays.ValueArray
-import org.cerion.stocklist.functions.types.IFunctionEnum
+import org.cerion.stocks.core.arrays.ValueArray
+import org.cerion.stocks.core.functions.types.IFunctionEnum
 import java.util.*
 
 abstract class FunctionBase protected constructor(override val id: IFunctionEnum, vararg params: Number) : IFunction {

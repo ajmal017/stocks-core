@@ -1,7 +1,7 @@
-package org.cerion.stocklist.web
+package org.cerion.stocks.core.web
 
-import org.cerion.stocklist.PriceRow
-import org.cerion.stocklist.model.Interval
+import org.cerion.stocks.core.PriceRow
+import org.cerion.stocks.core.model.Interval
 import java.util.*
 
 interface CachedDataAPI : DataAPI {

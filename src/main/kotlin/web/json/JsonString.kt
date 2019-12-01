@@ -1,4 +1,4 @@
-package org.cerion.stocklist.web.json
+package org.cerion.stocks.core.web.json
 
 class JsonString internal constructor(json: String, start: Int) : Json() {
 

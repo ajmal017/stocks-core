@@ -1,7 +1,7 @@
-package org.cerion.stocklist.overlays
+package org.cerion.stocks.core.overlays
 
-import org.cerion.stocklist.TestBase
-import org.cerion.stocklist.overlays.ExpMovingAverage
+import org.cerion.stocks.core.TestBase
+import org.cerion.stocks.core.overlays.ExpMovingAverage
 import org.junit.Assert.*
 import org.junit.Test
 

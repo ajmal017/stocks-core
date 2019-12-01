@@ -1,7 +1,7 @@
-package org.cerion.stocklist.overlays
+package org.cerion.stocks.core.overlays
 
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.functions.types.Overlay
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.functions.types.Overlay
 import kotlin.math.abs
 
 class KAMA(er: Int, fast: Int, slow: Int) : OverlayBase<FloatArray>(Overlay.KAMA, er, fast, slow) {

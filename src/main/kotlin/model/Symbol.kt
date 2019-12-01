@@ -1,4 +1,4 @@
-package org.cerion.stocklist.model
+package org.cerion.stocks.core.model
 
 class Symbol(val symbol: String, var name: String? = null, var exchange: String? = null) {
 

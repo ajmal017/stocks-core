@@ -1,7 +1,7 @@
-package org.cerion.stocklist.functions.types
+package org.cerion.stocks.core.functions.types
 
-import org.cerion.stocklist.functions.IPriceOverlay
-import org.cerion.stocklist.overlays.*
+import org.cerion.stocks.core.functions.IPriceOverlay
+import org.cerion.stocks.core.overlays.*
 
 enum class PriceOverlay : IFunctionEnum {
 

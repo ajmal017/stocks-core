@@ -1,10 +1,10 @@
-package org.cerion.stocklist.functions.conditions
+package org.cerion.stocks.core.functions.conditions
 
-import org.cerion.stocklist.TestBase
-import org.cerion.stocklist.arrays.BandArray
-import org.cerion.stocklist.functions.IPriceOverlay
-import org.cerion.stocklist.overlays.BollingerBands
-import org.cerion.stocklist.overlays.SimpleMovingAverage
+import org.cerion.stocks.core.TestBase
+import org.cerion.stocks.core.arrays.BandArray
+import org.cerion.stocks.core.functions.IPriceOverlay
+import org.cerion.stocks.core.overlays.BollingerBands
+import org.cerion.stocks.core.overlays.SimpleMovingAverage
 import org.junit.Assert.*
 import org.junit.Test
 

@@ -1,12 +1,12 @@
-package org.cerion.stocklist.functions.conditions
+package org.cerion.stocks.core.functions.conditions
 
-import org.cerion.stocklist.Price
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.arrays.BandArray
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.charts.PriceChart
-import org.cerion.stocklist.charts.StockChart
-import org.cerion.stocklist.functions.IPriceOverlay
+import org.cerion.stocks.core.Price
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.arrays.BandArray
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.charts.PriceChart
+import org.cerion.stocks.core.charts.StockChart
+import org.cerion.stocks.core.functions.IPriceOverlay
 
 class PriceCondition(private val condition: Condition, private val overlay: IPriceOverlay) : ICondition {
 

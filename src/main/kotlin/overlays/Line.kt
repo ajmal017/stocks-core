@@ -1,7 +1,7 @@
-package org.cerion.stocklist.overlays
+package org.cerion.stocks.core.overlays
 
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.functions.types.Overlay
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.functions.types.Overlay
 
 class Line(slope: Double = 1.0) : OverlayBase<FloatArray>(Overlay.LINE, slope) {
 

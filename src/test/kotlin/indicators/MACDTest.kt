@@ -1,7 +1,7 @@
-package org.cerion.stocklist.indicators
+package org.cerion.stocks.core.indicators
 
-import org.cerion.stocklist.TestBase
-import org.cerion.stocklist.indicators.MACD
+import org.cerion.stocks.core.TestBase
+import org.cerion.stocks.core.indicators.MACD
 import org.junit.Test
 
 class MACDTest : TestBase() {

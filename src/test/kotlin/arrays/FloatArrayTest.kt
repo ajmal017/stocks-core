@@ -1,7 +1,7 @@
-package org.cerion.stocklist.arrays
+package org.cerion.stocks.core.arrays
 
-import org.cerion.stocklist.TestBase
-import org.cerion.stocklist.overlays.SimpleMovingAverage
+import org.cerion.stocks.core.TestBase
+import org.cerion.stocks.core.overlays.SimpleMovingAverage
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

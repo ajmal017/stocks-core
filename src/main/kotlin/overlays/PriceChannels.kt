@@ -1,9 +1,9 @@
-package org.cerion.stocklist.overlays
+package org.cerion.stocks.core.overlays
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.arrays.*
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.functions.types.PriceOverlay
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.arrays.*
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.functions.types.PriceOverlay
 import kotlin.math.max
 
 class PriceChannels(period: Int = 20) : PriceOverlayBase(PriceOverlay.CHAN, period) {

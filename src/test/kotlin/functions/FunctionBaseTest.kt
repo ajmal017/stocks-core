@@ -1,12 +1,12 @@
-package org.cerion.stocklist.functions
+package org.cerion.stocks.core.functions
 
-import org.cerion.stocklist.TestBase
-import org.cerion.stocklist.Utils
-import org.cerion.stocklist.functions.types.IFunctionEnum
-import org.cerion.stocklist.functions.types.Indicator
-import org.cerion.stocklist.functions.types.Overlay
-import org.cerion.stocklist.functions.types.PriceOverlay
-import org.cerion.stocklist.overlays.BollingerBands
+import org.cerion.stocks.core.TestBase
+import org.cerion.stocks.core.Utils
+import org.cerion.stocks.core.functions.types.IFunctionEnum
+import org.cerion.stocks.core.functions.types.Indicator
+import org.cerion.stocks.core.functions.types.Overlay
+import org.cerion.stocks.core.functions.types.PriceOverlay
+import org.cerion.stocks.core.overlays.BollingerBands
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test

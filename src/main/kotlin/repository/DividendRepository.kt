@@ -1,7 +1,7 @@
-package org.cerion.stocklist.repository
+package org.cerion.stocks.core.repository
 
-import org.cerion.stocklist.model.Dividend
-import org.cerion.stocklist.model.HistoricalDates
+import org.cerion.stocks.core.model.Dividend
+import org.cerion.stocks.core.model.HistoricalDates
 
 interface DividendRepository {
     fun get(symbol: String): List<Dividend>

@@ -1,6 +1,6 @@
-package org.cerion.stocklist.charts
+package org.cerion.stocks.core.charts
 
-import org.cerion.stocklist.PriceList
+import org.cerion.stocks.core.PriceList
 
 class CandleDataSet(private val mList: PriceList, override val label: String, override val color: Int) : IDataSet {
 

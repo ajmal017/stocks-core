@@ -1,8 +1,8 @@
-package org.cerion.stocklist.overlays
+package org.cerion.stocks.core.overlays
 
-import org.cerion.stocklist.arrays.BandArray
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.functions.types.Overlay
+import org.cerion.stocks.core.arrays.BandArray
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.functions.types.Overlay
 
 class BollingerBands(period: Int, stddev: Double) : OverlayBase<BandArray>(Overlay.BB, period, stddev) {
 

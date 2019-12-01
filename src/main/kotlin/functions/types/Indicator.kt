@@ -1,7 +1,7 @@
-package org.cerion.stocklist.functions.types
+package org.cerion.stocks.core.functions.types
 
-import org.cerion.stocklist.functions.IIndicator
-import org.cerion.stocklist.indicators.*
+import org.cerion.stocks.core.functions.IIndicator
+import org.cerion.stocks.core.indicators.*
 
 enum class Indicator : IFunctionEnum {
 

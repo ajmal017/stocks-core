@@ -1,4 +1,4 @@
-package org.cerion.stocklist.arrays
+package org.cerion.stocks.core.arrays
 
 abstract class ValueArray {
 

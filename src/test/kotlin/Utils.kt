@@ -1,7 +1,7 @@
-package org.cerion.stocklist
+package org.cerion.stocks.core
 
-import org.cerion.stocklist.model.Dividend
-import org.cerion.stocklist.web.api.YahooFinance
+import org.cerion.stocks.core.model.Dividend
+import org.cerion.stocks.core.web.api.YahooFinance
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*

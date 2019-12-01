@@ -1,7 +1,7 @@
-package org.cerion.stocklist.model
+package org.cerion.stocks.core.model
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.PriceRow
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.PriceRow
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.*

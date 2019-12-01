@@ -1,4 +1,4 @@
-package org.cerion.stocklist.functions.conditions
+package org.cerion.stocks.core.functions.conditions
 
 enum class Condition {
     ABOVE,

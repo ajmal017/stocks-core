@@ -1,9 +1,9 @@
-package org.cerion.stocklist.arrays
+package org.cerion.stocks.core.arrays
 
-import org.cerion.stocklist.overlays.BollingerBands
-import org.cerion.stocklist.overlays.ExpMovingAverage
-import org.cerion.stocklist.overlays.LinearRegressionLine
-import org.cerion.stocklist.overlays.SimpleMovingAverage
+import org.cerion.stocks.core.overlays.BollingerBands
+import org.cerion.stocks.core.overlays.ExpMovingAverage
+import org.cerion.stocks.core.overlays.LinearRegressionLine
+import org.cerion.stocks.core.overlays.SimpleMovingAverage
 import kotlin.math.ln
 import kotlin.math.sqrt
 

@@ -1,6 +1,6 @@
-package org.cerion.stocklist.functions.types
+package org.cerion.stocks.core.functions.types
 
-import org.cerion.stocklist.functions.IFunction
+import org.cerion.stocks.core.functions.IFunction
 
 interface IFunctionEnum {
     val instance: IFunction

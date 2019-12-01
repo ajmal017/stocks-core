@@ -1,8 +1,8 @@
-package org.cerion.stocklist.charts
+package org.cerion.stocks.core.charts
 
-import org.cerion.stocklist.indicators.MACD
-import org.cerion.stocklist.overlays.ExpMovingAverage
-import org.cerion.stocklist.overlays.SimpleMovingAverage
+import org.cerion.stocks.core.indicators.MACD
+import org.cerion.stocks.core.overlays.ExpMovingAverage
+import org.cerion.stocks.core.overlays.SimpleMovingAverage
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Test

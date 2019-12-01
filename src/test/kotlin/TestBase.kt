@@ -1,4 +1,4 @@
-package org.cerion.stocklist
+package org.cerion.stocks.core
 
 import org.junit.Assert.assertEquals
 import java.util.*

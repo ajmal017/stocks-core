@@ -1,13 +1,13 @@
-package org.cerion.stocklist.web
+package org.cerion.stocks.core.web
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.PriceRow
-import org.cerion.stocklist.model.Dividend
-import org.cerion.stocklist.model.Interval
-import org.cerion.stocklist.model.Quote
-import org.cerion.stocklist.model.Symbol
-import org.cerion.stocklist.repository.DividendRepository
-import org.cerion.stocklist.repository.PriceListRepository
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.PriceRow
+import org.cerion.stocks.core.model.Dividend
+import org.cerion.stocks.core.model.Interval
+import org.cerion.stocks.core.model.Quote
+import org.cerion.stocks.core.model.Symbol
+import org.cerion.stocks.core.repository.DividendRepository
+import org.cerion.stocks.core.repository.PriceListRepository
 import java.util.*
 
 class RepositoryCachedAPI(private val mAPI: DataAPI, private val mPriceRepo: PriceListRepository, private val mDividendRepo: DividendRepository) : CachedDataAPI {

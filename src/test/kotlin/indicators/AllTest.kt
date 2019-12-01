@@ -1,6 +1,6 @@
-package org.cerion.stocklist.indicators
+package org.cerion.stocks.core.indicators
 
-import org.cerion.stocklist.functions.types.Indicator
+import org.cerion.stocks.core.functions.types.Indicator
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

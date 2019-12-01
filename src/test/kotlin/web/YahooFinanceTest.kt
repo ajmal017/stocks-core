@@ -1,7 +1,7 @@
-package org.cerion.stocklist.web
+package org.cerion.stocks.core.web
 
-import org.cerion.stocklist.TestBase
-import org.cerion.stocklist.web.api.YahooFinance
+import org.cerion.stocks.core.TestBase
+import org.cerion.stocks.core.web.api.YahooFinance
 import org.junit.Test
 
 class YahooFinanceTest : TestBase() {

@@ -1,4 +1,4 @@
-package org.cerion.stocklist.arrays
+package org.cerion.stocks.core.arrays
 
 class MACDArray(size: Int, private val signalPeriod: Int) : FloatArray(size) {
 

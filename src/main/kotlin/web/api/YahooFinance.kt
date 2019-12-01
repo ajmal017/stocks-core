@@ -1,11 +1,11 @@
-package org.cerion.stocklist.web.api
+package org.cerion.stocks.core.web.api
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.PriceRow
-import org.cerion.stocklist.model.Dividend
-import org.cerion.stocklist.model.Interval
-import org.cerion.stocklist.model.Quote
-import org.cerion.stocklist.web.Tools
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.PriceRow
+import org.cerion.stocks.core.model.Dividend
+import org.cerion.stocks.core.model.Interval
+import org.cerion.stocks.core.model.Quote
+import org.cerion.stocks.core.web.Tools
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -1,10 +1,10 @@
-package org.cerion.stocklist.functions
+package org.cerion.stocks.core.functions
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.arrays.ValueArray
-import org.cerion.stocklist.functions.types.IFunctionEnum
-import org.cerion.stocklist.functions.types.Indicator
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.arrays.ValueArray
+import org.cerion.stocks.core.functions.types.IFunctionEnum
+import org.cerion.stocks.core.functions.types.Indicator
 
 
 interface IFunction {

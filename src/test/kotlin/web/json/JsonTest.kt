@@ -1,6 +1,6 @@
-package org.cerion.stocklist.web.json
+package org.cerion.stocks.core.web.json
 
-import org.cerion.stocklist.Utils
+import org.cerion.stocks.core.Utils
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

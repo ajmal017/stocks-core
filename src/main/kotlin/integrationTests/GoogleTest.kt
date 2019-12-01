@@ -1,6 +1,6 @@
-package org.cerion.stocklist.integrationTests
+package org.cerion.stocks.core.integrationTests
 
-import org.cerion.stocklist.web.api.GoogleFinance
+import org.cerion.stocks.core.web.api.GoogleFinance
 
 class GoogleTest {
 

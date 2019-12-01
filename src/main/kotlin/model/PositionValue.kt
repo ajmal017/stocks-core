@@ -1,6 +1,6 @@
-package org.cerion.stocklist.model
+package org.cerion.stocks.core.model
 
-import org.cerion.stocklist.PriceList
+import org.cerion.stocks.core.PriceList
 import java.text.SimpleDateFormat
 import java.util.*
 

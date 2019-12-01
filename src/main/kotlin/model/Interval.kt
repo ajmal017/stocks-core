@@ -1,4 +1,4 @@
-package org.cerion.stocklist.model
+package org.cerion.stocks.core.model
 
 enum class Interval {
     DAILY,

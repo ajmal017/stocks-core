@@ -1,4 +1,4 @@
-package org.cerion.stocklist.web
+package org.cerion.stocks.core.web
 
 class Response {
     var code: Int = 0

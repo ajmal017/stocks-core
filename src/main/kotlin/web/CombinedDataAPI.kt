@@ -1,13 +1,13 @@
-package org.cerion.stocklist.web
+package org.cerion.stocks.core.web
 
-import org.cerion.stocklist.PriceRow
-import org.cerion.stocklist.model.Dividend
-import org.cerion.stocklist.model.Interval
-import org.cerion.stocklist.model.Quote
-import org.cerion.stocklist.model.Symbol
-import org.cerion.stocklist.web.api.GoogleFinance
-import org.cerion.stocklist.web.api.Tiingo
-import org.cerion.stocklist.web.api.YahooFinance
+import org.cerion.stocks.core.PriceRow
+import org.cerion.stocks.core.model.Dividend
+import org.cerion.stocks.core.model.Interval
+import org.cerion.stocks.core.model.Quote
+import org.cerion.stocks.core.model.Symbol
+import org.cerion.stocks.core.web.api.GoogleFinance
+import org.cerion.stocks.core.web.api.Tiingo
+import org.cerion.stocks.core.web.api.YahooFinance
 import java.util.*
 
 class CombinedDataAPI : DataAPI {

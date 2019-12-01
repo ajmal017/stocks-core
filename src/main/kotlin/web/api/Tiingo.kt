@@ -1,8 +1,8 @@
-package org.cerion.stocklist.web.api
+package org.cerion.stocks.core.web.api
 
-import org.cerion.stocklist.model.Symbol
-import org.cerion.stocklist.web.json.Json
-import org.cerion.stocklist.web.json.JsonObject
+import org.cerion.stocks.core.model.Symbol
+import org.cerion.stocks.core.web.json.Json
+import org.cerion.stocks.core.web.json.JsonObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection

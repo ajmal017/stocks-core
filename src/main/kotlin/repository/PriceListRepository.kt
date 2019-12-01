@@ -1,9 +1,9 @@
-package org.cerion.stocklist.repository
+package org.cerion.stocks.core.repository
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.PriceRow
-import org.cerion.stocklist.model.HistoricalDates
-import org.cerion.stocklist.model.Interval
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.PriceRow
+import org.cerion.stocks.core.model.HistoricalDates
+import org.cerion.stocks.core.model.Interval
 
 interface PriceListRepository {
     fun add(list: PriceList)

@@ -1,3 +1,3 @@
-package org.cerion.stocklist.web.json
+package org.cerion.stocks.core.web.json
 
 class JsonException : Exception()

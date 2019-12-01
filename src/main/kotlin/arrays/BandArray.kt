@@ -1,4 +1,4 @@
-package org.cerion.stocklist.arrays
+package org.cerion.stocks.core.arrays
 
 class BandArray(private val source: FloatArray, private val upper: FloatArray, private val lower: FloatArray) : ValueArray() {
 

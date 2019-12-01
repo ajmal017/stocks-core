@@ -1,8 +1,8 @@
-package org.cerion.stocklist.integrationTests
+package org.cerion.stocks.core.integrationTests
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.model.Interval
-import org.cerion.stocklist.web.api.YahooFinance
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.model.Interval
+import org.cerion.stocks.core.web.api.YahooFinance
 
 class YahooFinanceTest {
 

@@ -1,10 +1,10 @@
-package org.cerion.stocklist.indicators
+package org.cerion.stocks.core.indicators
 
 
-import org.cerion.stocklist.PriceList
-import org.cerion.stocklist.arrays.FloatArray
-import org.cerion.stocklist.functions.types.Indicator
-import org.cerion.stocklist.model.Interval
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.functions.types.Indicator
+import org.cerion.stocks.core.model.Interval
 import kotlin.math.sqrt
 
 class SharpeRatio(period: Int, riskFreeRate: Double) : IndicatorBase(Indicator.SHARPE, period, riskFreeRate) {

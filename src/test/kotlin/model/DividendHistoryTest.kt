@@ -1,7 +1,7 @@
-package org.cerion.stocklist.model
+package org.cerion.stocks.core.model
 
-import org.cerion.stocklist.TestBase
-import org.cerion.stocklist.Utils
+import org.cerion.stocks.core.TestBase
+import org.cerion.stocks.core.Utils
 import org.junit.Test
 
 import org.junit.Assert.*
