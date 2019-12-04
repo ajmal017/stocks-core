@@ -154,7 +154,7 @@ class YahooFinance private constructor() {
                 if (start < end) {
                     mCookieCrumb = page.substring(start, end)
                     mCookieCrumb = mCookieCrumb!!.replace("\\u002F", "/")
-                    mCookie = res.headers["set-cookie"]!![0]
+                    mCookie = res.headers["Set-Cookie"]!![0]
                     mCookie = mCookie!!.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
                     return true
                 }
