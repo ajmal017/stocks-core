@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 // TODO rename this to just Position after existing class can be renamed to something better (PurchaseLot maybe)
-class PositionValue(private val purchase: Position, private val priceList: PriceList?) {
+class PositionValue(private val purchase: PositionWithDividends, private val priceList: PriceList?) {
 
     private val dividendsReinvested = purchase.dividendsReinvested
     private val date: Date = purchase.date

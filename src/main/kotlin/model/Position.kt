@@ -2,7 +2,16 @@ package org.cerion.stocks.core.model
 
 import java.util.Date
 
-class Position(val symbol: String, val count: Double, val origPrice: Double, val date: Date, val dividendsReinvested: Boolean = false) {
+interface Position {
+    val symbol: String
+    val quantity: Double
+    val pricePerShare: Double
+    val totalValue: Double
+    val cash: Boolean
+}
+
+@Deprecated("phasing out for simplified version")
+class PositionWithDividends(val symbol: String, val count: Double, val origPrice: Double, val date: Date, val dividendsReinvested: Boolean = false) {
 
     var id = 0
     var accountId = 0

@@ -13,7 +13,7 @@ class PositionValueTest {
     fun priceChange() {
         val shares = 10.123f
 
-        val pos = Position("SPY", shares.toDouble(), 2276.98, getDate(30))
+        val pos = PositionWithDividends("SPY", shares.toDouble(), 2276.98, getDate(30))
         val position = PositionValue(pos, null)
         val q = Quote("SPY")
         q.lastTrade = 2352.95f
@@ -46,7 +46,7 @@ class PositionValueTest {
         //val purchasePrice = 4090.9401 // Issues representing this in double, should really be 4094.94000000000
         val profit = 63.95
 
-        val pos = Position("FRIFX", 341.481, 11.98, GregorianCalendar(2017, 2, 9).time, true)
+        val pos = PositionWithDividends("FRIFX", 341.481, 11.98, GregorianCalendar(2017, 2, 9).time, true)
         val q = Quote("FRIFX")
         q.lastTrade = 12.13f
 
@@ -78,7 +78,7 @@ class PositionValueTest {
 
     @Test
     fun dividendHistory() {
-        val pos = Position("SPY", 10.0, 123.45, getDate(30))
+        val pos = PositionWithDividends("SPY", 10.0, 123.45, getDate(30))
         val position = PositionValue(pos, null)
         val q = Quote("SPY")
         q.lastTrade = 123.45f
