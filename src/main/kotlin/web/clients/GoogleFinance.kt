@@ -1,4 +1,4 @@
-package org.cerion.stocks.core.web.api
+package org.cerion.stocks.core.web.clients
 
 import org.cerion.stocks.core.model.Quote
 import org.cerion.stocks.core.model.Symbol

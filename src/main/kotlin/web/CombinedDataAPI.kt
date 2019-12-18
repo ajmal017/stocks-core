@@ -5,9 +5,7 @@ import org.cerion.stocks.core.model.Dividend
 import org.cerion.stocks.core.model.Interval
 import org.cerion.stocks.core.model.Quote
 import org.cerion.stocks.core.model.Symbol
-import org.cerion.stocks.core.web.api.GoogleFinance
-import org.cerion.stocks.core.web.api.Tiingo
-import org.cerion.stocks.core.web.api.YahooFinance
+import org.cerion.stocks.core.web.clients.*
 import java.util.*
 
 class CombinedDataAPI : DataAPI {

@@ -1,4 +1,4 @@
-package org.cerion.stocks.core.web.api
+package org.cerion.stocks.core.web.clients
 
 import okhttp3.Response
 

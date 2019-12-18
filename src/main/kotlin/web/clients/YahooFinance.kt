@@ -1,4 +1,4 @@
-package org.cerion.stocks.core.web.api
+package org.cerion.stocks.core.web.clients
 
 import org.cerion.stocks.core.PriceList
 import org.cerion.stocks.core.PriceRow
