@@ -1,5 +1,6 @@
 package org.cerion.stocks.core.web
 
+import org.cerion.stocks.core.PriceList
 import org.cerion.stocks.core.PriceRow
 import org.cerion.stocks.core.model.Dividend
 import org.cerion.stocks.core.model.Interval
@@ -13,6 +14,14 @@ class CombinedDataAPI : DataAPI {
     private val yahoo: YahooFinance = YahooFinance.instance
     private val google: GoogleFinance = GoogleFinance()
     private val tiingo: Tiingo = Tiingo()
+
+    override fun getPriceList(symbol: String, interval: Interval, start: Date): PriceList {
+        val prices = getPrices(symbol, interval, start)
+        val list = PriceList(symbol, prices)
+        list.lastUpdated = Date()
+
+        return list
+    }
 
     @Throws(Exception::class)
     override fun getPrices(symbol: String, interval: Interval, start: Date): List<PriceRow> {

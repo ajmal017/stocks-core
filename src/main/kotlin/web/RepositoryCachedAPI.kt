@@ -7,15 +7,86 @@ import org.cerion.stocks.core.model.Interval
 import org.cerion.stocks.core.model.Quote
 import org.cerion.stocks.core.model.Symbol
 import org.cerion.stocks.core.repository.DividendRepository
-import org.cerion.stocks.core.repository.PriceListRepository
 import java.util.*
 
-class RepositoryCachedAPI(private val mAPI: DataAPI, private val mPriceRepo: PriceListRepository, private val mDividendRepo: DividendRepository) : CachedDataAPI {
+class RepositoryCachedAPI(private val mAPI: DataAPI, private val mDividendRepo: DividendRepository) : CachedDataAPI {
 
-    override fun clearCache() {
-        mPriceRepo.deleteAll()
+    fun clearCache() {
+        //mPriceRepo.deleteAll()
         mDividendRepo.deleteAll()
     }
+
+    override fun getPriceList(symbol: String, interval: Interval, start: Date): PriceList {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getPrices(symbol: String, interval: Interval, start: Date): List<PriceRow> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    /*
+    override fun getPriceList(symbol: String, interval: Interval, start: Date): PriceList {
+        return getPriceList(symbol, interval, start, false)
+    }
+
+    fun getPriceList(symbol: String, interval: Interval, start: Date, forceUpdate: Boolean): PriceList {
+
+        var result = mPriceRepo.getList(symbol, interval)
+        var update = forceUpdate
+        var retrieveFrom: Date? = null
+
+        if (result == null) {
+            update = true
+        }
+        else if(result.lastUpdated != null) {
+            val now = Date()
+            var diff = now.time - result.lastUpdated!!.time
+            diff /= (1000 * 60 * 60).toLong()
+            val hours = diff
+            val days = diff / 24
+
+            println(symbol + " " + interval.name + " last updated " + result.lastUpdated + " (" + diff + " days ago)")
+
+            // TODO, smarter updates based on last price obtained and weekends
+            if (interval === Interval.DAILY && hours >= 12)
+                update = true
+            else if (interval === Interval.WEEKLY && days > 3)
+                update = true
+            else if (interval === Interval.MONTHLY && days > 7)
+                update = true
+
+            // Incremental update, not sure if all this is necessary but start a few data points earlier to be safe
+            // TODO this may be working but do full update and re-verify this later
+            /*
+            if (update) {
+                val cal = Calendar.getInstance()
+                cal.time = result.last.date
+
+                when (interval) {
+                    Interval.DAILY -> cal.add(Calendar.DAY_OF_MONTH, -1)
+                    Interval.WEEKLY -> cal.add(Calendar.DAY_OF_MONTH, -7)
+                    Interval.MONTHLY -> cal.add(Calendar.DAY_OF_MONTH, -31)
+                    Interval.QUARTERLY,
+                    Interval.YEARLY -> throw Exception("Only daily/weekly/monthly allowed")
+                }
+
+                retrieveFrom = cal.time
+            }
+             */
+        }
+
+        if (retrieveFrom != null) {
+            updatePricesIncremental(symbol, interval, start, retrieveFrom)
+        }
+        else if (update)
+            updatePrices(symbol, interval, start)
+        else
+            return result!!
+
+        // Result should have been added above
+        return mPriceRepo.getList(symbol, interval)!!
+    }
+
 
     @Throws(Exception::class)
     override fun getPrices(symbol: String, interval: Interval, start: Date, forceUpdate: Boolean): List<PriceRow> {
@@ -74,6 +145,8 @@ class RepositoryCachedAPI(private val mAPI: DataAPI, private val mPriceRepo: Pri
         return getPrices(symbol, interval, start, false)
     }
 
+     */
+
     override fun getDividends(symbol: String): List<Dividend> {
         val dates = mDividendRepo.getHistoricalDates(symbol)
         var update = false
@@ -119,6 +192,7 @@ class RepositoryCachedAPI(private val mAPI: DataAPI, private val mPriceRepo: Pri
         return mAPI.getQuote(symbol)
     }
 
+    /*
     @Throws(Exception::class)
     private fun updatePricesIncremental(symbol: String, interval: Interval, firstDate: Date, startFrom: Date) {
         println("Incremental update starting from $startFrom")
@@ -184,4 +258,5 @@ class RepositoryCachedAPI(private val mAPI: DataAPI, private val mPriceRepo: Pri
             throw Exception("Failed to get updated prices for $symbol")
         }
     }
+     */
 }

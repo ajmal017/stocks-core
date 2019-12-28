@@ -2,6 +2,7 @@ package org.cerion.stocks.core.model
 
 import java.util.Date
 
+@Deprecated("store values in list parent object")
 class HistoricalDates {
     var symbol: String? = null
     var lastUpdated: Date? = null
