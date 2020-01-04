@@ -4,17 +4,13 @@ import org.cerion.stocks.core.PriceList
 import org.cerion.stocks.core.PriceRow
 import org.cerion.stocks.core.model.Dividend
 import org.cerion.stocks.core.model.Interval
-import org.cerion.stocks.core.model.Quote
 import org.cerion.stocks.core.model.Symbol
 import org.cerion.stocks.core.repository.DividendRepository
 import java.util.*
 
-class RepositoryCachedAPI(private val mAPI: DataAPI, private val mDividendRepo: DividendRepository) : CachedDataAPI {
+// TODO add symbols those can be cached too
 
-    fun clearCache() {
-        //mPriceRepo.deleteAll()
-        mDividendRepo.deleteAll()
-    }
+class RepositoryCachedAPI(private val webApi: DataAPI, private val dividendRepo: DividendRepository) : DataAPI {
 
     override fun getPriceList(symbol: String, interval: Interval, start: Date): PriceList {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -148,7 +144,7 @@ class RepositoryCachedAPI(private val mAPI: DataAPI, private val mDividendRepo: 
      */
 
     override fun getDividends(symbol: String): List<Dividend> {
-        val dates = mDividendRepo.getHistoricalDates(symbol)
+        val dates = dividendRepo.getHistoricalDates(symbol)
         var update = false
 
         if (dates == null) {
@@ -169,27 +165,15 @@ class RepositoryCachedAPI(private val mAPI: DataAPI, private val mDividendRepo: 
 
         if (update) {
             // TODO API should fail if it doesn't get a valid response, difference between error and success
-            val dividends = mAPI.getDividends(symbol)
-            mDividendRepo.add(symbol, dividends) //updatePrices(symbol, interval);
+            val dividends = webApi.getDividends(symbol)
+            dividendRepo.add(symbol, dividends) //updatePrices(symbol, interval);
         }
 
-        return mDividendRepo.get(symbol)
-    }
-
-    override fun getSymbols(symbols: Set<String>): List<Symbol> {
-        return mAPI.getSymbols(symbols)
+        return dividendRepo.get(symbol)
     }
 
     override fun getSymbol(symbol: String): Symbol? {
-        return mAPI.getSymbol(symbol)
-    }
-
-    override fun getQuotes(symbols: Set<String>): Map<String, Quote> {
-        return mAPI.getQuotes(symbols)
-    }
-
-    override fun getQuote(symbol: String): Quote? {
-        return mAPI.getQuote(symbol)
+        return webApi.getSymbol(symbol)
     }
 
     /*

@@ -19,9 +19,5 @@ interface DataAPI {
 
     fun getDividends(symbol: String): List<Dividend>
 
-    fun getSymbols(symbols: Set<String>): List<Symbol>
     fun getSymbol(symbol: String): Symbol?
-
-    fun getQuotes(symbols: Set<String>): Map<String, Quote>
-    fun getQuote(symbol: String): Quote?
 }

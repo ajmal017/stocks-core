@@ -9,14 +9,13 @@ import org.cerion.stocks.core.model.Symbol
 import org.cerion.stocks.core.web.clients.*
 import java.util.*
 
-class CombinedDataAPI : DataAPI {
+class CombinedDataAPI(private val tiingoApiKey: String) : DataAPI {
 
     private val yahoo: YahooFinance = YahooFinance.instance
-    private val google: GoogleFinance = GoogleFinance()
-    private val tiingo: Tiingo = Tiingo()
+    private val tiingo: Tiingo = Tiingo(tiingoApiKey)
 
     override fun getPriceList(symbol: String, interval: Interval, start: Date): PriceList {
-        val prices = getPrices(symbol, interval, start)
+        val prices = yahoo.getPrices(symbol, interval, start)
         val list = PriceList(symbol, prices)
         list.lastUpdated = Date()
 
@@ -32,10 +31,6 @@ class CombinedDataAPI : DataAPI {
         return yahoo.getDividends(symbol)
     }
 
-    override fun getSymbols(symbols: Set<String>): List<Symbol> {
-        throw UnsupportedOperationException()
-    }
-
     override fun getSymbol(symbol: String): Symbol? {
         try {
             return tiingo.getSymbol(symbol)
@@ -44,13 +39,5 @@ class CombinedDataAPI : DataAPI {
         }
 
         return null
-    }
-
-    override fun getQuotes(symbols: Set<String>): Map<String, Quote> {
-        throw UnsupportedOperationException()
-    }
-
-    override fun getQuote(symbol: String): Quote? {
-        return google.getQuote(symbol)
     }
 }
