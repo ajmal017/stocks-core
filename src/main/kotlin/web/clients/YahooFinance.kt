@@ -154,7 +154,11 @@ class YahooFinance private constructor() {
                 if (start < end) {
                     mCookieCrumb = page.substring(start, end)
                     mCookieCrumb = mCookieCrumb!!.replace("\\u002F", "/")
-                    mCookie = res.headers["Set-Cookie"]!![1] // Index 0 or 1 seems to be for http vs https requests
+
+                    // Seems to be different for local vs android, if more than 1 get the last entry
+                    // If this still fails look into better method, might be difference between http vs https requests
+                    val cookieHeaders = res.headers["Set-Cookie"]!!
+                    mCookie = cookieHeaders[cookieHeaders.size - 1]
                     mCookie = mCookie!!.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
                     return true
                 }

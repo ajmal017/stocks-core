@@ -9,7 +9,7 @@ import org.cerion.stocks.core.model.Symbol
 import org.cerion.stocks.core.web.clients.*
 import java.util.*
 
-class CombinedDataAPI(private val tiingoApiKey: String) : DataAPI {
+open class CombinedDataAPI(private val tiingoApiKey: String) : DataAPI {
 
     private val yahoo: YahooFinance = YahooFinance.instance
     private val tiingo: Tiingo = Tiingo(tiingoApiKey)
