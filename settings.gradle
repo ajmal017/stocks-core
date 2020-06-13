@@ -1,2 +1,19 @@
-rootProject.name = 'stocklist'
 
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id.startsWith("org.jetbrains.kotlin.multiplatform")) {
+                useVersion('1.3.72')
+            }
+        }
+    }
+}
+
+
+rootProject.name = 'core'
+
+
+enableFeaturePreview('GRADLE_METADATA')

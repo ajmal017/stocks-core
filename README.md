@@ -1,2 +1,2 @@
 # stocklist-library
-Stock market historical prices library with technical indicators
+Kotlin Multiplatform library for stock market historical prices and technical indicators
