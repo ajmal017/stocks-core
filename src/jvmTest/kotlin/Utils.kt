@@ -30,7 +30,7 @@ object Utils {
     fun generateList(size: Int): PriceList {
         val prices = ArrayList<PriceRow>()
         for (i in 0 until size)
-            prices.add(PriceRow(KMPDate(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat()))
+            prices.add(PriceRow(KMPDate.TODAY, i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat()))
 
         return PriceList("TEST", prices)
     }

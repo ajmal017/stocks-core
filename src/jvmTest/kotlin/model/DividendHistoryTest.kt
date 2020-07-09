@@ -16,16 +16,16 @@ class DividendHistoryTest : TestBase() {
         val history = DividendHistory(dividends, Utils.getDate(30))
 
         assertEquals(9.1, history.lastDividend!!, 0.005)
-        assertDateEquals(KMPDate(), history.lastDividendDate!!)
+        assertEquals(KMPDate.TODAY, history.lastDividendDate)
 
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_MONTH, 1)
-        assertDateEquals(calendar.time, history.nextDividendEstimate!!)
+        assertEquals(KMPDate(calendar.time), history.nextDividendEstimate!!)
     }
 
     @Test
     fun noDividends() {
-        val history = DividendHistory(listOf(), KMPDate(GregorianCalendar(2011, 8, 13).time))
+        val history = DividendHistory(listOf(), KMPDate(2011, 8, 13))
 
         assertNull(history.lastDividend)
         assertEquals(0.0, history.totalDividends, 0.0001)
@@ -35,22 +35,22 @@ class DividendHistoryTest : TestBase() {
 
     @Test
     fun startDate_pastLastDividend() {
-        val history = DividendHistory(getSampleList(), KMPDate(GregorianCalendar(2016, 5, 1).time))
+        val history = DividendHistory(getSampleList(), KMPDate(2016, 5, 1))
 
         assertEquals(4.75, history.lastDividend!!, 0.0001)
         assertEquals(0.0, history.totalDividends, 0.0001)
-        assertEquals(KMPDate(Date(1460444400000)), history.lastDividendDate)
-        assertEquals(KMPDate(Date(1467957600000)), history.nextDividendEstimate)
+        assertEquals(KMPDate(2016,4,12), history.lastDividendDate)
+        assertEquals(KMPDate(2016,7,7), history.nextDividendEstimate)
     }
 
     @Test
     fun fields_Test() {
-        val history = DividendHistory(getSampleList(), KMPDate(GregorianCalendar(2011, 8, 13).time))
+        val history = DividendHistory(getSampleList(), KMPDate(2011, 8, 13))
 
         assertEquals(4.75, history.lastDividend!!, 0.0001)
         assertEquals(89.3, history.totalDividends, 0.0001)
-        assertEquals(KMPDate(Date(1460444400000)), history.lastDividendDate)
-        assertEquals(KMPDate(Date(1467957600000)), history.nextDividendEstimate)
+        assertEquals(KMPDate(2016,4,12), history.lastDividendDate)
+        assertEquals(KMPDate(2016,7, 7), history.nextDividendEstimate)
     }
 
     private fun getSampleList(): List<Dividend> {

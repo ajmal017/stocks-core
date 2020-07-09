@@ -6,22 +6,23 @@ import java.util.*
 actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comparable<KMPDate> {
     companion object {
         private val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val TODAY: KMPDate
+            get() = KMPDate(Date())
     }
-
-    // TODO many of the date constructors in unit tests can be changed to take the primary constructor
-    @Deprecated("Need to make parser for ISO date format / converter for room database")
-    constructor(date: Date) : this(date.year + 1900, date.month + 1, date.date)
-
-    constructor() : this(Date()) // For unit tests, change or use a NOW in companion
 
     private var _date: Date = Date(year - 1900, month - 1, date)
 
-    actual fun toISOString(): String = dateFormat.format(_date)
+    // Ideally this should not be used but some cases where its needed
+    constructor(date: Date) : this(date.year + 1900, date.month + 1, date.date)
+
+    actual fun toISOString(): String = dateFormat.format(_date) // YYYY-MM-DD
+    override fun toString(): String = toISOString()
 
     actual val time: Long
         get() = _date.time
 
-    actual override fun equals(other: Any?): Boolean { // TODO should ignore time, add test for that
+    // TODO equals should ignore time, depending how it was constructed the same dates may not return true
+    actual override fun equals(other: Any?): Boolean {
         if (other is KMPDate)
             return _date.compareTo(other._date) == 0
 
@@ -31,6 +32,7 @@ actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comp
     override fun hashCode(): Int = _date.hashCode()
     override fun compareTo(other: KMPDate): Int = _date.compareTo(other._date)
 
+    // TODO might might be the same as 'day', merge to single that is enum return type
     actual val dayOfWeek: Int
         get() {
             val c = Calendar.getInstance()
@@ -48,4 +50,7 @@ actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comp
         get() = _date.day
 
     val jvmDate: Date = _date
+
+    // TODO add diff function that returns integer for days between
+    // TODO add add() function to return new date X days back/ahead
 }

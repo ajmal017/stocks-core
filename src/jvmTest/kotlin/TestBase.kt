@@ -1,8 +1,6 @@
 package org.cerion.stocks.core
 
 import org.junit.Assert.assertEquals
-import org.cerion.stocks.core.platform.KMPDate
-import java.util.*
 
 open class TestBase {
 
@@ -16,14 +14,6 @@ open class TestBase {
 
     fun assertEqual(expected: Double, actual: Float) {
         assertEquals(expected, actual.toDouble(), 0.005)
-    }
-
-    fun assertDateEquals(expected: KMPDate, actual: KMPDate) {
-        assertEquals(expected.time / 1000, actual.time / 1000)
-    }
-
-    fun assertDateEquals(expected: Date, actual: KMPDate) {
-        assertEquals(KMPDate(expected).time / 1000, actual.time / 1000)
     }
 
     companion object {
