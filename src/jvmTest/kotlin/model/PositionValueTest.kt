@@ -4,6 +4,7 @@ import org.cerion.stocks.core.PriceList
 import org.cerion.stocks.core.PriceRow
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.cerion.stocks.core.platform.KMPDate
 import java.util.*
 
 
@@ -13,7 +14,7 @@ class PositionValueTest {
     fun priceChange() {
         val shares = 10.123f
 
-        val pos = PositionWithDividends("SPY", shares.toDouble(), 2276.98, getDate(30))
+        val pos = PositionWithDividends("SPY", shares.toDouble(), 2276.98, KMPDate(getDate(30)))
         val position = PositionValue(pos, null)
         val q = Quote("SPY")
         q.lastTrade = 2352.95f
@@ -46,15 +47,15 @@ class PositionValueTest {
         //val purchasePrice = 4090.9401 // Issues representing this in double, should really be 4094.94000000000
         val profit = 63.95
 
-        val pos = PositionWithDividends("FRIFX", 341.481, 11.98, GregorianCalendar(2017, 2, 9).time, true)
+        val pos = PositionWithDividends("FRIFX", 341.481, 11.98, KMPDate(GregorianCalendar(2017, 2, 9).time), true)
         val q = Quote("FRIFX")
         q.lastTrade = 12.13f
 
         //val api = YahooFinance.getInstance()
         val prices = ArrayList<PriceRow>()
-        prices.add(PriceRow(GregorianCalendar(2017, 2, 8).time, 1f, 1f, 1f, 1f, 10000000.0f))
-        prices.add(PriceRow(GregorianCalendar(2017, 2, 9).time, 11.99f, 11.99f, 11.90f, 11.943306f, 10000000.0f))
-        prices.add(PriceRow(GregorianCalendar(2017, 2, 10).time, 2f, 2f, 2f, 2f, 10000000.0f))
+        prices.add(PriceRow(KMPDate(GregorianCalendar(2017, 2, 8).time), 1f, 1f, 1f, 1f, 10000000.0f))
+        prices.add(PriceRow(KMPDate(GregorianCalendar(2017, 2, 9).time), 11.99f, 11.99f, 11.90f, 11.943306f, 10000000.0f))
+        prices.add(PriceRow(KMPDate(GregorianCalendar(2017, 2, 10).time), 2f, 2f, 2f, 2f, 10000000.0f))
         val list = PriceList("FRIFX", prices)
 
         val position = PositionValue(pos, list)
@@ -78,7 +79,7 @@ class PositionValueTest {
 
     @Test
     fun dividendHistory() {
-        val pos = PositionWithDividends("SPY", 10.0, 123.45, getDate(30))
+        val pos = PositionWithDividends("SPY", 10.0, 123.45, KMPDate(getDate(30)))
         val position = PositionValue(pos, null)
         val q = Quote("SPY")
         q.lastTrade = 123.45f
@@ -105,7 +106,7 @@ class PositionValueTest {
         val result = ArrayList<Dividend>()
 
         for (v in values) {
-            val d = Dividend(calendar.time, v)
+            val d = Dividend(KMPDate(calendar.time), v)
             result.add(d)
 
             calendar.add(Calendar.DAY_OF_MONTH, -1)

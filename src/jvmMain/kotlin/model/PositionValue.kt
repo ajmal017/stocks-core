@@ -1,6 +1,7 @@
 package org.cerion.stocks.core.model
 
 import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.platform.KMPDate
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -8,7 +9,7 @@ import java.util.*
 class PositionValue(private val purchase: PositionWithDividends, private val priceList: PriceList?) {
 
     private val dividendsReinvested = purchase.dividendsReinvested
-    private val date: Date = purchase.date
+    private val date: KMPDate = purchase.date
     private val origPrice = purchase.origPrice
     var quote: Quote? = null
     private var origPriceAdjusted: Double = 0.toDouble()
@@ -108,7 +109,7 @@ class PositionValue(private val purchase: PositionWithDividends, private val pri
 
             var start = 0
             for (p in priceList) {
-                if (this.dateEquals(p.date, date)) {
+                if (p.date == date) {
                     start = p.pos
                     break
                 }
@@ -160,7 +161,7 @@ class PositionValue(private val purchase: PositionWithDividends, private val pri
                     val date = list.dates[i]
                     // If entered today then currrent date may not be present so just use last entry
                     // TODO add unit test to check this value
-                    if (dateEquals(date, this.date) || origPriceAdjusted == 0.0 && i == list.size - 1) {
+                    if (date == this.date || origPriceAdjusted == 0.0 && i == list.size - 1) {
                         origPriceAdjusted = list.close[i].toDouble()
                     }
                 }
@@ -168,10 +169,6 @@ class PositionValue(private val purchase: PositionWithDividends, private val pri
         } else {
             throw IllegalArgumentException("daily prices required")
         }
-    }
-
-    private fun dateEquals(d1: Date, d2: Date): Boolean {
-        return dayFormat.format(d1) == dayFormat.format(d2)
     }
 
     companion object {

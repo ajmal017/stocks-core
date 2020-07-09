@@ -2,6 +2,7 @@ package org.cerion.stocks.core
 
 import org.cerion.stocks.core.arrays.FloatArray
 import org.cerion.stocks.core.model.Interval
+import org.cerion.stocks.core.platform.KMPDate
 
 import java.util.*
 import kotlin.math.ln
@@ -12,7 +13,7 @@ import kotlin.math.pow
 class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
 
     private var logScale = false
-    val dates: Array<Date>
+    val dates: Array<KMPDate>
     val open: FloatArray = FloatArray(list.size)
     val high: FloatArray = FloatArray(list.size)
     val low: FloatArray = FloatArray(list.size)
@@ -56,7 +57,7 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
     init {
         val sortedList = list.sortedBy { it.date }
         val size = list.size
-        val dateList = mutableListOf<Date>()
+        val dateList = mutableListOf<KMPDate>()
 
         for (i in 0 until size) {
             val p = sortedList[i]

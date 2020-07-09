@@ -1,5 +1,6 @@
 package org.cerion.stocks.core.model
 
+import org.cerion.stocks.core.platform.KMPDate
 import java.util.Date
 
 interface Position {
@@ -11,7 +12,7 @@ interface Position {
 }
 
 @Deprecated("phasing out for simplified version")
-class PositionWithDividends(val symbol: String, val count: Double, val origPrice: Double, val date: Date, val dividendsReinvested: Boolean = false) {
+class PositionWithDividends(val symbol: String, val count: Double, val origPrice: Double, val date: KMPDate, val dividendsReinvested: Boolean = false) {
 
     var id = 0
     var accountId = 0

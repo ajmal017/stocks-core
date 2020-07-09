@@ -6,6 +6,7 @@ import org.cerion.stocks.core.model.Dividend
 import org.cerion.stocks.core.model.Interval
 import org.cerion.stocks.core.model.Quote
 import org.cerion.stocks.core.web.Tools
+import org.cerion.stocks.core.platform.KMPDate
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -337,7 +338,7 @@ class YahooFinance private constructor() {
             return result
         }
 
-        private fun parseDate(inputDate: String): Date? {
+        private fun parseDate(inputDate: String): KMPDate? {
             var date = inputDate
             var result: Date?
             date = date.replace("\"", "")
@@ -354,7 +355,10 @@ class YahooFinance private constructor() {
 
             }
 
-            return result
+            return if (result != null)
+                KMPDate(result)
+            else
+                null
         }
 
         private fun parseString(str: String): String {
@@ -405,7 +409,7 @@ class YahooFinance private constructor() {
                     volume /= 1000
                     val date = mDateFormat.parse(fields[0])
 
-                    return PriceRow(date, open, high, low, adjClose, volume.toFloat())
+                    return PriceRow(KMPDate(date), open, high, low, adjClose, volume.toFloat())
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

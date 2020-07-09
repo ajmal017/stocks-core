@@ -1,11 +1,11 @@
 package org.cerion.stocks.core
 
+import org.cerion.stocks.core.platform.KMPDate
 import java.text.SimpleDateFormat
-import java.util.*
 
 class Price(val parent: PriceList, val pos: Int) : IPrice {
 
-    override val date: Date get() = parent.dates[pos]
+    override val date: KMPDate get() = parent.dates[pos]
     override val open: Float get() = parent.open[pos]
     override val close: Float get() = parent.close[pos]
     override val high: Float get() = parent.high[pos]
@@ -16,11 +16,7 @@ class Price(val parent: PriceList, val pos: Int) : IPrice {
         get() = mDateFormat.format(date) //When it needs to be formatted properly
 
     val dow: Int
-        get() {
-            val c = Calendar.getInstance()
-            c.time = date
-            return c.get(Calendar.DAY_OF_WEEK)
-        }
+        get() = date.dayOfWeek
 
     //Slope of closing price
     fun slope(period: Int): Float {
@@ -32,7 +28,7 @@ class Price(val parent: PriceList, val pos: Int) : IPrice {
     fun change(prev: Price): Float = getPercentDiff(prev)
 
     fun getPercentDiff(old: Price): Float {
-        if (!old.date.before(date))
+        if (old.date > date)
             throw RuntimeException("current price is older than input price")
 
         val diff = close - old.close

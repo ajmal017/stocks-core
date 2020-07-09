@@ -2,6 +2,7 @@ package org.cerion.stocks.core
 
 import org.cerion.stocks.core.model.Dividend
 import org.cerion.stocks.core.web.clients.YahooFinance
+import org.cerion.stocks.core.platform.KMPDate
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
@@ -13,7 +14,7 @@ object Utils {
         PriceList("^GSPC", YahooFinance.getPricesFromTable(data))
     }
 
-    fun resourceToString(fileName: String): String {
+    private fun resourceToString(fileName: String): String {
         val classloader = Thread.currentThread().contextClassLoader
         val inputStream = classloader.getResourceAsStream(fileName)
 
@@ -29,7 +30,7 @@ object Utils {
     fun generateList(size: Int): PriceList {
         val prices = ArrayList<PriceRow>()
         for (i in 0 until size)
-            prices.add(PriceRow(Date(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat()))
+            prices.add(PriceRow(KMPDate(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat()))
 
         return PriceList("TEST", prices)
     }
@@ -39,7 +40,7 @@ object Utils {
         val result = ArrayList<Dividend>()
 
         for (v in values) {
-            val d = Dividend(calendar.time, v)
+            val d = Dividend(KMPDate(calendar.time), v)
             result.add(d)
 
             calendar.add(Calendar.DAY_OF_MONTH, -1)
@@ -48,9 +49,9 @@ object Utils {
         return result
     }
 
-    fun getDate(daysAgo: Int): Date {
+    fun getDate(daysAgo: Int): KMPDate {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_MONTH, -daysAgo)
-        return calendar.time
+        return KMPDate(calendar.time)
     }
 }

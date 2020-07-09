@@ -7,6 +7,7 @@ import org.cerion.stocks.core.functions.IOverlay
 import org.cerion.stocks.core.functions.ISimpleOverlay
 import org.cerion.stocks.core.functions.types.IFunctionEnum
 import org.cerion.stocks.core.functions.types.Overlay
+import org.cerion.stocks.core.platform.KMPDate
 import java.util.*
 
 abstract class StockChart : Cloneable {
@@ -15,6 +16,7 @@ abstract class StockChart : Cloneable {
     protected var mOverlays: MutableList<IOverlay> = ArrayList()
     private var nextColor = 0
 
+    // TODO better define color usages
     protected var mPrimaryColors = intArrayOf(0, 0, 0, 0) // TODO add colors that don't use any java libraries, android overrides them all anyway
     protected var mSecondaryColors = intArrayOf(0)
 
@@ -26,7 +28,7 @@ abstract class StockChart : Cloneable {
 
     abstract fun getDataSets(priceList: PriceList): List<IDataSet>
 
-    fun getDates(list: PriceList): Array<Date> = list.dates.sliceArray(1 until list.dates.size)
+    fun getDates(list: PriceList): Array<KMPDate> = list.dates.sliceArray(1 until list.dates.size)
 
     @Throws(CloneNotSupportedException::class)
     public override fun clone(): Any {
@@ -61,6 +63,9 @@ abstract class StockChart : Cloneable {
     protected fun colorGreen(): Int = mPrimaryColors[3]
 
     fun setPrimaryColors(colors: IntArray) {
+        if (colors.size != mPrimaryColors.size)
+            throw IllegalArgumentException("${mPrimaryColors.size} colors required")
+
         if (colors.size == mPrimaryColors.size)
             mPrimaryColors = colors
     }

@@ -1,9 +1,10 @@
 package org.cerion.stocks.core
 
-import java.util.*
+import org.cerion.stocks.core.platform.KMPDate
+
 
 data class PriceRow(
-        override val date: Date,
+        override val date: KMPDate,
         override val open: Float,
         override val high: Float,
         override val low: Float,

@@ -1,5 +1,6 @@
 package org.cerion.stocks.core.model
 
+import org.cerion.stocks.core.platform.KMPDate
 import java.util.Date
 
 // Possibly useful omitted ones that can be calculated from the others
@@ -21,7 +22,7 @@ class Quote(val symbol: String) {
     var change: Float = 0.toFloat() // Change since previous date (lastTrade - prevClose)?
     var changePercent: Float = 0.toFloat()
     var volume: Long = 0
-    var lastTradeDate: Date? = null
+    var lastTradeDate: KMPDate? = null
 
     var averageVolume: Long = 0
     var oneYearTarget: Float = 0.toFloat() // Average analysts estimate of price in 1 year
@@ -47,7 +48,7 @@ class Quote(val symbol: String) {
     var sma200: Float = 0.toFloat()
 
     var dividendYield: Float = 0.toFloat()
-    var dividendDate: Date? = null
+    var dividendDate: KMPDate? = null
     var dividendsPerShare: Float = 0.toFloat()
 
     var marketCap: String? = null
