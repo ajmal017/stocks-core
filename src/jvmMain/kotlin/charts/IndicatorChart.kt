@@ -13,7 +13,7 @@ import org.cerion.stocks.core.functions.types.Indicator
 
 import java.util.ArrayList
 
-class IndicatorChart(private var mIndicator: IIndicator) : StockChart() {
+class IndicatorChart(private var mIndicator: IIndicator, colors: ChartColors = ChartColors()) : StockChart(colors) {
 
     private val extra = ArrayList<IIndicator>()
 
@@ -84,14 +84,14 @@ class IndicatorChart(private var mIndicator: IIndicator) : StockChart() {
     }
 
     private fun getIndicatorDataSets(arr: ValueArray, indicator: IIndicator): List<DataSet> {
-        // TODO add all cases types and colors
+        // TODO look at all uses and see if any colors should be non-defaults (there are some that will)
         if (arr.javaClass == BandArray::class.java)
             return getBandDataSet(arr as BandArray, indicator.toString(), indicator.toString(), colorBlack())
         else if (arr.javaClass == MACDArray::class.java)
             return getMACDDataSet(arr as MACDArray, indicator.toString(), indicator.toString(), indicator.toString(), colorBlack(), colorRed(), colorBlue())
         else if (arr.javaClass == PairArray::class.java)
-            return getPairDataSet(arr as PairArray, indicator.toString(), indicator.toString(), colorGreen(), colorRed())
+            return getPairDataSet(arr as PairArray, indicator.toString(), indicator.toString(), _colors.positiveGreen, _colors.negativeRed)
 
-        return getSingleDataSet(arr as FloatArray, indicator.toString(), colorBlack())
+        return getSingleDataSet(arr as FloatArray, indicator.toString(), _colors.primary)
     }
 }

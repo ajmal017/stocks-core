@@ -10,7 +10,7 @@ import org.cerion.stocks.core.functions.types.Overlay
 import org.cerion.stocks.core.platform.KMPDate
 import java.util.*
 
-abstract class StockChart : Cloneable {
+abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
 
     //protected List<FunctionCall> mOverlays = new ArrayList<>();
     protected var mOverlays: MutableList<IOverlay> = ArrayList()

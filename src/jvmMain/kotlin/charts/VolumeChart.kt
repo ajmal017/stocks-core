@@ -5,14 +5,14 @@ import org.cerion.stocks.core.arrays.FloatArray
 import org.cerion.stocks.core.functions.ISimpleOverlay
 import java.util.*
 
-class VolumeChart : StockChart() {
+class VolumeChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
     var logScale = false
 
     override fun getDataSets(priceList: PriceList): List<IDataSet> {
         val result = ArrayList<IDataSet>()
         val volume = if(logScale) priceList.toLogScale().volume else priceList.volume
 
-        val data = DataSet(volume, "Volume", colorBlack())
+        val data = DataSet(volume, "Volume", _colors.volumneBlue)
         data.lineType = LineType.BAR
         result.addAll(listOf(data))
 

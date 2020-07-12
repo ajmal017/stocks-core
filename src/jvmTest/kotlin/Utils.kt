@@ -1,11 +1,15 @@
 package org.cerion.stocks.core
 
 import org.cerion.stocks.core.model.Dividend
-import org.cerion.stocks.core.web.clients.YahooFinance
 import org.cerion.stocks.core.platform.KMPDate
+import org.cerion.stocks.core.web.clients.YahooFinance
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.*
+
 
 object Utils {
 
@@ -18,6 +22,10 @@ object Utils {
         val classloader = Thread.currentThread().contextClassLoader
         val inputStream = classloader.getResourceAsStream(fileName)
 
+        // Issue with getting resources in KMP project
+        if (inputStream == null)
+            return fileToString("src\\jvmTest\\resources\\$fileName")
+
         val isr = InputStreamReader(inputStream)
         val br = BufferedReader(isr)
         val sb = StringBuffer()
@@ -25,6 +33,16 @@ object Utils {
             sb.append(line + "\r\n")
 
         return sb.toString()
+    }
+
+    private fun fileToString(fileName: String): String {
+        val contentBuilder = StringBuilder()
+
+        Files.lines(Paths.get(fileName), StandardCharsets.UTF_8).use {
+            stream -> stream.forEach { s: String? -> contentBuilder.append(s).append("\r\n") }
+        }
+
+        return contentBuilder.toString()
     }
 
     fun generateList(size: Int): PriceList {

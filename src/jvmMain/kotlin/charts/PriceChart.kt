@@ -7,8 +7,8 @@ import org.cerion.stocks.core.functions.types.PriceOverlay
 import org.cerion.stocks.core.model.Interval
 import java.util.*
 
-class PriceChart : StockChart() {
-    var candleData = true
+class PriceChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
+    var candleData = false
     var showPrice = true
     var logScale = false
 
@@ -21,7 +21,7 @@ class PriceChart : StockChart() {
         } else if (candleData && canShowCandleData(list)) {
             result.addAll(listOf(CandleDataSet(list, "Price", colorBlack())))
         } else {
-            result.addAll(listOf(DataSet(list.close, "Price", colorBlack())))
+            result.addAll(listOf(DataSet(list.close, "Price", _colors.primaryBlue)))
         }
 
         result.addAll(getOverlayDataSets(list))
