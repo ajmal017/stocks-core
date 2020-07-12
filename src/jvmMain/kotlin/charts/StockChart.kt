@@ -7,6 +7,7 @@ import org.cerion.stocks.core.functions.IOverlay
 import org.cerion.stocks.core.functions.ISimpleOverlay
 import org.cerion.stocks.core.functions.types.IFunctionEnum
 import org.cerion.stocks.core.functions.types.Overlay
+import org.cerion.stocks.core.overlays.ParabolicSAR
 import org.cerion.stocks.core.platform.KMPDate
 import java.util.*
 
@@ -15,8 +16,8 @@ abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
     protected var _overlays: MutableList<IOverlay> = ArrayList()
     private var _nextColor = 0
 
-    open val overlays: Array<IFunctionEnum>
-        get() = Overlay.values().toList().toTypedArray()
+    open val overlays: List<IFunctionEnum>
+        get() = Overlay.values().toList()
 
     val overlayCount: Int
         get() = _overlays.size
@@ -66,59 +67,20 @@ abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
     }
 
     protected fun getDefaultOverlayDataSets(arr: ValueArray, overlay: IOverlay, ignoreColor: Int): List<DataSet> {
-        if (arr.javaClass == BandArray::class.java)
-            return getBandDataSet(arr as BandArray, overlay.toString(), overlay.toString(), getNextColor(ignoreColor))
-        else if (arr.javaClass == PairArray::class.java) // TODO these are more complex for colors, look into later, using primary as placeholder
-            return getPairDataSet(arr as PairArray, overlay.toString(), overlay.toString(), _colors.primary, _colors.primary)
+        val label = overlay.toString()
 
-        return getSingleDataSet(arr as FloatArray, overlay.toString(), getNextColor(ignoreColor))
-    }
+        return when (arr) {
+            is BandArray -> arr.getDataSets(label, label, getNextColor(ignoreColor))
+            // TODO these are more complex for colors, look into later, using primary as placeholder
+            is PairArray -> arr.getDataSets(label, label, _colors.primary, _colors.primary)
+            is FloatArray -> {
+                val dataSet = arr.toDataSet(label, getNextColor(ignoreColor))
+                if (overlay is ParabolicSAR)
+                    dataSet.lineType = LineType.DOTTED
 
-    protected fun getSingleDataSet(values: FloatArray, label: String, color: Int): List<DataSet> {
-        return ArrayList(listOf(DataSet(values, label, color)))
-    }
-
-    private fun getBandDataSet(values: BandArray, labelUpper: String, labelLower: String, color: Int): List<DataSet> {
-        val upper = FloatArray(values.size)
-        val lower = FloatArray(values.size)
-
-        for (i in 0 until values.size) {
-            upper[i] = values.upper(i)
-            lower[i] = values.lower(i)
+                listOf(dataSet)
+            }
+            else -> throw NotImplementedError()
         }
-
-        val result = ArrayList<DataSet>()
-        result.add(DataSet(upper, labelUpper, color))
-        result.add(DataSet(lower, labelLower, color))
-
-        return result
-    }
-
-    protected fun getPairDataSet(values: PairArray, labelPos: String, labelNeg: String, colorPos: Int, colorNeg: Int): List<DataSet> {
-        val result = ArrayList<DataSet>()
-        result.add(DataSet(values.positive, labelPos, colorPos))
-        result.add(DataSet(values.negative, labelNeg, colorNeg))
-        return result
-    }
-
-    protected fun getMACDDataSet(values: MACDArray,
-                                 labelMACD: String, labelSignal: String, labelHist: String,
-                                 colorMACD: Int, colorSignal: Int, colorHist: Int): List<DataSet> {
-
-        val signal = FloatArray(values.size)
-        val hist = FloatArray(values.size)
-
-        // TODO make function to get signal/hist arrays directly
-        for (i in 0 until values.size) {
-            signal[i] = values.signal(i)
-            hist[i] = values.hist(i)
-        }
-
-        val result = ArrayList<DataSet>()
-        result.add(DataSet(values, labelMACD, colorMACD))
-        result.add(DataSet(signal, labelSignal, colorSignal))
-        result.add(DataSet(hist, labelHist, colorHist))
-
-        return result
     }
 }

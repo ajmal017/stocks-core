@@ -1,6 +1,9 @@
 package org.cerion.stocks.core.charts
 
+import org.cerion.stocks.core.arrays.BandArray
 import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.arrays.MACDArray
+import org.cerion.stocks.core.arrays.PairArray
 
 class DataSet(private val values: FloatArray, override val label: String, override var color: Int) : IDataSet, Iterable<Float> {
 
@@ -17,4 +20,31 @@ class DataSet(private val values: FloatArray, override val label: String, overri
             override fun next(): Float = values[index++]
         }
     }
+}
+
+fun FloatArray.toDataSet(label: String, color: Int) = DataSet(this, label, color)
+
+fun BandArray.getDataSets(labelUpper: String, labelLower: String, color: Int): List<DataSet> {
+    return listOf(DataSet(upper, labelUpper, color), DataSet(lower, labelLower, color))
+}
+
+fun PairArray.getDataSets(labelPos: String, labelNeg: String, colorPos: Int, colorNeg: Int): List<DataSet> {
+    return listOf(DataSet(positive, labelPos, colorPos), DataSet(negative, labelNeg, colorNeg))
+}
+
+fun MACDArray.getDataSets(labelMACD: String, labelSignal: String, labelHist: String,
+                          colorMACD: Int, colorSignal: Int, colorHist: Int): List<DataSet> {
+
+    val signal = FloatArray(size)
+    val hist = FloatArray(size)
+
+    // TODO make function to get signal/hist arrays directly
+    for (i in 0 until size) {
+        signal[i] = signal(i)
+        hist[i] = hist(i)
+    }
+
+    return listOf(DataSet(this, labelMACD, colorMACD),
+            DataSet(signal, labelSignal, colorSignal),
+            DataSet(hist, labelHist, colorHist))
 }

@@ -11,8 +11,6 @@ import org.cerion.stocks.core.functions.IOverlay
 import org.cerion.stocks.core.functions.ISimpleOverlay
 import org.cerion.stocks.core.functions.types.Indicator
 
-import java.util.ArrayList
-
 class IndicatorChart(private var mIndicator: IIndicator, colors: ChartColors = ChartColors()) : StockChart(colors) {
 
     private val extra = ArrayList<IIndicator>()
@@ -54,50 +52,53 @@ class IndicatorChart(private var mIndicator: IIndicator, colors: ChartColors = C
     }
 
     override fun getDataSets(priceList: PriceList): List<IDataSet> {
-        val result = ArrayList<IDataSet>()
+        val result = mutableListOf<IDataSet>()
 
         val arr = mIndicator.eval(priceList)
-        result.addAll(getIndicatorDataSets(arr, mIndicator))
+        result += getIndicatorDataSets(arr, mIndicator)
 
         // TODO set color on these
         for (indicator in extra) {
             val va = indicator.eval(priceList)
-            result.addAll(getIndicatorDataSets(va, indicator))
+            result += getIndicatorDataSets(va, indicator)
         }
 
         // Pass color of first data set to be ignored for any overlays
-        result.addAll(getOverlayDataSets(arr, result[0].color))
+        result += getOverlayDataSets(arr, result[0].color)
         return result
     }
 
     private fun getOverlayDataSets(arr: ValueArray, ignoreColor: Int): List<DataSet> {
         resetNextColor()
-        val result = ArrayList<DataSet>()
+        val result = mutableListOf<DataSet>()
 
         for (overlay in _overlays) {
             val ol = overlay as ISimpleOverlay
 
             val temp = ol.eval(arr as FloatArray)
-            result.addAll(getDefaultOverlayDataSets(temp, ol, ignoreColor))
+            result += getDefaultOverlayDataSets(temp, ol, ignoreColor)
         }
 
         return result
     }
 
     private fun getIndicatorDataSets(arr: ValueArray, indicator: IIndicator): List<DataSet> {
+        val label = indicator.toString()
+
         // TODO look at all uses and see if any colors should be non-defaults (there are some that will)
-        if (arr.javaClass == BandArray::class.java)
-            throw NotImplementedError() // No indicators seem to be using this
-        else if (arr.javaClass == MACDArray::class.java)
-            return getMACDDataSet(arr as MACDArray, indicator.toString(), indicator.toString(), indicator.toString(), _colors.yellow, _colors.purple, _colors.secondaryBlue)
-        else if (arr.javaClass == PairArray::class.java)
-            return getPairDataSet(arr as PairArray, indicator.toString(), indicator.toString(), _colors.positiveGreen, _colors.negativeRed)
+        return when (arr) {
+            is BandArray -> throw NotImplementedError() // No indicators seem to be using this
+            is MACDArray -> arr.getDataSets(label, label, label, _colors.yellow, _colors.purple, _colors.secondaryBlue)
+            is PairArray -> arr.getDataSets(label, label, _colors.positiveGreen, _colors.negativeRed)
+            is FloatArray -> {
+                // TODO add more special cases
+                var color = _colors.primary
+                if (indicator.id == Indicator.RSI)
+                    color = _colors.orange
 
-        // TODO add more special cases
-        var color = _colors.primary
-        if (indicator.id == Indicator.RSI)
-            color = _colors.orange
-
-        return getSingleDataSet(arr as FloatArray, indicator.toString(), color)
+                listOf(arr.toDataSet(label, color))
+            }
+            else -> throw NotImplementedError()
+        }
     }
 }

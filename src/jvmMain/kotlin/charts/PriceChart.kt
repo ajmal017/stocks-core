@@ -5,7 +5,6 @@ import org.cerion.stocks.core.functions.IOverlay
 import org.cerion.stocks.core.functions.types.IFunctionEnum
 import org.cerion.stocks.core.functions.types.PriceOverlay
 import org.cerion.stocks.core.model.Interval
-import java.util.*
 
 class PriceChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
     var candleData = false
@@ -16,50 +15,39 @@ class PriceChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
         get() = _colors.primaryBlue
 
     override fun getDataSets(priceList: PriceList): List<IDataSet> {
-        val result = ArrayList<IDataSet>()
+        val result = mutableListOf<IDataSet>()
         val list = if(logScale) priceList.toLogScale() else priceList
 
         if (!showPrice) {
             // Don't add price data
-        } else if (candleData && canShowCandleData(list)) {
-            result.addAll(listOf(CandleDataSet(list, "Price")))
-        } else {
-            result.addAll(listOf(DataSet(list.close, "Price", lineColor)))
         }
+        else if (candleData && canShowCandleData(list))
+            result += CandleDataSet(list, "Price")
+        else
+            result += DataSet(list.close, "Price", lineColor)
 
-        result.addAll(getOverlayDataSets(list))
+        result += getOverlayDataSets(list)
         return result
     }
 
     private fun getOverlayDataSets(list: PriceList): List<DataSet> {
         resetNextColor()
-        val result = ArrayList<DataSet>()
+        val result = mutableListOf<DataSet>()
 
         for (overlay in _overlays) {
             val arr = overlay.eval(list)
-            result.addAll(getDefaultOverlayDataSets(arr, overlay, lineColor))
-
-            if (overlay.id.javaClass == PriceOverlay::class.java) {
-                val ol = overlay.id as PriceOverlay
-
-                if (ol == PriceOverlay.PSAR)
-                    result[result.size - 1].lineType = LineType.DOTTED
-            }
+            result += getDefaultOverlayDataSets(arr, overlay, lineColor)
         }
 
         return result
     }
 
-    override val overlays: Array<IFunctionEnum>
+    override val overlays: List<IFunctionEnum>
         get() {
-        val overlay = listOf(*super.overlays)
+        val overlay = super.overlays
         val priceOverlay = listOf(*PriceOverlay.values())
 
-        val combined = ArrayList<IFunctionEnum>()
-        combined.addAll(overlay)
-        combined.addAll(priceOverlay)
-
-        return combined.toTypedArray()
+        return overlay + priceOverlay
     }
 
     fun addOverlay(overlay: IOverlay) {

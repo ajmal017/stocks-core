@@ -1,6 +1,6 @@
 package org.cerion.stocks.core.arrays
 
-class BandArray(private val source: FloatArray, private val upper: FloatArray, private val lower: FloatArray) : ValueArray() {
+class BandArray(private val source: FloatArray, val upper: FloatArray, val lower: FloatArray) : ValueArray() {
 
     override val size = source.size
 
