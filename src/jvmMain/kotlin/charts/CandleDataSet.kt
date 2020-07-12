@@ -2,8 +2,9 @@ package org.cerion.stocks.core.charts
 
 import org.cerion.stocks.core.PriceList
 
-class CandleDataSet(private val mList: PriceList, override val label: String, override val color: Int) : IDataSet {
+class CandleDataSet(private val mList: PriceList, override val label: String) : IDataSet {
 
+    override val color: Int = 0 // Special case data set, ignore color value
     override val size: Int = mList.size - 1
     override val lineType: LineType = LineType.CANDLE
 

@@ -19,7 +19,7 @@ class PriceChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
         if (!showPrice) {
             // Don't add price data
         } else if (candleData && canShowCandleData(list)) {
-            result.addAll(listOf(CandleDataSet(list, "Price", colorBlack())))
+            result.addAll(listOf(CandleDataSet(list, "Price")))
         } else {
             result.addAll(listOf(DataSet(list.close, "Price", _colors.primaryBlue)))
         }

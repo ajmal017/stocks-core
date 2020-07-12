@@ -86,9 +86,9 @@ class IndicatorChart(private var mIndicator: IIndicator, colors: ChartColors = C
     private fun getIndicatorDataSets(arr: ValueArray, indicator: IIndicator): List<DataSet> {
         // TODO look at all uses and see if any colors should be non-defaults (there are some that will)
         if (arr.javaClass == BandArray::class.java)
-            return getBandDataSet(arr as BandArray, indicator.toString(), indicator.toString(), colorBlack())
+            throw NotImplementedError() // No indicators seem to be using this
         else if (arr.javaClass == MACDArray::class.java)
-            return getMACDDataSet(arr as MACDArray, indicator.toString(), indicator.toString(), indicator.toString(), colorBlack(), colorRed(), colorBlue())
+            return getMACDDataSet(arr as MACDArray, indicator.toString(), indicator.toString(), indicator.toString(), _colors.yellow, _colors.purple, _colors.secondaryBlue)
         else if (arr.javaClass == PairArray::class.java)
             return getPairDataSet(arr as PairArray, indicator.toString(), indicator.toString(), _colors.positiveGreen, _colors.negativeRed)
 

@@ -12,12 +12,10 @@ import java.util.*
 
 abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
 
-    //protected List<FunctionCall> mOverlays = new ArrayList<>();
     protected var mOverlays: MutableList<IOverlay> = ArrayList()
     private var nextColor = 0
 
     // TODO better define color usages
-    protected var mPrimaryColors = intArrayOf(0, 0, 0, 0) // TODO add colors that don't use any java libraries, android overrides them all anyway
     protected var mSecondaryColors = intArrayOf(0)
 
     open val overlays: Array<IFunctionEnum>
@@ -57,19 +55,6 @@ abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
 
     fun getOverlay(position: Int): IOverlay = mOverlays[position]
 
-    protected fun colorBlack(): Int = mPrimaryColors[0]
-    protected fun colorRed(): Int = mPrimaryColors[1]
-    protected fun colorBlue(): Int = mPrimaryColors[2]
-    protected fun colorGreen(): Int = mPrimaryColors[3]
-
-    fun setPrimaryColors(colors: IntArray) {
-        if (colors.size != mPrimaryColors.size)
-            throw IllegalArgumentException("${mPrimaryColors.size} colors required")
-
-        if (colors.size == mPrimaryColors.size)
-            mPrimaryColors = colors
-    }
-
     fun setSecondaryColors(colors: IntArray) {
         mSecondaryColors = colors
     }
@@ -89,8 +74,8 @@ abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
     protected fun getDefaultOverlayDataSets(arr: ValueArray, overlay: IOverlay): List<DataSet> {
         if (arr.javaClass == BandArray::class.java)
             return getBandDataSet(arr as BandArray, overlay.toString(), overlay.toString(), getNextColor())
-        else if (arr.javaClass == PairArray::class.java)
-            return getPairDataSet(arr as PairArray, overlay.toString(), overlay.toString(), colorGreen(), colorRed())
+        else if (arr.javaClass == PairArray::class.java) // TODO these are more complex for colors, look into later, using primary as placeholder
+            return getPairDataSet(arr as PairArray, overlay.toString(), overlay.toString(), _colors.primary, _colors.primary)
 
         return getSingleDataSet(arr as FloatArray, overlay.toString(), getNextColor())
     }

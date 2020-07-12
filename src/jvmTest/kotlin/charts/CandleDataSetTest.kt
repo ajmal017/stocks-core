@@ -10,7 +10,7 @@ class CandleDataSetTest {
     @Test
     fun sizeOffsetByOne() {
         val list = Utils.sP500TestData
-        val data = CandleDataSet(list, "", 0)
+        val data = CandleDataSet(list, "")
 
         assertEquals("size should be 1 less", (list.size - 1).toLong(), data.size.toLong())
         assertEquals("invalid close value at position 0", list.close[1], data.getClose(0), 0.0001f)
