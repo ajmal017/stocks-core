@@ -17,4 +17,19 @@ class ChartColors {
     var secondaryRed = 0
     var secondaryGreen = 0
 
+    fun getOverlayColor(index: Int): Int {
+        // Allow for now since unit tests don't always set color
+        // assert(orange != purple) { "colors must be unique" }
+
+        // Order of rotating overlay colors
+        return when(index % 6) {
+            0 -> orange
+            1 -> purple
+            2 -> secondaryGreen
+            3 -> secondaryRed
+            4 -> secondaryBlue
+            5 -> yellow
+            else -> throw IndexOutOfBoundsException()
+        }
+    }
 }

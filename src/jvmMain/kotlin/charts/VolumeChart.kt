@@ -8,11 +8,14 @@ import java.util.*
 class VolumeChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
     var logScale = false
 
+    private val barColor: Int
+        get() = _colors.volumneBlue
+
     override fun getDataSets(priceList: PriceList): List<IDataSet> {
         val result = ArrayList<IDataSet>()
         val volume = if(logScale) priceList.toLogScale().volume else priceList.volume
 
-        val data = DataSet(volume, "Volume", _colors.volumneBlue)
+        val data = DataSet(volume, "Volume", barColor)
         data.lineType = LineType.BAR
         result.addAll(listOf(data))
 
@@ -25,11 +28,11 @@ class VolumeChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
         resetNextColor()
         val result = ArrayList<IDataSet>()
 
-        for (overlay in mOverlays) {
+        for (overlay in _overlays) {
             val ol = overlay as ISimpleOverlay
 
             val arr = ol.eval(volume)
-            result.addAll(getDefaultOverlayDataSets(arr, overlay))
+            result.addAll(getDefaultOverlayDataSets(arr, overlay, barColor))
         }
 
         return result

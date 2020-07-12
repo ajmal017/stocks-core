@@ -12,17 +12,14 @@ import java.util.*
 
 abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
 
-    protected var mOverlays: MutableList<IOverlay> = ArrayList()
-    private var nextColor = 0
-
-    // TODO better define color usages
-    protected var mSecondaryColors = intArrayOf(0)
+    protected var _overlays: MutableList<IOverlay> = ArrayList()
+    private var _nextColor = 0
 
     open val overlays: Array<IFunctionEnum>
         get() = Overlay.values().toList().toTypedArray()
 
     val overlayCount: Int
-        get() = mOverlays.size
+        get() = _overlays.size
 
     abstract fun getDataSets(priceList: PriceList): List<IDataSet>
 
@@ -33,58 +30,55 @@ abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
         val clone = super.clone() as StockChart
 
         // Copy overlays
-        clone.mOverlays = ArrayList()
+        clone._overlays = ArrayList()
 
-        for (overlay in mOverlays) {
+        for (overlay in _overlays) {
             val copy = overlay.id.instance
             copy.setParams(*overlay.params.toTypedArray().clone())
-            clone.mOverlays.add(copy as IOverlay)
+            clone._overlays.add(copy as IOverlay)
         }
 
         return clone
     }
 
     fun addOverlay(overlay: ISimpleOverlay): StockChart {
-        mOverlays.add(overlay)
+        _overlays.add(overlay)
         return this
     }
 
     fun clearOverlays() {
-        mOverlays.clear()
+        _overlays.clear()
     }
 
-    fun getOverlay(position: Int): IOverlay = mOverlays[position]
+    fun getOverlay(position: Int): IOverlay = _overlays[position]
 
-    fun setSecondaryColors(colors: IntArray) {
-        mSecondaryColors = colors
-    }
+    private fun getNextColor(ignoreColor: Int): Int {
+        val color = _colors.getOverlayColor(_nextColor++)
 
-    //protected fun getPriceList(logScale: Boolean): PriceList {
-    //    return if (logScale) mList!!.toLogScale() else mList!!
-    //}
+        if (color == ignoreColor && color != 0) // Ignore zero for unit tests that don't set color values
+            return getNextColor((ignoreColor))
 
-    protected fun getNextColor(): Int {
-        return mSecondaryColors[nextColor++ % mSecondaryColors.size]
+        return color
     }
 
     protected fun resetNextColor() {
-        nextColor = 0
+        _nextColor = 0
     }
 
-    protected fun getDefaultOverlayDataSets(arr: ValueArray, overlay: IOverlay): List<DataSet> {
+    protected fun getDefaultOverlayDataSets(arr: ValueArray, overlay: IOverlay, ignoreColor: Int): List<DataSet> {
         if (arr.javaClass == BandArray::class.java)
-            return getBandDataSet(arr as BandArray, overlay.toString(), overlay.toString(), getNextColor())
+            return getBandDataSet(arr as BandArray, overlay.toString(), overlay.toString(), getNextColor(ignoreColor))
         else if (arr.javaClass == PairArray::class.java) // TODO these are more complex for colors, look into later, using primary as placeholder
             return getPairDataSet(arr as PairArray, overlay.toString(), overlay.toString(), _colors.primary, _colors.primary)
 
-        return getSingleDataSet(arr as FloatArray, overlay.toString(), getNextColor())
+        return getSingleDataSet(arr as FloatArray, overlay.toString(), getNextColor(ignoreColor))
     }
 
     protected fun getSingleDataSet(values: FloatArray, label: String, color: Int): List<DataSet> {
         return ArrayList(listOf(DataSet(values, label, color)))
     }
 
-    protected fun getBandDataSet(values: BandArray, labelUpper: String, labelLower: String, color: Int): List<DataSet> {
+    private fun getBandDataSet(values: BandArray, labelUpper: String, labelLower: String, color: Int): List<DataSet> {
         val upper = FloatArray(values.size)
         val lower = FloatArray(values.size)
 

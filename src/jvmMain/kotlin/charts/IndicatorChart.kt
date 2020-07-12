@@ -32,7 +32,7 @@ class IndicatorChart(private var mIndicator: IIndicator, colors: ChartColors = C
 
         // Preserve overlays, they are reset with setIndicator()
         val overlays = ArrayList<IOverlay>()
-        overlays.addAll(chart.mOverlays)
+        overlays.addAll(chart._overlays)
 
         // Copy indicator
         val params = indicator.params.toTypedArray().clone()
@@ -41,7 +41,7 @@ class IndicatorChart(private var mIndicator: IIndicator, colors: ChartColors = C
         chart.indicator = indicator
 
         // Add back overlays
-        chart.mOverlays = overlays
+        chart._overlays = overlays
 
         return chart
     }
@@ -65,19 +65,20 @@ class IndicatorChart(private var mIndicator: IIndicator, colors: ChartColors = C
             result.addAll(getIndicatorDataSets(va, indicator))
         }
 
-        result.addAll(getOverlayDataSets(arr))
+        // Pass color of first data set to be ignored for any overlays
+        result.addAll(getOverlayDataSets(arr, result[0].color))
         return result
     }
 
-    private fun getOverlayDataSets(arr: ValueArray): List<DataSet> {
+    private fun getOverlayDataSets(arr: ValueArray, ignoreColor: Int): List<DataSet> {
         resetNextColor()
         val result = ArrayList<DataSet>()
 
-        for (overlay in mOverlays) {
+        for (overlay in _overlays) {
             val ol = overlay as ISimpleOverlay
 
             val temp = ol.eval(arr as FloatArray)
-            result.addAll(getDefaultOverlayDataSets(temp, ol))
+            result.addAll(getDefaultOverlayDataSets(temp, ol, ignoreColor))
         }
 
         return result
@@ -92,6 +93,11 @@ class IndicatorChart(private var mIndicator: IIndicator, colors: ChartColors = C
         else if (arr.javaClass == PairArray::class.java)
             return getPairDataSet(arr as PairArray, indicator.toString(), indicator.toString(), _colors.positiveGreen, _colors.negativeRed)
 
-        return getSingleDataSet(arr as FloatArray, indicator.toString(), _colors.primary)
+        // TODO add more special cases
+        var color = _colors.primary
+        if (indicator.id == Indicator.RSI)
+            color = _colors.orange
+
+        return getSingleDataSet(arr as FloatArray, indicator.toString(), color)
     }
 }

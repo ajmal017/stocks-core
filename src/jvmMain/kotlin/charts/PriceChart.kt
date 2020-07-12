@@ -12,6 +12,9 @@ class PriceChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
     var showPrice = true
     var logScale = false
 
+    private val lineColor: Int
+        get() = _colors.primaryBlue
+
     override fun getDataSets(priceList: PriceList): List<IDataSet> {
         val result = ArrayList<IDataSet>()
         val list = if(logScale) priceList.toLogScale() else priceList
@@ -21,7 +24,7 @@ class PriceChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
         } else if (candleData && canShowCandleData(list)) {
             result.addAll(listOf(CandleDataSet(list, "Price")))
         } else {
-            result.addAll(listOf(DataSet(list.close, "Price", _colors.primaryBlue)))
+            result.addAll(listOf(DataSet(list.close, "Price", lineColor)))
         }
 
         result.addAll(getOverlayDataSets(list))
@@ -32,9 +35,9 @@ class PriceChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
         resetNextColor()
         val result = ArrayList<DataSet>()
 
-        for (overlay in mOverlays) {
+        for (overlay in _overlays) {
             val arr = overlay.eval(list)
-            result.addAll(getDefaultOverlayDataSets(arr, overlay))
+            result.addAll(getDefaultOverlayDataSets(arr, overlay, lineColor))
 
             if (overlay.id.javaClass == PriceOverlay::class.java) {
                 val ol = overlay.id as PriceOverlay
@@ -60,7 +63,7 @@ class PriceChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
     }
 
     fun addOverlay(overlay: IOverlay) {
-        mOverlays.add(overlay)
+        _overlays.add(overlay)
     }
 
     /**
