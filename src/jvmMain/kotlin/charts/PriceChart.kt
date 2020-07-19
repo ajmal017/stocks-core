@@ -5,6 +5,7 @@ import org.cerion.stocks.core.functions.IOverlay
 import org.cerion.stocks.core.functions.types.IFunctionEnum
 import org.cerion.stocks.core.functions.types.PriceOverlay
 import org.cerion.stocks.core.model.Interval
+import kotlin.math.log
 
 class PriceChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
     var candleData = false
@@ -28,6 +29,23 @@ class PriceChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
 
         result += getOverlayDataSets(list)
         return result
+    }
+
+    override fun getSerializedParams(): Map<String, String> {
+        val map = mutableMapOf<String, String>()
+
+        // Only save non-default values
+        if (logScale) map["logScale"] = logScale.toString()
+        if (candleData) map["candleData"] = candleData.toString()
+        if (!showPrice) map["showPrice"] = showPrice.toString()
+
+        return map
+    }
+
+    override fun setSerializedParams(params: Map<String, String>) {
+        logScale = (params["logScale"] ?: "false").toBoolean()
+        candleData = (params["candleData"] ?: "false").toBoolean()
+        showPrice = (params["showPrice"] ?: "true").toBoolean()
     }
 
     private fun getOverlayDataSets(list: PriceList): List<DataSet> {

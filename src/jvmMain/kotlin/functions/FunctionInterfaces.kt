@@ -14,6 +14,7 @@ interface IFunction {
     val params: List<Number>
     fun eval(list: PriceList): ValueArray
     fun setParams(vararg params: Number)
+    fun serialize(): String
 }
 
 interface IIndicator : IFunction {

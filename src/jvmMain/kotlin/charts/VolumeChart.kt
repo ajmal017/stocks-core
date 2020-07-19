@@ -22,6 +22,19 @@ class VolumeChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
         return result
     }
 
+    override fun getSerializedParams(): Map<String, String> {
+        val map = mutableMapOf<String, String>()
+
+        // Only save non-default values
+        if (logScale) map["logScale"] = logScale.toString()
+
+        return map
+    }
+
+    override fun setSerializedParams(params: Map<String, String>) {
+        logScale = (params["logScale"] ?: "false").toBoolean()
+    }
+
     private fun getOverlayDataSets(volume: FloatArray): List<IDataSet> {
         resetNextColor()
         val result = mutableListOf<IDataSet>()

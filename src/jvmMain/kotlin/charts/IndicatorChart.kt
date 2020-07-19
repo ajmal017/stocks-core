@@ -11,18 +11,18 @@ import org.cerion.stocks.core.functions.IOverlay
 import org.cerion.stocks.core.functions.ISimpleOverlay
 import org.cerion.stocks.core.functions.types.Indicator
 
-class IndicatorChart(private var mIndicator: IIndicator, colors: ChartColors = ChartColors()) : StockChart(colors) {
+class IndicatorChart(indicator: IIndicator, colors: ChartColors = ChartColors()) : StockChart(colors) {
 
     private val extra = ArrayList<IIndicator>()
 
-    var indicator: IIndicator
-        get() = mIndicator
-        set(indicator) {
+    var indicator: IIndicator = indicator
+        set(value) {
             clearOverlays()
-            mIndicator = indicator
+            field = value
         }
 
-    val id: Indicator = mIndicator.id
+    val id: Indicator
+        get() = indicator.id
 
     @Throws(CloneNotSupportedException::class)
     override fun clone(): Any {
@@ -44,18 +44,26 @@ class IndicatorChart(private var mIndicator: IIndicator, colors: ChartColors = C
         return chart
     }
 
-    fun add(indicator: IIndicator) {
-        if (indicator.id !== mIndicator.id)
-            throw IllegalArgumentException("must be type " + mIndicator.id)
+    override fun getSerializedParams(): Map<String, String> {
+        return mapOf(Pair("indicator", indicator.serialize()))
+    }
 
-        extra.add(indicator)
+    override fun setSerializedParams(params: Map<String, String>) {
+        // No extra fields to set
+    }
+
+    fun add(extraIndicator: IIndicator) {
+        if (indicator.id !== extraIndicator.id)
+            throw IllegalArgumentException("must be type " + indicator.id)
+
+        extra.add(extraIndicator)
     }
 
     override fun getDataSets(priceList: PriceList): List<IDataSet> {
         val result = mutableListOf<IDataSet>()
 
-        val arr = mIndicator.eval(priceList)
-        result += getIndicatorDataSets(arr, mIndicator)
+        val arr = indicator.eval(priceList)
+        result += getIndicatorDataSets(arr, indicator)
 
         // TODO set color on these
         for (indicator in extra) {

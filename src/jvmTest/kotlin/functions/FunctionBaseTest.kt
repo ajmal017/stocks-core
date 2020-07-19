@@ -6,7 +6,9 @@ import org.cerion.stocks.core.functions.types.IFunctionEnum
 import org.cerion.stocks.core.functions.types.Indicator
 import org.cerion.stocks.core.functions.types.Overlay
 import org.cerion.stocks.core.functions.types.PriceOverlay
+import org.cerion.stocks.core.indicators.MACD
 import org.cerion.stocks.core.overlays.BollingerBands
+import org.cerion.stocks.core.overlays.SimpleMovingAverage
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
@@ -142,5 +144,12 @@ class FunctionBaseTest : TestBase() {
 
             assertEquals("'$i' resultType() does not match eval() result", arr.javaClass, indicator.resultType)
         }
+    }
+
+    @Test
+    fun functionBase_serialize() {
+        assertEquals("SMA(22)", SimpleMovingAverage(22).serialize())
+        assertEquals("BB(30,2.1)", BollingerBands(30, 2.1).serialize())
+        assertEquals("MACD(2,3,4)", MACD(2,3,4).serialize())
     }
 }

@@ -2,6 +2,10 @@ package org.cerion.stocks.core.functions
 
 import org.cerion.stocks.core.arrays.ValueArray
 import org.cerion.stocks.core.functions.types.IFunctionEnum
+import org.cerion.stocks.core.functions.types.Indicator
+import org.cerion.stocks.core.functions.types.Overlay
+import org.cerion.stocks.core.functions.types.PriceOverlay
+import org.cerion.stocks.core.overlays.SimpleMovingAverage
 import java.util.*
 
 abstract class FunctionBase protected constructor(override val id: IFunctionEnum, vararg params: Number) : IFunction {
@@ -99,5 +103,42 @@ abstract class FunctionBase protected constructor(override val id: IFunctionEnum
         }
 
         return result
+    }
+
+    override fun serialize(): String {
+        var result = this.id.toString()
+        if (params.isNotEmpty()) {
+            result += "(" + params.joinToString(",") + ")"
+        }
+
+        return result
+    }
+
+    companion object {
+        fun deserialize(str: String): IFunction {
+            // Format is NAME(p1,p2)
+            val tokens = str.replace("(", ",").replace(")", "").split(",")
+            val name = tokens[0]
+            val values = tokens.drop(1).map { parseNumber(it) }
+
+            val enums: MutableList<IFunctionEnum> = Indicator.values().toMutableList()
+            enums += Overlay.values().toList()
+            enums += PriceOverlay.values().toList()
+
+            val function = enums.first { it.toString() == name }
+            val result = function.instance
+
+            if (values.isNotEmpty())
+                result.setParams(*values.toTypedArray())
+
+            return result
+        }
+
+        private fun parseNumber(n: String): Number {
+            return if (n.contains("."))
+                n.toDouble()
+            else
+                n.toInt()
+        }
     }
 }

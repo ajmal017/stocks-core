@@ -1,8 +1,12 @@
 package org.cerion.stocks.core.charts
 
 import org.cerion.stocks.core.PriceList
-import org.cerion.stocks.core.arrays.*
+import org.cerion.stocks.core.arrays.BandArray
 import org.cerion.stocks.core.arrays.FloatArray
+import org.cerion.stocks.core.arrays.PairArray
+import org.cerion.stocks.core.arrays.ValueArray
+import org.cerion.stocks.core.functions.FunctionBase
+import org.cerion.stocks.core.functions.IIndicator
 import org.cerion.stocks.core.functions.IOverlay
 import org.cerion.stocks.core.functions.ISimpleOverlay
 import org.cerion.stocks.core.functions.types.IFunctionEnum
@@ -53,6 +57,9 @@ abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
 
     fun getOverlay(position: Int): IOverlay = _overlays[position]
 
+    protected abstract fun getSerializedParams(): Map<String, String>
+    protected abstract fun setSerializedParams(params: Map<String, String>)
+
     private fun getNextColor(ignoreColor: Int): Int {
         val color = _colors.getOverlayColor(_nextColor++)
 
@@ -81,6 +88,83 @@ abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
                 listOf(dataSet)
             }
             else -> throw NotImplementedError()
+        }
+    }
+
+    fun serialize(): String {
+        // Format for serialization
+        // type:price;logScale:false;overlays:[SMA(234),TEST(2,3,4];
+        // Parameters split by ;
+        // KeyValue split by   :
+        // List split by       ,
+
+        var result = "type:" + when(this) {
+            is PriceChart -> "price"
+            is VolumeChart -> "volume"
+            is IndicatorChart -> "indicator"
+            else -> throw NotImplementedError()
+        }
+
+        val params = getSerializedParams()
+        params.forEach {
+            result += ";${it.key}:${it.value}"
+        }
+
+        if (overlayCount > 0) {
+            result += ";overlays:[" + _overlays.map { it.serialize() }.joinToString(",") + "]"
+        }
+
+        return result
+    }
+
+    companion object {
+        fun deserialize(str: String, colors: ChartColors = ChartColors()): StockChart {
+            val params = str.split(";")
+            val map = mutableMapOf<String, String>()
+            for(param in params) {
+                val keyval = param.split(":")
+                if (keyval.size != 2)
+                    continue
+
+                if (keyval[0] == "overlays")
+                    map[keyval[0]] = keyval[1].replace("[", "").replace("]", "").replace("),", ")\t")
+                else
+                    map[keyval[0]] = keyval[1]
+            }
+
+            val overlays = map["overlays"]?.split("\t")?.map { FunctionBase.deserialize(it) }
+
+            val result = when(map["type"]) {
+                "price" -> {
+                    PriceChart(colors).apply {
+                        overlays?.forEach {
+                            addOverlay(it as IOverlay)
+                        }
+                    }
+                }
+                "volume" -> {
+                    VolumeChart(colors).apply {
+                        overlays?.forEach {
+                            addOverlay(it as ISimpleOverlay)
+                        }
+                    }
+                }
+                "indicator" -> {
+                    val indicator = FunctionBase.deserialize(map["indicator"]!!) as IIndicator
+                    IndicatorChart(indicator, colors).apply {
+                        overlays?.forEach {
+                            addOverlay(it as ISimpleOverlay)
+                        }
+                    }
+                }
+
+                else -> throw NotImplementedError()
+            }
+
+            // Set misc parameters specific to each chart
+            result.setSerializedParams(map)
+
+            return result
         }
     }
 }

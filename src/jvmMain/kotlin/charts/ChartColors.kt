@@ -1,6 +1,6 @@
 package org.cerion.stocks.core.charts
 
-class ChartColors {
+open class ChartColors {
 
     // Basic colors
     var primary = 0 // (white or black) depending on theme
