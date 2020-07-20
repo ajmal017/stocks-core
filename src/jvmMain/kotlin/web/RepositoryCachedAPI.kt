@@ -3,6 +3,7 @@ package org.cerion.stocks.core.web
 import org.cerion.stocks.core.PriceList
 import org.cerion.stocks.core.PriceRow
 import org.cerion.stocks.core.model.Dividend
+import org.cerion.stocks.core.model.FetchInterval
 import org.cerion.stocks.core.model.Interval
 import org.cerion.stocks.core.model.Symbol
 import org.cerion.stocks.core.repository.DividendRepository
@@ -12,11 +13,11 @@ import java.util.*
 
 class RepositoryCachedAPI(private val webApi: DataAPI, private val dividendRepo: DividendRepository) : DataAPI {
 
-    override fun getPriceList(symbol: String, interval: Interval, start: Date): PriceList {
+    override fun getPriceList(symbol: String, interval: FetchInterval, start: Date?): PriceList {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getPrices(symbol: String, interval: Interval, start: Date): List<PriceRow> {
+    override fun getPrices(symbol: String, interval: FetchInterval, start: Date): List<PriceRow> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

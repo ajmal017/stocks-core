@@ -2,10 +2,7 @@ package org.cerion.stocks.core.web
 
 import org.cerion.stocks.core.PriceList
 import org.cerion.stocks.core.PriceRow
-import org.cerion.stocks.core.model.Dividend
-import org.cerion.stocks.core.model.Interval
-import org.cerion.stocks.core.model.Quote
-import org.cerion.stocks.core.model.Symbol
+import org.cerion.stocks.core.model.*
 import org.cerion.stocks.core.web.clients.*
 import java.util.*
 
@@ -14,7 +11,7 @@ open class CombinedDataAPI(private val tiingoApiKey: String) : DataAPI {
     private val yahoo: YahooFinance = YahooFinance.instance
     private val tiingo: Tiingo = Tiingo(tiingoApiKey)
 
-    override fun getPriceList(symbol: String, interval: Interval, start: Date): PriceList {
+    override fun getPriceList(symbol: String, interval: FetchInterval, start: Date?): PriceList {
         val prices = yahoo.getPrices(symbol, interval, start)
         val list = PriceList(symbol, prices)
         list.lastUpdated = Date()
@@ -23,7 +20,7 @@ open class CombinedDataAPI(private val tiingoApiKey: String) : DataAPI {
     }
 
     @Throws(Exception::class)
-    override fun getPrices(symbol: String, interval: Interval, start: Date): List<PriceRow> {
+    override fun getPrices(symbol: String, interval: FetchInterval, start: Date): List<PriceRow> {
         return yahoo.getPrices(symbol, interval, start)
     }
 

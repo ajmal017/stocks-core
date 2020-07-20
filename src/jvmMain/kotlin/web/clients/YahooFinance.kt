@@ -3,6 +3,7 @@ package org.cerion.stocks.core.web.clients
 import org.cerion.stocks.core.PriceList
 import org.cerion.stocks.core.PriceRow
 import org.cerion.stocks.core.model.Dividend
+import org.cerion.stocks.core.model.FetchInterval
 import org.cerion.stocks.core.model.Interval
 import org.cerion.stocks.core.model.Quote
 import org.cerion.stocks.core.web.Tools
@@ -12,10 +13,12 @@ import java.util.*
 
 class YahooFinance private constructor() {
 
+    // TODO add interval enum specific to this class for more type safety, the other has values this API does not support
+
     private var mCookieCrumb: String? = null
     private var mCookie: String? = null
 
-    fun getPrices(symbol: String, interval: Interval, count: Int): PriceList {
+    fun getPrices(symbol: String, interval: FetchInterval, count: Int): PriceList {
         val start = getCalendar(interval, count)
 
         val prices = getPrices(symbol, interval, start.time)
@@ -32,7 +35,7 @@ class YahooFinance private constructor() {
         return result
     }
 
-    fun getPrices(symbol: String, interval: Interval, start: Date): MutableList<PriceRow> {
+    fun getPrices(symbol: String, interval: FetchInterval, start: Date?): MutableList<PriceRow> {
         if (!setCookieCrumb())
             throw RuntimeException("Failed to get cookie")
 
@@ -44,12 +47,16 @@ class YahooFinance private constructor() {
         // &crumb=TSV3DSdPIjI
 
         var sURL = "https://query1.finance.yahoo.com/v7/finance/download/$symbol"
-        sURL += "?period1=" + start.time / 1000
+        if (start != null)
+            sURL += "?period1=" + start.time / 1000
+        else
+            sURL += "?period1=-1325635200" // This is the date they use for S&P 500 index at max size
+
         sURL += "&period2=" + Date().time / 1000
 
-        if (interval === Interval.MONTHLY)
+        if (interval === FetchInterval.MONTHLY)
             sURL += "&interval=1mo"
-        else if (interval === Interval.WEEKLY)
+        else if (interval === FetchInterval.WEEKLY)
             sURL += "&interval=1wk"
         else
             sURL += "&interval=1d"
@@ -169,9 +176,9 @@ class YahooFinance private constructor() {
         return false
     }
 
-    private fun getCalendar(interval: Interval, count: Int): Calendar {
+    private fun getCalendar(interval: FetchInterval, count: Int): Calendar {
         val cal = Calendar.getInstance()
-        if (interval === Interval.DAILY)
+        if (interval === FetchInterval.DAILY)
         //This one is just an estimate since there are various days the market is closed
         {
             val trading_days_year = 250
@@ -183,10 +190,10 @@ class YahooFinance private constructor() {
 
             val weekdays = (remaining * (365.0 / trading_days_year)).toInt()
             cal.add(Calendar.DAY_OF_YEAR, 1 - weekdays)
-        } else if (interval === Interval.WEEKLY) {
+        } else if (interval === FetchInterval.WEEKLY) {
             cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
             cal.add(Calendar.WEEK_OF_MONTH, -count - 1)
-        } else if (interval === Interval.MONTHLY) {
+        } else if (interval === FetchInterval.MONTHLY) {
             cal.add(Calendar.MONTH, -count)
             cal.set(Calendar.DAY_OF_MONTH, 1)
         }

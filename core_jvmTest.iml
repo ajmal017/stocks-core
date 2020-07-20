@@ -6,8 +6,8 @@
         <dependsOnModuleNames>:core:commonTest</dependsOnModuleNames>
         <sourceSets>
           <sourceSet>core_commonTest</sourceSet>
-          <sourceSet>core_commonMain</sourceSet>
           <sourceSet>core_jvmMain</sourceSet>
+          <sourceSet>core_commonMain</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <externalSystemTestTasks>jvmTest|:core:jvmTest|jvm</externalSystemTestTasks>
@@ -125,8 +125,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="core_jvmMain" scope="TEST" />
     <orderEntry type="module" module-name="core_commonMain" scope="TEST" />
+    <orderEntry type="module" module-name="core_jvmMain" scope="TEST" />
   </component>
   <component name="TestModuleProperties" production-module="core_jvmMain" />
 </module>
