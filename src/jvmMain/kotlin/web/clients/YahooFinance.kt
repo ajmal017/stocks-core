@@ -1,29 +1,29 @@
 package org.cerion.stocks.core.web.clients
 
-import org.cerion.stocks.core.PriceList
 import org.cerion.stocks.core.PriceRow
 import org.cerion.stocks.core.model.Dividend
-import org.cerion.stocks.core.model.FetchInterval
-import org.cerion.stocks.core.model.Interval
 import org.cerion.stocks.core.model.Quote
-import org.cerion.stocks.core.web.Tools
 import org.cerion.stocks.core.platform.KMPDate
+import org.cerion.stocks.core.web.FetchInterval
+import org.cerion.stocks.core.web.PriceHistoryDataSource
+import org.cerion.stocks.core.web.Tools
 import java.text.SimpleDateFormat
 import java.util.*
 
-class YahooFinance private constructor() {
+class YahooFinance private constructor() : PriceHistoryDataSource {
 
     // TODO add interval enum specific to this class for more type safety, the other has values this API does not support
 
     private var mCookieCrumb: String? = null
     private var mCookie: String? = null
 
+    /*
     fun getPrices(symbol: String, interval: FetchInterval, count: Int): PriceList {
         val start = getCalendar(interval, count)
 
         val prices = getPrices(symbol, interval, start.time)
-        while (prices.size > count)
-            prices.removeAt(0)
+        //while (prices.size > count)
+        //    prices.removeAt(0)
 
         val result = PriceList(symbol, prices)
 
@@ -34,8 +34,9 @@ class YahooFinance private constructor() {
         println("Result lines= " + result.size)
         return result
     }
+     */
 
-    fun getPrices(symbol: String, interval: FetchInterval, start: Date?): MutableList<PriceRow> {
+    override fun getPrices(symbol: String, interval: FetchInterval, start: Date?): List<PriceRow> {
         if (!setCookieCrumb())
             throw RuntimeException("Failed to get cookie")
 
@@ -375,7 +376,7 @@ class YahooFinance private constructor() {
             return result
         }
 
-        fun parseLine(sLine: String): PriceRow {
+        private fun parseLine(sLine: String): PriceRow {
             val fields = sLine.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (fields.size == 7) {
                 //TODO fix this for S&P large numbers

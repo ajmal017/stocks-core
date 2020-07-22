@@ -120,6 +120,16 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
         return this.symbol.contentEquals(symbol)
     }
 
+    fun truncate(minStartDate: KMPDate): PriceList {
+        val prices = mutableListOf<PriceRow>()
+        for(p in this) {
+            if (p.date >= minStartDate)
+                prices.add(PriceRow(p.date, p.open, p.high, p.low, p.close, p.volume))
+        }
+
+        return PriceList(symbol, prices)
+    }
+
     fun toWeekly(): PriceList {
         if (interval !== Interval.DAILY)
             throw RuntimeException("Interval must be daily")

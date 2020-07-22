@@ -6,6 +6,7 @@ import org.cerion.stocks.core.model.*
 import org.cerion.stocks.core.web.clients.*
 import java.util.*
 
+@Deprecated("Use classes directly")
 open class CombinedDataAPI(private val tiingoApiKey: String) : DataAPI {
 
     private val yahoo: YahooFinance = YahooFinance.instance

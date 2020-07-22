@@ -7,10 +7,3 @@ enum class Interval {
     QUARTERLY,
     YEARLY
 }
-
-// Intervals the APIs allow fetching for
-enum class FetchInterval {
-    DAILY,
-    WEEKLY,
-    MONTHLY,
-}

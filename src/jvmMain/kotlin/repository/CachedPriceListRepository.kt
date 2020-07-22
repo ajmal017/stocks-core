@@ -1,10 +1,10 @@
 package org.cerion.stocks.core.repository
 
 import org.cerion.stocks.core.PriceList
-import org.cerion.stocks.core.model.FetchInterval
 import org.cerion.stocks.core.model.Interval
 import org.cerion.stocks.core.platform.KMPDate
-import org.cerion.stocks.core.web.DataAPI
+import org.cerion.stocks.core.web.FetchInterval
+import org.cerion.stocks.core.web.PriceHistoryDataSource
 import java.util.*
 
 interface PriceHistoryDates {
@@ -29,7 +29,7 @@ class DefaultPriceHistoryDates : PriceHistoryDates {
     }
 }
 
-class CachedPriceListRepository(private val repo: IPriceListRepository, private val api: DataAPI, private val dates: PriceHistoryDates = DefaultPriceHistoryDates()) {
+class CachedPriceListRepository(private val repo: IPriceListRepository, private val api: PriceHistoryDataSource, private val dates: PriceHistoryDates = DefaultPriceHistoryDates()) {
 
     fun get(symbol: String, interval: Interval): PriceList {
         val fetchInterval = when(interval) {
@@ -92,7 +92,8 @@ class CachedPriceListRepository(private val repo: IPriceListRepository, private 
         else
             cachedResult!!
 
-        // TODO if monthly truncate when less than quarterly value
+        if (interval == Interval.MONTHLY && dates.monthlyStartDate != null)
+            return result.truncate(dates.monthlyStartDate!!)
         if (interval == Interval.QUARTERLY)
             return result.toQuarterly()
         if (interval == Interval.YEARLY)
@@ -114,7 +115,9 @@ class CachedPriceListRepository(private val repo: IPriceListRepository, private 
 
             val startDate = kmpStartDate?.jvmDate
 
-            list = api.getPriceList(symbol, fetchInterval, startDate)
+            val prices = api.getPrices(symbol, fetchInterval, startDate)
+            list = PriceList(symbol, prices)
+            list.lastUpdated = Date()
         } catch (e: Exception) {
             // nothing
         }

@@ -3,8 +3,6 @@ package org.cerion.stocks.core.web
 import org.cerion.stocks.core.PriceList
 import org.cerion.stocks.core.PriceRow
 import org.cerion.stocks.core.model.Dividend
-import org.cerion.stocks.core.model.FetchInterval
-import org.cerion.stocks.core.model.Interval
 import org.cerion.stocks.core.model.Symbol
 import org.cerion.stocks.core.repository.DividendRepository
 import java.util.*
@@ -19,6 +17,10 @@ class RepositoryCachedAPI(private val webApi: DataAPI, private val dividendRepo:
 
     override fun getPrices(symbol: String, interval: FetchInterval, start: Date): List<PriceRow> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getDividends(symbol: String): List<Dividend> {
+        TODO("Not yet implemented")
     }
 
     /*
@@ -143,35 +145,6 @@ class RepositoryCachedAPI(private val webApi: DataAPI, private val dividendRepo:
     }
 
      */
-
-    override fun getDividends(symbol: String): List<Dividend> {
-        val dates = dividendRepo.getHistoricalDates(symbol)
-        var update = false
-
-        if (dates == null) {
-            update = true
-        } else {
-            val now = Date()
-            var diff = now.time - dates.lastUpdated!!.time
-            diff /= (1000 * 60 * 60 * 24).toLong()
-            //Log.d(TAG, symbol + " " + interval.name() + " last updated " + dates.LastUpdated + " (" + diff + " days ago)");
-
-            // TODO based it on the following
-            // IF most recent dividend is less than 30 days old, check at most once a week
-            // IF no dividends, check once a month, probably wont ever be any
-            // If new dividend expected soon, check daily
-            if (diff > 7)
-                update = true
-        }
-
-        if (update) {
-            // TODO API should fail if it doesn't get a valid response, difference between error and success
-            val dividends = webApi.getDividends(symbol)
-            dividendRepo.add(symbol, dividends) //updatePrices(symbol, interval);
-        }
-
-        return dividendRepo.get(symbol)
-    }
 
     override fun getSymbol(symbol: String): Symbol? {
         return webApi.getSymbol(symbol)
