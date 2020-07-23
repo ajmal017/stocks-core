@@ -376,7 +376,7 @@ class YahooFinance private constructor() : PriceHistoryDataSource {
             return result
         }
 
-        private fun parseLine(sLine: String): PriceRow {
+        fun parseLine(sLine: String): PriceRow {
             val fields = sLine.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (fields.size == 7) {
                 //TODO fix this for S&P large numbers
