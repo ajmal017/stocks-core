@@ -8,10 +8,11 @@ open class ChartColors {
     var volumneBlue = 0
     var positiveGreen = 0
     var negativeRed = 0
+    var primaryPurple = 0 // Used for common indicators such as RSI / MACD
 
-    // Secondary and overlay colors (no blue/red/green)
+    // Secondary and overlay colors (no blue/red/green/purple)
     var orange = 0
-    var purple = 0
+    var teal = 0
     var yellow = 0
     var secondaryBlue = 0
     var secondaryRed = 0
@@ -24,11 +25,11 @@ open class ChartColors {
         // Order of rotating overlay colors
         return when(index % 6) {
             0 -> orange
-            1 -> purple
+            1 -> teal
             2 -> secondaryGreen
-            3 -> secondaryRed
+            3 -> yellow
             4 -> secondaryBlue
-            5 -> yellow
+            5 -> secondaryRed
             else -> throw IndexOutOfBoundsException()
         }
     }

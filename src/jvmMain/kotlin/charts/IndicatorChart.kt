@@ -96,13 +96,13 @@ class IndicatorChart(indicator: IIndicator, colors: ChartColors = ChartColors())
         // TODO look at all uses and see if any colors should be non-defaults (there are some that will)
         return when (arr) {
             is BandArray -> throw NotImplementedError() // No indicators seem to be using this
-            is MACDArray -> arr.getDataSets(label, label, label, _colors.yellow, _colors.purple, _colors.secondaryBlue)
+            is MACDArray -> arr.getDataSets(label, label, label, _colors.primaryPurple, _colors.orange, _colors.secondaryBlue)
             is PairArray -> arr.getDataSets(label, label, _colors.positiveGreen, _colors.negativeRed)
             is FloatArray -> {
                 // TODO add more special cases
                 var color = _colors.primary
                 if (indicator.id == Indicator.RSI)
-                    color = _colors.orange
+                    color = _colors.primaryPurple
 
                 listOf(arr.toDataSet(label, color))
             }

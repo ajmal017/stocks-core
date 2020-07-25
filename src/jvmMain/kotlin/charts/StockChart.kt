@@ -66,6 +66,10 @@ abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
         if (color == ignoreColor && color != 0) // Ignore zero for unit tests that don't set color values
             return getNextColor((ignoreColor))
 
+        // For volume teal is too close to default so replace with purple
+        if (this is VolumeChart && color == _colors.teal)
+            return _colors.primaryPurple
+
         return color
     }
 

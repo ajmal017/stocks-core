@@ -24,13 +24,14 @@ class ChartColorsTest : TestBase() {
         volumneBlue = 3
         positiveGreen = 4
         negativeRed = 5
+        primaryPurple = 6
 
-        orange = 6
-        purple = 7
-        yellow = 8
-        secondaryBlue = 9
-        secondaryRed = 10
-        secondaryGreen = 11
+        orange = 10
+        teal = 11
+        yellow = 12
+        secondaryBlue = 13
+        secondaryRed = 14
+        secondaryGreen = 15
     }
 
     @Test
@@ -61,9 +62,9 @@ class ChartColorsTest : TestBase() {
     fun chartColors_MACD() {
         val chart = IndicatorChart(MACD(), colors)
         val data = chart.getDataSets(priceList)
-        assertEquals(8, data[0].color)
-        assertEquals(7, data[1].color)
-        assertEquals(9, data[2].color)
+        assertEquals(6, data[0].color)
+        assertEquals(10, data[1].color)
+        assertEquals(13, data[2].color)
     }
 
     @Test
@@ -96,10 +97,10 @@ class ChartColorsTest : TestBase() {
         chart.addOverlay(SimpleMovingAverage())
         chart.addOverlay(ExpMovingAverage())
 
-        // Primary color is orange + overlays should skip that color in list
+        // Primary color is purple
         val data = chart.getDataSets(priceList)
-        assertEquals(colors.orange, data[0].color)
-        assertEquals(colors.getOverlayColor(1), data[1].color)
-        assertEquals(colors.getOverlayColor(2), data[2].color)
+        assertEquals(colors.primaryPurple, data[0].color)
+        assertEquals(colors.getOverlayColor(0), data[1].color)
+        assertEquals(colors.getOverlayColor(1), data[2].color)
     }
 }
