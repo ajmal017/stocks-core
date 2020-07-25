@@ -49,6 +49,9 @@ actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comp
     actual val day: Int
         get() = _date.day
 
+    actual val month: Int // Returns 0-11 for Jan-Dec
+        get() = _date.month
+
     val jvmDate: Date = _date
 
     // TODO add diff function that returns integer for days between

@@ -5,10 +5,7 @@ import org.cerion.stocks.core.model.Interval
 import org.cerion.stocks.core.platform.KMPDate
 
 import java.util.*
-import kotlin.math.ln
-import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.pow
+import kotlin.math.*
 
 class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
 
@@ -175,6 +172,45 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
         return PriceList(symbol, prices)
     }
 
+    fun toMonthly(): PriceList {
+        if (interval !== Interval.DAILY)
+            throw RuntimeException("Interval must be daily")
+
+        val prices = ArrayList<PriceRow>()
+
+        var i = 0
+        while (i < size - 1) {
+            val start = get(i)
+
+            val open = start.open
+            var close = start.close
+            var high = start.high
+            var low = start.low
+            var volume = start.volume
+
+            while (i < size - 1) {
+                i++
+                val p = get(i)
+
+                if (start.date.month != p.date.month)
+                    break
+
+                volume += p.volume
+                if (p.high > high)
+                    high = p.high
+                if (p.low < low)
+                    low = p.low
+
+                close = p.close
+            }
+
+            val p = PriceRow(start.date, open, high, low, close, volume)
+            prices.add(p)
+        }
+
+        return PriceList(symbol, prices)
+    }
+
     fun toQuarterly(): PriceList {
         if (interval !== Interval.MONTHLY)
             throw RuntimeException("Interval must be monthly")
@@ -266,6 +302,54 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
             Interval.MONTHLY -> 12
             Interval.QUARTERLY -> 4
             else -> 1
+        }
+    }
+
+    companion object {
+        fun generateSeries(days: Int): PriceList {
+            val dates = mutableListOf<KMPDate>()
+            val cal = Calendar.getInstance()
+            while(dates.size < days) {
+                if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
+                    cal.add(Calendar.DAY_OF_WEEK, -1)
+                else if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+                    cal.add(Calendar.DAY_OF_WEEK, -2)
+
+                dates.add(KMPDate(cal.time))
+                cal.add(Calendar.DAY_OF_MONTH, -1)
+            }
+
+            dates.reverse()
+
+            var base = 100.0f
+            val increase = 0.001f // ~10% increase every <period> days
+            val periodLength = 200
+
+            val rows = mutableListOf<PriceRow>()
+            for(i in 0 until days) {
+                val period = (i % periodLength) * (Math.PI / periodLength)
+                var curr = base + (base * sin(period)).toFloat()
+
+                // Rotate 3 days up and 2 down
+                when(i % 5) {
+                    0 -> curr += curr*0.02f
+                    2 -> curr += curr*0.02f
+                    3 -> curr -= curr*0.03f
+                    4 -> curr -= curr*0.03f
+                }
+
+                val open = curr - (base / 200)
+                val high = curr + (base / 100)
+                val low = curr - (base / 100)
+                val volume = curr * 1000
+
+                rows.add(PriceRow(dates[i], open, high, low, curr, volume))
+                cal.add(Calendar.DAY_OF_MONTH, 1)
+
+                base += base * increase
+            }
+
+            return PriceList("TESTDATA", rows.reversed())
         }
     }
 }
