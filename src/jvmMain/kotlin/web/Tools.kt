@@ -49,6 +49,7 @@ object Tools {
             if (cookie != null)
                 conn.setRequestProperty("Cookie", cookie)
 
+            conn.connectTimeout = 5 * 1000 // 10 second timeout
             conn.connect()
             val reader = BufferedReader(InputStreamReader(conn.getInputStream()))
 
