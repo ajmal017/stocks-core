@@ -1,7 +1,10 @@
 package org.cerion.stocks.core.platform
 
 import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.temporal.ChronoUnit
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comparable<KMPDate> {
     companion object {
@@ -59,6 +62,16 @@ actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comp
 
     val jvmDate: Date = _date
 
-    // TODO add diff function that returns integer for days between
-    // TODO add add() function to return new date X days back/ahead
+    actual fun add(days: Int): KMPDate {
+        val cal = Calendar.getInstance()
+        cal.time = _date
+        cal.add(Calendar.DAY_OF_MONTH, days)
+
+        return KMPDate(cal.time)
+    }
+
+    actual fun diff(other: KMPDate): Int {
+        val diff = time - other.time
+        return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS).toInt()
+    }
 }

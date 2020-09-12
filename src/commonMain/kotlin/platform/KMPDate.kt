@@ -8,6 +8,9 @@ expect class KMPDate(year: Int, month: Int, date: Int) : Comparable<KMPDate> {
     val date: Int
     val month: Int
 
+    fun add(days: Int): KMPDate
+    fun diff(other: KMPDate): Int
+
     override fun equals(other: Any?): Boolean
 }
 

@@ -2,10 +2,10 @@ package org.cerion.stocks.core
 
 import org.cerion.stocks.core.arrays.FloatArray
 import org.cerion.stocks.core.model.Interval
+import org.cerion.stocks.core.platform.DayOfWeek
 import org.cerion.stocks.core.platform.KMPDate
 import org.cerion.stocks.core.platform.KMPTimeStamp
 
-import java.util.*
 import kotlin.math.*
 
 class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
@@ -309,15 +309,16 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
     companion object {
         fun generateSeries(days: Int): PriceList {
             val dates = mutableListOf<KMPDate>()
-            val cal = Calendar.getInstance()
-            while(dates.size < days) {
-                if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
-                    cal.add(Calendar.DAY_OF_WEEK, -1)
-                else if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-                    cal.add(Calendar.DAY_OF_WEEK, -2)
+            var date = KMPDate.TODAY
 
-                dates.add(KMPDate(cal.time))
-                cal.add(Calendar.DAY_OF_MONTH, -1)
+            while(dates.size < days) {
+                if (date.dayOfWeek == DayOfWeek.SATURDAY)
+                    date = date.add(-1)
+                else if (date.dayOfWeek == DayOfWeek.SUNDAY)
+                    date = date.add(-2)
+
+                dates.add(date)
+                date = date.add(-1)
             }
 
             dates.reverse()
@@ -345,8 +346,6 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
                 val volume = curr * 1000
 
                 rows.add(PriceRow(dates[i], open, high, low, curr, volume))
-                cal.add(Calendar.DAY_OF_MONTH, 1)
-
                 base += base * increase
             }
 
