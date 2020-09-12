@@ -32,12 +32,20 @@ actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comp
     override fun hashCode(): Int = _date.hashCode()
     override fun compareTo(other: KMPDate): Int = _date.compareTo(other._date)
 
-    // TODO might might be the same as 'day', merge to single that is enum return type
-    actual val dayOfWeek: Int
+    actual val dayOfWeek: DayOfWeek
         get() {
             val c = Calendar.getInstance()
             c.time = _date
-            return c.get(Calendar.DAY_OF_WEEK)
+            return when (c.get(Calendar.DAY_OF_WEEK)) {
+                Calendar.SUNDAY -> DayOfWeek.SUNDAY
+                Calendar.MONDAY -> DayOfWeek.MONDAY
+                Calendar.TUESDAY -> DayOfWeek.TUESDAY
+                Calendar.WEDNESDAY -> DayOfWeek.WEDNESDAY
+                Calendar.THURSDAY -> DayOfWeek.THURSDAY
+                Calendar.FRIDAY -> DayOfWeek.FRIDAY
+                Calendar.SATURDAY -> DayOfWeek.SATURDAY
+                else -> throw RuntimeException()
+            }
         }
 
     actual val year: Int
@@ -45,9 +53,6 @@ actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comp
 
     actual val date: Int
         get() = _date.date
-
-    actual val day: Int
-        get() = _date.day
 
     actual val month: Int // Returns 0-11 for Jan-Dec
         get() = _date.month

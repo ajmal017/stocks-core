@@ -3,6 +3,7 @@ package org.cerion.stocks.core.repository
 import org.cerion.stocks.core.PriceList
 import org.cerion.stocks.core.model.Interval
 import org.cerion.stocks.core.platform.KMPDate
+import org.cerion.stocks.core.platform.KMPTimeStamp
 import org.cerion.stocks.core.web.FetchInterval
 import org.cerion.stocks.core.web.PriceHistoryDataSource
 import java.util.*
@@ -117,7 +118,7 @@ class CachedPriceListRepository(private val repo: IPriceListRepository, private 
 
             val prices = api.getPrices(symbol, fetchInterval, startDate)
             list = PriceList(symbol, prices)
-            list.lastUpdated = Date()
+            list.lastUpdated = KMPTimeStamp()
         } catch (e: Exception) {
             // nothing
         }

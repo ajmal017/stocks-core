@@ -5,7 +5,6 @@ import org.cerion.stocks.core.functions.IOverlay
 import org.cerion.stocks.core.functions.types.IFunctionEnum
 import org.cerion.stocks.core.functions.types.PriceOverlay
 import org.cerion.stocks.core.model.Interval
-import kotlin.math.log
 
 class PriceChart(colors: ChartColors = ChartColors()) : StockChart(colors) {
     var candleData = false

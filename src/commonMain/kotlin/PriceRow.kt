@@ -14,10 +14,10 @@ data class PriceRow(
     init {
         //Error checking
         if (open < low || close < low || open > high || close > high)
-            throw RuntimeException("Price range inconsistency " + String.format("%s,%f,%f,%f,%f", formattedDate, open, high, low, close))
+            throw RuntimeException("Price range inconsistency ${date.toISOString()}: $open, $high, $low, $close")
     }
 
-    // TODO possibly only one use so remove later
+    @Deprecated("unnecessary", ReplaceWith("date.toISOString()"))
     val formattedDate: String
-        get() = Price.mDateFormat.format(date) //When it needs to be formatted properly
+        get() = date.toISOString()
 }

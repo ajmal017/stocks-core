@@ -3,6 +3,7 @@ package org.cerion.stocks.core
 import org.cerion.stocks.core.arrays.FloatArray
 import org.cerion.stocks.core.model.Interval
 import org.cerion.stocks.core.platform.KMPDate
+import org.cerion.stocks.core.platform.KMPTimeStamp
 
 import java.util.*
 import kotlin.math.*
@@ -16,7 +17,7 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
     val low: FloatArray = FloatArray(list.size)
     val close: FloatArray = FloatArray(list.size)
     val volume: FloatArray = FloatArray(list.size)
-    var lastUpdated: Date? = null
+    var lastUpdated: KMPTimeStamp? = null
 
     // Skip first instance
     // the first month of a fund may only have a few days worth of arrays depending on its first trading date, example SPY

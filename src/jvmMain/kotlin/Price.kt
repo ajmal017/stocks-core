@@ -1,7 +1,7 @@
 package org.cerion.stocks.core
 
+import org.cerion.stocks.core.platform.DayOfWeek
 import org.cerion.stocks.core.platform.KMPDate
-import java.text.SimpleDateFormat
 
 class Price(val parent: PriceList, val pos: Int) : IPrice {
 
@@ -12,10 +12,11 @@ class Price(val parent: PriceList, val pos: Int) : IPrice {
     override val low: Float get() = parent.low[pos]
     override val volume: Float get() = parent.volume[pos]
 
+    @Deprecated("use date directly", ReplaceWith("date.toISOString()"))
     val formattedDate: String
-        get() = mDateFormat.format(date) //When it needs to be formatted properly
+        get() = date.toISOString()
 
-    val dow: Int
+    val dow: DayOfWeek
         get() = date.dayOfWeek
 
     //Slope of closing price
@@ -36,8 +37,6 @@ class Price(val parent: PriceList, val pos: Int) : IPrice {
     }
 
     companion object {
-        val mDateFormat = SimpleDateFormat("yyyy-MM-dd")
-
         fun getDecimal(value: Float): String {
             return String.format("%.2f", value)
         }
