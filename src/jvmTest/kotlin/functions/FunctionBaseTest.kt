@@ -8,11 +8,30 @@ import org.cerion.stocks.core.functions.types.Overlay
 import org.cerion.stocks.core.functions.types.PriceOverlay
 import org.cerion.stocks.core.indicators.MACD
 import org.cerion.stocks.core.overlays.BollingerBands
+import org.cerion.stocks.core.overlays.ExpMovingAverage
 import org.cerion.stocks.core.overlays.SimpleMovingAverage
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import java.util.*
+import kotlin.reflect.KClass
+import kotlin.reflect.full.defaultType
+import kotlin.reflect.full.starProjectedType
+
+abstract class BaseClass {
+    abstract fun eval(): Number
+}
+class SomeClassOne : BaseClass() {
+    override fun eval(): Int = 55
+}
+
+class SomeClassTwo : BaseClass() {
+    override fun eval(): Double = 5.5
+}
+
+fun run(foo: BaseClass, bar: BaseClass) {
+    // TODO check if foo.eval() returns the same type as bar.eval()
+}
 
 class FunctionBaseTest : TestBase() {
 
@@ -61,6 +80,12 @@ class FunctionBaseTest : TestBase() {
         assertEquals("same functions should not be mapped", map.size.toLong(), 2)
     }
 
+    @Test
+    fun equals_checksClassName() {
+        val call1 = ExpMovingAverage(10)
+        val call2 = SimpleMovingAverage(10)
+        assertNotEquals(call1, call2)
+    }
     @Test
     fun equals_checksParameters() {
         val call1 = Overlay.EMA.getInstance(10)
@@ -113,16 +138,25 @@ class FunctionBaseTest : TestBase() {
     }
 
     @Test
+    fun setParams_setsNewValues() {
+        val call = BollingerBands()
+        call.setParams(33, 2.5)
+
+        assertEquals(33, call.params[0])
+        assertEquals(2.5f, call.params[1])
+    }
+
+    @Test
     fun verifyReturnTypes_simpleOverlays() {
 
         for (o in Overlay.values()) {
             val overlay = o.instance
             var arr = overlay.eval(priceList.close)
-            assertEquals("'$o' resultType() does not match eval() result", arr.javaClass, overlay.resultType)
+            assertEquals("'$o' resultType() does not match eval() result", arr::class.starProjectedType, overlay.resultType)
 
             // Verify when called on both evals
             arr = overlay.eval(priceList)
-            assertEquals("'$o' resultType() does not match eval() result (2)", arr.javaClass, overlay.resultType)
+            assertEquals("'$o' resultType() does not match eval() result (2)", arr::class.starProjectedType, overlay.resultType)
         }
     }
 
@@ -132,7 +166,7 @@ class FunctionBaseTest : TestBase() {
             val overlay = o.instance
             val arr = overlay.eval(priceList)
 
-            assertEquals("'$o' resultType() does not match eval() result", arr.javaClass, overlay.resultType)
+            assertEquals("'$o' resultType() does not match eval() result", arr::class.starProjectedType, overlay.resultType)
         }
     }
 
@@ -142,7 +176,7 @@ class FunctionBaseTest : TestBase() {
             val indicator = i.instance
             val arr = indicator.eval(priceList)
 
-            assertEquals("'$i' resultType() does not match eval() result", arr.javaClass, indicator.resultType)
+            assertEquals("'$i' resultType() does not match eval() result", arr::class.starProjectedType, indicator.resultType)
         }
     }
 

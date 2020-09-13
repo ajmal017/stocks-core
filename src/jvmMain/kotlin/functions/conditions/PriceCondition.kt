@@ -7,6 +7,7 @@ import org.cerion.stocks.core.arrays.FloatArray
 import org.cerion.stocks.core.charts.PriceChart
 import org.cerion.stocks.core.charts.StockChart
 import org.cerion.stocks.core.functions.IPriceOverlay
+import kotlin.reflect.full.starProjectedType
 
 class PriceCondition(private val condition: Condition, private val overlay: IPriceOverlay) : ICondition {
 
@@ -20,7 +21,7 @@ class PriceCondition(private val condition: Condition, private val overlay: IPri
         }
 
     init {
-        if (condition === Condition.INSIDE && overlay.resultType != BandArray::class.java)
+        if (condition === Condition.INSIDE && overlay.resultType != BandArray::class.starProjectedType)
             throw IllegalArgumentException("condition")
     }
 

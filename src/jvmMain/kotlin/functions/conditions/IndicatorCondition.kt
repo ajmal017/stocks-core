@@ -8,6 +8,7 @@ import org.cerion.stocks.core.charts.StockChart
 import org.cerion.stocks.core.functions.IFunction
 import org.cerion.stocks.core.functions.IIndicator
 import org.cerion.stocks.core.functions.IOverlay
+import kotlin.reflect.full.starProjectedType
 
 class IndicatorCondition
 /**
@@ -36,9 +37,9 @@ class IndicatorCondition
 
     init {
         // Only valid to compare two float arrays with each other
-        if (indicator1.resultType != FloatArray::class.java)
+        if (indicator1.resultType != FloatArray::class.starProjectedType)
             throw IllegalArgumentException("indicator1 must return type FloatArray")
-        if (indicator2.resultType != FloatArray::class.java)
+        if (indicator2.resultType != FloatArray::class.starProjectedType)
             throw IllegalArgumentException("indicator2 must return type FloatArray")
 
         if (condition === Condition.INSIDE)

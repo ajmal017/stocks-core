@@ -5,8 +5,7 @@ import org.cerion.stocks.core.functions.types.IFunctionEnum
 import org.cerion.stocks.core.functions.types.Indicator
 import org.cerion.stocks.core.functions.types.Overlay
 import org.cerion.stocks.core.functions.types.PriceOverlay
-import org.cerion.stocks.core.overlays.SimpleMovingAverage
-import java.util.*
+import kotlin.reflect.KType
 
 abstract class FunctionBase protected constructor(override val id: IFunctionEnum, vararg params: Number) : IFunction {
 
@@ -33,7 +32,7 @@ abstract class FunctionBase protected constructor(override val id: IFunctionEnum
             return false
         if (other !is FunctionBase)
             return false
-        if (javaClass != other.javaClass)
+        if (this::class != other::class)
             return false
 
         return if (id !== other.id) false else _params == other._params
@@ -74,20 +73,18 @@ abstract class FunctionBase protected constructor(override val id: IFunctionEnum
         val newParams = removeDoubles(*params)
 
         for (i in newParams.indices) {
-            val c1 = newParams[i].javaClass
-            val c2 = _params[i].javaClass
-            if (c1 != c2)
+            if (newParams[i]::class != _params[i]::class)
                 throw IllegalArgumentException("invalid parameter type at position $i")
         }
 
-        Collections.copy(_params, newParams)
+        newParams.forEachIndexed { index, number -> _params[index] = number }
     }
 
-    override val resultType: Class<out ValueArray>
+    override val resultType: KType
         get() {
             try {
-                val methods = javaClass.methods.filter { it.name == "eval" && it.returnType.name != ValueArray::class.java.name }
-                return methods.first().returnType as Class<out ValueArray>
+                val methods = this::class.members.filter { it.name == "eval" && it.returnType != ValueArray::class }
+                return methods.first().returnType
             } catch (e: Exception) {
                 throw RuntimeException(e.message)
             }

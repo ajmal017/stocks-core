@@ -9,6 +9,7 @@ import org.cerion.stocks.core.charts.StockChart
 import org.cerion.stocks.core.functions.IFunction
 import org.cerion.stocks.core.functions.IIndicator
 import org.cerion.stocks.core.functions.IOverlay
+import kotlin.reflect.full.starProjectedType
 
 class ValueIndicatorCondition
 /**
@@ -31,8 +32,8 @@ class ValueIndicatorCondition
         }
 
     init {
-        if (condition === Condition.INSIDE && indicator.resultType != BandArray::class.java)
-            throw IllegalArgumentException(Condition.INSIDE.toString() + " must be applied to " + BandArray::class.java)
+        if (condition === Condition.INSIDE && indicator.resultType != BandArray::class.starProjectedType)
+            throw IllegalArgumentException(Condition.INSIDE.toString() + " must be applied to " + BandArray::class.simpleName)
     }
 
     override fun eval(list: PriceList): Boolean {
