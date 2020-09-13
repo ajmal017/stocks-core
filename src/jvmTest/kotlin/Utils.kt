@@ -4,10 +4,8 @@ import org.cerion.stocks.core.model.Dividend
 import org.cerion.stocks.core.platform.KMPDate
 import org.cerion.stocks.core.web.clients.YahooFinance
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStreamReader
-import java.nio.charset.StandardCharsets
-import java.nio.file.Files
-import java.nio.file.Paths
 import java.util.*
 
 
@@ -36,6 +34,8 @@ object Utils {
     }
 
     private fun fileToString(fileName: String): String {
+        return File(fileName).readText(Charsets.UTF_8)
+        /*
         val contentBuilder = StringBuilder()
 
         Files.lines(Paths.get(fileName), StandardCharsets.UTF_8).use {
@@ -43,6 +43,7 @@ object Utils {
         }
 
         return contentBuilder.toString()
+         */
     }
 
     fun generateList(size: Int): PriceList {

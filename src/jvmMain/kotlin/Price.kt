@@ -37,8 +37,9 @@ class Price(val parent: PriceList, val pos: Int) : IPrice {
     }
 
     companion object {
+        @Deprecated("removing", ReplaceWith("String.format(\"%.2f\", value)"))
         fun getDecimal(value: Float): String {
-            return String.format("%.2f", value)
+            return value.toString() //String.format("%.2f", value)
         }
     }
 }

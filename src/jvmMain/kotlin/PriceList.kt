@@ -8,7 +8,7 @@ import org.cerion.stocks.core.platform.KMPTimeStamp
 
 import kotlin.math.*
 
-class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
+class PriceList(val symbol: String, list: List<PriceRow>, delegate: ArrayList<Price> = ArrayList()) : MutableList<Price> by delegate {
 
     private var logScale = false
     val dates: Array<KMPDate>
@@ -114,8 +114,9 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
         return result
     }
 
+    @Deprecated("unnecessary", ReplaceWith("this.symbol == symbol"))
     fun `is`(symbol: String): Boolean {
-        return this.symbol.contentEquals(symbol)
+        return this.symbol == symbol
     }
 
     fun truncate(minStartDate: KMPDate): PriceList {
@@ -329,7 +330,7 @@ class PriceList(val symbol: String, list: List<PriceRow>) : ArrayList<Price>() {
 
             val rows = mutableListOf<PriceRow>()
             for(i in 0 until days) {
-                val period = (i % periodLength) * (Math.PI / periodLength)
+                val period = (i % periodLength) * (PI / periodLength)
                 var curr = base + (base * sin(period)).toFloat()
 
                 // Rotate 3 days up and 2 down

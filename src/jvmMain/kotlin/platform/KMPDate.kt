@@ -1,15 +1,13 @@
 package org.cerion.stocks.core.platform
 
 import java.text.SimpleDateFormat
-import java.time.Duration
-import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comparable<KMPDate> {
-    companion object {
+    actual companion object {
         private val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-        val TODAY: KMPDate
+        actual val TODAY: KMPDate
             get() = KMPDate(Date())
     }
 

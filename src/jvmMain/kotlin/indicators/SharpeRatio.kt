@@ -42,7 +42,7 @@ class SharpeRatio(period: Int, riskFreeRate: Double) : IndicatorBase(Indicator.S
                 result[i] = avg[i] / std[i]
                 result[i] *= sqrt(multiplier.toFloat())
             } else
-                result[i] = java.lang.Float.NaN
+                result[i] = Float.NaN
         }
 
         return result
