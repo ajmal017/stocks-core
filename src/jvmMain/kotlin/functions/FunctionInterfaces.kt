@@ -5,12 +5,12 @@ import org.cerion.stocks.core.arrays.FloatArray
 import org.cerion.stocks.core.arrays.ValueArray
 import org.cerion.stocks.core.functions.types.IFunctionEnum
 import org.cerion.stocks.core.functions.types.Indicator
-import kotlin.reflect.KType
+import kotlin.reflect.KClass
 
 
 interface IFunction {
     val name: String
-    val resultType: KType
+    val resultType: KClass<*>
     val id: IFunctionEnum
     val params: List<Number>
     fun eval(list: PriceList): ValueArray

@@ -152,11 +152,11 @@ class FunctionBaseTest : TestBase() {
         for (o in Overlay.values()) {
             val overlay = o.instance
             var arr = overlay.eval(priceList.close)
-            assertEquals("'$o' resultType() does not match eval() result", arr::class.starProjectedType, overlay.resultType)
+            assertEquals("'$o' resultType() does not match eval() result", arr::class, overlay.resultType)
 
             // Verify when called on both evals
             arr = overlay.eval(priceList)
-            assertEquals("'$o' resultType() does not match eval() result (2)", arr::class.starProjectedType, overlay.resultType)
+            assertEquals("'$o' resultType() does not match eval() result (2)", arr::class, overlay.resultType)
         }
     }
 
@@ -166,7 +166,7 @@ class FunctionBaseTest : TestBase() {
             val overlay = o.instance
             val arr = overlay.eval(priceList)
 
-            assertEquals("'$o' resultType() does not match eval() result", arr::class.starProjectedType, overlay.resultType)
+            assertEquals("'$o' resultType() does not match eval() result", arr::class, overlay.resultType)
         }
     }
 
@@ -176,7 +176,7 @@ class FunctionBaseTest : TestBase() {
             val indicator = i.instance
             val arr = indicator.eval(priceList)
 
-            assertEquals("'$i' resultType() does not match eval() result", arr::class.starProjectedType, indicator.resultType)
+            assertEquals("'$i' resultType() does not match eval() result", arr::class, indicator.resultType)
         }
     }
 

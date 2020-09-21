@@ -32,7 +32,7 @@ class ValueIndicatorCondition
         }
 
     init {
-        if (condition === Condition.INSIDE && indicator.resultType != BandArray::class.starProjectedType)
+        if (condition === Condition.INSIDE && indicator.resultType != BandArray::class)
             throw IllegalArgumentException(Condition.INSIDE.toString() + " must be applied to " + BandArray::class.simpleName)
     }
 

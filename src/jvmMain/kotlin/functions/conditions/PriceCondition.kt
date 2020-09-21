@@ -21,7 +21,7 @@ class PriceCondition(private val condition: Condition, private val overlay: IPri
         }
 
     init {
-        if (condition === Condition.INSIDE && overlay.resultType != BandArray::class.starProjectedType)
+        if (condition === Condition.INSIDE && overlay.resultType != BandArray::class)
             throw IllegalArgumentException("condition")
     }
 

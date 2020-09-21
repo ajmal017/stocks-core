@@ -1,11 +1,11 @@
 package org.cerion.stocks.core.functions
 
-import org.cerion.stocks.core.arrays.ValueArray
+import org.cerion.stocks.core.PriceList
 import org.cerion.stocks.core.functions.types.IFunctionEnum
 import org.cerion.stocks.core.functions.types.Indicator
 import org.cerion.stocks.core.functions.types.Overlay
 import org.cerion.stocks.core.functions.types.PriceOverlay
-import kotlin.reflect.KType
+import kotlin.reflect.KClass
 
 abstract class FunctionBase protected constructor(override val id: IFunctionEnum, vararg params: Number) : IFunction {
 
@@ -80,15 +80,12 @@ abstract class FunctionBase protected constructor(override val id: IFunctionEnum
         newParams.forEachIndexed { index, number -> _params[index] = number }
     }
 
-    override val resultType: KType
+    override val resultType: KClass<*>
         get() {
-            try {
-                val methods = this::class.members.filter { it.name == "eval" && it.returnType != ValueArray::class }
-                return methods.first().returnType
-            } catch (e: Exception) {
-                throw RuntimeException(e.message)
-            }
-
+            // Evaluate on a small dataset to get result type
+            val fakeList = PriceList.generateSeries(10) //
+            val result = eval(fakeList)
+            return result::class
         }
 
     private fun removeDoubles(vararg params: Number): MutableList<Number> {
