@@ -1,13 +1,9 @@
 package org.cerion.stocks.core.charts
 
 import org.cerion.stocks.core.PriceList
-import org.cerion.stocks.core.arrays.BandArray
+import org.cerion.stocks.core.arrays.*
 import org.cerion.stocks.core.arrays.FloatArray
-import org.cerion.stocks.core.arrays.MACDArray
-import org.cerion.stocks.core.arrays.PairArray
-import org.cerion.stocks.core.arrays.ValueArray
 import org.cerion.stocks.core.functions.IIndicator
-import org.cerion.stocks.core.functions.IOverlay
 import org.cerion.stocks.core.functions.ISimpleOverlay
 import org.cerion.stocks.core.functions.types.Indicator
 
@@ -23,26 +19,6 @@ class IndicatorChart(indicator: IIndicator, colors: ChartColors = ChartColors())
 
     val id: Indicator
         get() = indicator.id
-
-    @Throws(CloneNotSupportedException::class)
-    override fun clone(): Any {
-        val chart = super.clone() as IndicatorChart
-
-        // Preserve overlays, they are reset with setIndicator()
-        val overlays = ArrayList<IOverlay>()
-        overlays.addAll(chart._overlays)
-
-        // Copy indicator
-        val params = indicator.params.toTypedArray().clone()
-        val indicator = indicator.id.instance
-        indicator.setParams(*params)
-        chart.indicator = indicator
-
-        // Add back overlays
-        chart._overlays = overlays
-
-        return chart
-    }
 
     override fun getSerializedParams(): Map<String, String> {
         return mapOf(Pair("indicator", indicator.serialize()))

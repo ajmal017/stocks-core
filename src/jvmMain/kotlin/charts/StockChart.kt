@@ -15,7 +15,7 @@ import org.cerion.stocks.core.overlays.ParabolicSAR
 import org.cerion.stocks.core.platform.KMPDate
 import java.util.*
 
-abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
+abstract class StockChart(protected val _colors: ChartColors) {
 
     protected var _overlays: MutableList<IOverlay> = ArrayList()
     private var _nextColor = 0
@@ -30,21 +30,7 @@ abstract class StockChart(protected val _colors: ChartColors) : Cloneable {
 
     fun getDates(list: PriceList): Array<KMPDate> = list.dates.sliceArray(1 until list.dates.size)
 
-    @Throws(CloneNotSupportedException::class)
-    public override fun clone(): Any {
-        val clone = super.clone() as StockChart
-
-        // Copy overlays
-        clone._overlays = ArrayList()
-
-        for (overlay in _overlays) {
-            val copy = overlay.id.instance
-            copy.setParams(*overlay.params.toTypedArray().clone())
-            clone._overlays.add(copy as IOverlay)
-        }
-
-        return clone
-    }
+    fun copy(): StockChart = deserialize(serialize(), _colors)
 
     fun addOverlay(overlay: ISimpleOverlay): StockChart {
         _overlays.add(overlay)
