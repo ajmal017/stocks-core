@@ -8,7 +8,6 @@ import org.cerion.stocks.core.charts.StockChart
 import org.cerion.stocks.core.functions.IFunction
 import org.cerion.stocks.core.functions.IIndicator
 import org.cerion.stocks.core.functions.IOverlay
-import kotlin.reflect.full.starProjectedType
 
 class IndicatorCondition
 /**

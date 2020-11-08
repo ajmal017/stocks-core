@@ -13,7 +13,6 @@ import org.cerion.stocks.core.functions.types.IFunctionEnum
 import org.cerion.stocks.core.functions.types.Overlay
 import org.cerion.stocks.core.overlays.ParabolicSAR
 import org.cerion.stocks.core.platform.KMPDate
-import java.util.*
 
 abstract class StockChart(protected val _colors: ChartColors) {
 
