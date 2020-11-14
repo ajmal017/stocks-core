@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="stocks-core-js-0.0.1">
+    <output-path>C:\Data\Dev\GitHub\stocks-core\build\libs</output-path>
+    <root id="archive" name="stocks-core-js-0.0.1.jar">
+      <element id="module-output" name="stocks-core.jsMain" />
+    </root>
+  </artifact>
+</component>

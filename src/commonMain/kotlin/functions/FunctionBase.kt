@@ -7,6 +7,8 @@ import org.cerion.stocks.core.functions.types.Overlay
 import org.cerion.stocks.core.functions.types.PriceOverlay
 import kotlin.reflect.KClass
 
+//import kotlin.reflect.KClass
+
 abstract class FunctionBase protected constructor(override val id: IFunctionEnum, vararg params: Number) : IFunction {
 
     private val _params: MutableList<Number>

@@ -35,14 +35,12 @@ kotlin {
         }
     }
      */
-	/*
+
     js {
-        browser {
-        }
-        nodejs {
-        }
+        browser {}
+        binaries.executable()
+        useCommonJs()
     }
-	*/
 
     sourceSets {
         commonMain {
