@@ -1,10 +1,9 @@
-package platform
+package org.cerion.stocks.core.platform
 
-import org.cerion.stocks.core.platform.KMPDate
-import org.junit.Assert.*
-import org.junit.Test
-import java.util.*
-import kotlin.test.asserter
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+val date = KMPDate(2020, 11, 14)
 
 class KMPDateTest {
 
@@ -14,6 +13,17 @@ class KMPDateTest {
         assertEquals("2020-02-29", KMPDate(2020, 2, 29).toISOString())
         assertEquals("2020-07-06", KMPDate(2020, 7, 6).toISOString())
         assertEquals("2020-12-31", KMPDate(2020, 12, 31).toISOString())
+    }
+
+    @Test
+    fun compare() {
+        val date1 = KMPDate(2020, 11, 13)
+        val date2 = KMPDate(2020, 11, 13)
+        val date3 = KMPDate(2020, 11, 14)
+
+        assertEquals(-1, date1.compareTo(date3))
+        assertEquals(0, date1.compareTo(date2))
+        assertEquals(1, date3.compareTo(date2))
     }
 
     @Test
@@ -37,5 +47,20 @@ class KMPDateTest {
         assertEquals(1, date1.diff(date2))
         assertEquals(31, date1.diff(date3))
         assertEquals(-31, date3.diff(date1))
+    }
+
+    @Test
+    fun dayOfWeek() {
+        assertEquals(DayOfWeek.SATURDAY, date.dayOfWeek)
+    }
+
+    @Test
+    fun year() {
+        assertEquals(2020, date.year)
+    }
+
+    @Test
+    fun month() {
+        assertEquals(10, date.month)
     }
 }

@@ -50,7 +50,7 @@ actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comp
         }
 
     actual val year: Int
-        get() = _date.year
+        get() = _date.year + 1900
 
     actual val date: Int
         get() = _date.date

@@ -37,7 +37,11 @@ kotlin {
      */
 
     js {
-        browser {}
+        browser {
+            webpackTask {
+                output.libraryTarget = "commonjs"
+            }
+        }
         binaries.executable()
         useCommonJs()
     }

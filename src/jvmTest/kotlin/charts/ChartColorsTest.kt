@@ -1,11 +1,6 @@
-package charts
+package org.cerion.stocks.core.charts
 
 import org.cerion.stocks.core.TestBase
-import org.cerion.stocks.core.charts.ChartColors
-import org.cerion.stocks.core.charts.IndicatorChart
-import org.cerion.stocks.core.charts.PriceChart
-import org.cerion.stocks.core.charts.VolumeChart
-import org.cerion.stocks.core.functions.types.Overlay
 import org.cerion.stocks.core.indicators.AccumulationDistributionLine
 import org.cerion.stocks.core.indicators.MACD
 import org.cerion.stocks.core.indicators.RSI
@@ -13,7 +8,7 @@ import org.cerion.stocks.core.indicators.Vortex
 import org.cerion.stocks.core.overlays.BollingerBands
 import org.cerion.stocks.core.overlays.ExpMovingAverage
 import org.cerion.stocks.core.overlays.SimpleMovingAverage
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ChartColorsTest : TestBase() {
