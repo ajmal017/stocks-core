@@ -42,6 +42,7 @@ kotlin {
                 output.libraryTarget = "commonjs"
             }
         }
+
         binaries.executable()
         useCommonJs()
     }
@@ -90,4 +91,8 @@ kotlin {
             }
         }
     }
+}
+
+jsBrowserTest.onlyIf {
+    !System.getenv().containsKey('JITPACK')
 }
