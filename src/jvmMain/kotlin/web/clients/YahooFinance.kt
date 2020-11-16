@@ -2,7 +2,6 @@ package org.cerion.stocks.core.web.clients
 
 import org.cerion.stocks.core.PriceRow
 import org.cerion.stocks.core.model.Dividend
-import org.cerion.stocks.core.model.Quote
 import org.cerion.stocks.core.platform.KMPDate
 import org.cerion.stocks.core.web.FetchInterval
 import org.cerion.stocks.core.web.PriceHistoryDataSource
@@ -16,25 +15,6 @@ class YahooFinance private constructor() : PriceHistoryDataSource {
 
     private var mCookieCrumb: String? = null
     private var mCookie: String? = null
-
-    /*
-    fun getPrices(symbol: String, interval: FetchInterval, count: Int): PriceList {
-        val start = getCalendar(interval, count)
-
-        val prices = getPrices(symbol, interval, start.time)
-        //while (prices.size > count)
-        //    prices.removeAt(0)
-
-        val result = PriceList(symbol, prices)
-
-        // Should never happen
-        if (result.size > 0 && result.interval !== interval)
-            throw RuntimeException("unexpected interval " + result.interval)
-
-        println("Result lines= " + result.size)
-        return result
-    }
-     */
 
     override fun getPrices(symbol: String, interval: FetchInterval, start: Date?): List<PriceRow> {
         if (!setCookieCrumb())
@@ -102,46 +82,6 @@ class YahooFinance private constructor() : PriceHistoryDataSource {
         return result
     }
 
-    fun getQuotes(symbols: Set<String>): Map<String, Quote> {
-        var flags = ""
-        for (s in FLAGS)
-            flags += s
-
-        // String.join isn't working on android with a Set, possibly java v7/8 issue
-        var symbols_join = ""
-        for (s in symbols) {
-            if (symbols_join.isNotEmpty())
-                symbols_join += "+"
-            symbols_join += s
-        }
-
-        val url = "https://download.finance.yahoo.com/d/quotes.csv?s=$symbols_join&f=$flags&e=.csv"
-        val sResult = Tools.getURL(url)
-        val lines = sResult!!.split("\r\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-
-        val result = HashMap<String, Quote>()
-
-        var i = 0
-        for (symbol in symbols) {
-            val line = lines[i]
-            if (line.isNotEmpty())
-                result[symbol] = parseQuote(symbol, line)
-            else
-                result[symbol] = Quote(symbol)
-
-            i++
-        }
-
-        return result
-    }
-
-    fun getQuote(symbol: String): Quote? {
-        val symbols = HashSet(listOf(symbol))
-        val map = getQuotes(symbols)
-
-        return map[symbol]
-    }
-
     private fun setCookieCrumb(): Boolean {
         if (mCookieCrumb != null)
             return true
@@ -177,31 +117,6 @@ class YahooFinance private constructor() : PriceHistoryDataSource {
         return false
     }
 
-    private fun getCalendar(interval: FetchInterval, count: Int): Calendar {
-        val cal = Calendar.getInstance()
-        if (interval === FetchInterval.DAILY)
-        //This one is just an estimate since there are various days the market is closed
-        {
-            val trading_days_year = 250
-            var remaining = count
-            while (remaining >= trading_days_year) {
-                cal.add(Calendar.YEAR, -1)
-                remaining -= trading_days_year
-            }
-
-            val weekdays = (remaining * (365.0 / trading_days_year)).toInt()
-            cal.add(Calendar.DAY_OF_YEAR, 1 - weekdays)
-        } else if (interval === FetchInterval.WEEKLY) {
-            cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
-            cal.add(Calendar.WEEK_OF_MONTH, -count - 1)
-        } else if (interval === FetchInterval.MONTHLY) {
-            cal.add(Calendar.MONTH, -count)
-            cal.set(Calendar.DAY_OF_MONTH, 1)
-        }
-
-        return cal
-    }
-
     companion object {
 
         private val mDateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -233,119 +148,6 @@ class YahooFinance private constructor() : PriceHistoryDataSource {
             return prices
         }
 
-        // http://www.jarloo.com/yahoo_finance/
-        private val FLAGS = arrayOf(
-                //Pricing/Date
-                "p", "o", "c1", "p2", "g", "h", "l1", "t8", "k", "j", "v", "a2", "d1",
-
-                // Ratios and financial info
-                "e", "e7", "e8", "e9", "b4", "j4", "p5", "p6", "r", "r5", "r6", "r7", "s7",
-
-                // Averages
-                "m3", "m4",
-
-                // Misc info
-                "j1", "f6", "j2", "n", "s", "x", "s6",
-
-                // Dividends
-                "y", "d", "q")
-
-        private fun parseQuote(symbol: String, inputLine: String): Quote {
-            var line = inputLine
-            line = line.replace(", ", "&comma; ")
-            val lines = line.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-
-            if (lines.size != FLAGS.size)
-                throw IndexOutOfBoundsException("quotes.csv result does not match parameters")
-
-            val quote = Quote(symbol)
-
-            for (i in FLAGS.indices) {
-                val flag = FLAGS[i]
-                val value = lines[i]
-
-                when (flag) {
-                    "s" -> {
-                        val s = parseString(value)
-                        if (!s.contentEquals(symbol))
-                            throw IllegalStateException("parameter should match symbol")
-                    }
-                    "x" -> quote.exchange = parseString(value)
-                    "n" -> quote.name = parseString(value)
-
-                    "p" -> quote.prevClose = parseFloat(value)
-                    "o" -> quote.open = parseFloat(value)
-                    "g" -> quote.low = parseFloat(value)
-                    "h" -> quote.high = parseFloat(value)
-                    "l1" -> quote.lastTrade = parseFloat(value)
-                    "c1" -> quote.change = parseFloat(value)
-                    "p2" -> quote.changePercent = parseFloat(value)
-                    "v" -> quote.volume = parseLong(value)
-                    "d1" -> quote.lastTradeDate = parseDate(value)
-
-                    "e" -> quote.eps = parseFloat(value)
-                    //case "e7": quote.epsEstCurrentYear = parseFloat(value); break;
-                    //case "e8": quote.epsEstNextYear = parseFloat(value); break;
-                    //case "e9": quote.epsEstNextQuarter = parseFloat(value); break;
-
-                    "b4" -> quote.bookValue = parseFloat(value)
-                    "j4" -> quote.ebitda = parseString(value)
-                    "p5" -> quote.priceSalesRatio = parseFloat(value)
-                    "p6" -> quote.priceBookRatio = parseFloat(value)
-
-                    "r" -> quote.peRatio = parseFloat(value)
-                    "r5" -> quote.pegRatio = parseFloat(value)
-                    //case "r6": quote.priceEPSEstCurrentYear = parseFloat(value); break;
-                    //case "r7": quote.priceEPSEstNextYear = parseFloat(value); break;
-                    "s7" -> quote.shortRatio = parseFloat(value)
-                    "s6" -> quote.revenue = parseString(value)
-
-                    "a2" -> quote.averageVolume = parseLong(value)
-                    "t8" -> quote.oneYearTarget = parseFloat(value)
-                    "k" -> quote.high52 = parseFloat(value)
-                    "j" -> quote.low52 = parseFloat(value)
-
-                    "m3" -> quote.sma50 = parseFloat(value)
-                    "m4" -> quote.sma200 = parseFloat(value)
-
-                    "j1" -> quote.marketCap = parseString(value)
-                    "j2" -> quote.sharesTotal = parseLong(value)
-                    "f6" -> quote.sharesFloat = parseLong(value)
-
-                    "y" -> quote.dividendYield = parseFloat(value)
-                    "q" -> quote.dividendDate = parseDate(value)
-                    "d" -> quote.dividendsPerShare = parseFloat(value)
-                }
-            }
-
-            return quote
-        }
-
-        private fun parseFloat(input: String): Float {
-            var str = input
-
-            try {
-                str = str.replace("%", "")
-                str = str.replace("\"", "")
-                return java.lang.Float.parseFloat(str)
-            } catch (e: NumberFormatException) {
-                return 0f
-            }
-
-        }
-
-        private fun parseLong(number: String): Long {
-            var result: Long = 0
-
-            try {
-                result = java.lang.Long.parseLong(number)
-            } catch (e: Exception) {
-                //e.printStackTrace();
-            }
-
-            return result
-        }
-
         private fun parseDate(inputDate: String): KMPDate? {
             var date = inputDate
             var result: Date?
@@ -367,13 +169,6 @@ class YahooFinance private constructor() : PriceHistoryDataSource {
                 KMPDate(result)
             else
                 null
-        }
-
-        private fun parseString(str: String): String {
-            var result = str
-            result = result.replace("\"", "")
-            result = result.replace("&comma;", ",")
-            return result
         }
 
         fun parseLine(sLine: String): PriceRow {
