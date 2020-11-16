@@ -16,6 +16,7 @@ expect class KMPDate(year: Int, month: Int, date: Int) : Comparable<KMPDate> {
 
     companion object {
         val TODAY: KMPDate
+        fun parse(str: String): KMPDate
     }
 }
 

@@ -14,8 +14,6 @@ class FloatArrayTest : TestBase() {
         val arr1 = SimpleMovingAverage(13).eval(arr)
         val arr2 = arr.sma(13)
 
-        val map = mutableMapOf<Char, Int>()
-        val test = map.maxBy { it.value }
         assertEquals("all elements should be equal", arr1.last.toDouble(), arr2.last.toDouble(), 0.00000001)
     }
 

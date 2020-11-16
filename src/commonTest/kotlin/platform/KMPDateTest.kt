@@ -63,4 +63,15 @@ class KMPDateTest {
     fun month() {
         assertEquals(10, date.month)
     }
+
+    @Test
+    fun parse() {
+        val str1 = "2020-11-15"
+        assertEquals(str1, KMPDate.parse(str1).toISOString())
+        assertEquals(KMPDate(2020,11,15), KMPDate.parse(str1))
+
+        val str2 = "2020-04-07"
+        assertEquals(str2, KMPDate.parse(str2).toISOString())
+        assertEquals(KMPDate(2020,4,7), KMPDate.parse(str2))
+    }
 }

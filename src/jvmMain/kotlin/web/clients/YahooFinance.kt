@@ -415,9 +415,9 @@ class YahooFinance private constructor() : PriceHistoryDataSource {
 
                     var volume = java.lang.Long.parseLong(fields[6], 10)
                     volume /= 1000
-                    val date = mDateFormat.parse(fields[0])
+                    val date = KMPDate.parse(fields[0])
 
-                    return PriceRow(KMPDate(date), open, high, low, adjClose, volume.toFloat())
+                    return PriceRow(date, open, high, low, adjClose, volume.toFloat())
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

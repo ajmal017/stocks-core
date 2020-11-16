@@ -9,6 +9,10 @@ actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comp
         private val dateFormat = SimpleDateFormat("yyyy-MM-dd")
         actual val TODAY: KMPDate
             get() = KMPDate(Date())
+
+        actual fun parse(str: String): KMPDate {
+            return KMPDate(dateFormat.parse(str))
+        }
     }
 
     private var _date: Date = Date(year - 1900, month - 1, date)

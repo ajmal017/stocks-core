@@ -2,15 +2,20 @@ package org.cerion.stocks.core.platform
 
 import kotlin.js.Date
 
-val MS_PER_DAY = 1000 * 60 * 60 * 24
+const val MS_PER_DAY = 1000 * 60 * 60 * 24
 
 actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comparable<KMPDate> {
 
-    private var _date: Date = Date(year, month - 1, date)
-    constructor(date: Date) : this(date.getFullYear(), date.getMonth() + 1, date.getDate())
+    private var _date: Date = Date(Date.UTC(year, month - 1, date))
+    constructor(date: Date) : this(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate())
 
-    override fun compareTo(other: KMPDate): Int {
-        return _date.getTime().compareTo(other._date.getTime())
+    override fun compareTo(other: KMPDate): Int = _date.getTime().compareTo(other._date.getTime())
+
+    actual override fun equals(other: Any?): Boolean {
+        if (other is KMPDate)
+            return this.compareTo(other) == 0
+
+        return false
     }
 
     actual fun toISOString(): String = _date.toISOString().substring(0, 10)
@@ -20,7 +25,7 @@ actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comp
 
     actual val dayOfWeek: DayOfWeek
         get() {
-            return when (_date.getDay()) {
+            return when (_date.getUTCDay()) {
                 0 -> DayOfWeek.SUNDAY
                 1 -> DayOfWeek.MONDAY
                 2 -> DayOfWeek.TUESDAY
@@ -33,23 +38,24 @@ actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comp
         }
 
     actual val year: Int
-        get() = _date.getFullYear()
+        get() = _date.getUTCFullYear()
 
     actual val date: Int
-        get() = _date.getDate()
+        get() = _date.getUTCDate()
 
     actual val month: Int
-        get() = _date.getMonth()
+        get() = _date.getUTCMonth()
 
     actual fun add(days: Int): KMPDate {
         val date = Date(_date.toString())
-        date.asDynamic().setDate(date.getDate() + days)
+        date.asDynamic().setUTCDate(date.getUTCDate() + days)
         return KMPDate(date)
     }
 
     actual fun diff(other: KMPDate): Int {
-        val utc1 = Date.UTC(_date.getFullYear(), _date.getMonth(), _date.getDate())
-        val utc2 = Date.UTC(other._date.getFullYear(), other._date.getMonth(), other._date.getDate())
+        // TODO is this necessary?
+        val utc1 = Date.UTC(_date.getUTCFullYear(), _date.getUTCMonth(), _date.getUTCDate())
+        val utc2 = Date.UTC(other._date.getUTCFullYear(), other._date.getUTCMonth(), other._date.getUTCDate())
 
         return ((utc1 - utc2) / MS_PER_DAY).toInt()
     }
@@ -57,5 +63,12 @@ actual class KMPDate actual constructor(year: Int, month: Int, date: Int) : Comp
     actual companion object {
         actual val TODAY: KMPDate
             get() = KMPDate(Date())
+
+        actual fun parse(str: String): KMPDate {
+            val date = Date(Date.parse(str))
+            return KMPDate(date.toUTC())
+        }
     }
 }
+
+private fun Date.toUTC(): Date = Date(Date.UTC(getUTCFullYear(), getUTCMonth(), getUTCDate(), getUTCHours(), getUTCMinutes()))
