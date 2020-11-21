@@ -1,5 +1,6 @@
 package org.cerion.stocks.core
 
+import kotlinx.coroutines.runBlocking
 import org.cerion.stocks.core.model.Dividend
 import org.cerion.stocks.core.platform.KMPDate
 import org.cerion.stocks.core.web.clients.YahooFinance
@@ -8,6 +9,13 @@ import java.io.File
 import java.io.InputStreamReader
 import java.util.*
 
+actual suspend fun readResourceFile(fileName: String): String {
+    return Utils.resourceToString(fileName)
+}
+
+actual fun runTest(block: suspend () -> Unit) = runBlocking {
+    block()
+}
 
 object Utils {
 
@@ -16,7 +24,7 @@ object Utils {
         PriceList("^GSPC", YahooFinance.getPricesFromTable(data))
     }
 
-    private fun resourceToString(fileName: String): String {
+    fun resourceToString(fileName: String): String {
         val classloader = Thread.currentThread().contextClassLoader
         val inputStream = classloader.getResourceAsStream(fileName)
 
@@ -74,3 +82,4 @@ object Utils {
         return KMPDate(calendar.time)
     }
 }
+

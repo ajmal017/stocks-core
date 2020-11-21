@@ -2,3 +2,5 @@
 .gradle
 out/
 build
+/karma.config.d/karma.config.generated.js
+uiDesigner.xml
