@@ -1,27 +1,26 @@
 package org.cerion.stocks.core.overlays
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class SimpleMovingAverageTest : TestBase() {
 
-    val arr = priceList.close
-
     @Test
-    fun sma_1() {
+    fun sma_1() = runPriceTest {
+        val arr = priceList.close
         val sma = arr.sma(1)
-        assertEquals("Unexpected test arrays length", 4025, sma.size)
+        assertEquals(4025, sma.size, "Unexpected test arrays length")
 
         for (i in 0 until sma.size)
             assertEqual(arr[i], sma[i], "position $i")
     }
 
     @Test
-    fun sma_2() {
-        val sma = arr.sma(2)
+    fun sma_2() = runPriceTest {
+        val sma = it.close.sma(2)
 
-        assertEquals("Unexpected test arrays length", 4025, sma.size)
+        assertEquals(4025, sma.size, "Unexpected test arrays length")
         assertEqual(1455.22, sma[0], "position 0")
         assertEqual(1427.32, sma[1], "position 1")
         assertEqual(1429.40, sma[sma.size / 2], "position " + sma.size / 2)
@@ -29,10 +28,10 @@ class SimpleMovingAverageTest : TestBase() {
     }
 
     @Test
-    fun sma_20() {
-        val sma = arr.sma(20)
+    fun sma_20() = runPriceTest {
+        val sma = it.close.sma(20)
 
-        assertEquals("Unexpected test arrays length", 4025, sma.size)
+        assertEquals(4025, sma.size, "Unexpected test arrays length")
         assertEqual(1455.22, sma[0], "position 0")
         assertEqual(1427.32, sma[1], "position 1")
         assertEqual(1473.51, sma[sma.size / 2], "position " + sma.size / 2)
@@ -40,10 +39,10 @@ class SimpleMovingAverageTest : TestBase() {
     }
 
     @Test
-    fun sma_200() {
-        val sma = arr.sma(200)
+    fun sma_200() = runPriceTest {
+        val sma = it.close.sma(200)
 
-        assertEquals("Unexpected test arrays length", 4025, sma.size.toLong())
+        assertEquals(4025, sma.size.toLong(), "Unexpected test arrays length")
         assertEqual(1455.22, sma[0], "position 0")
         assertEqual(1427.32, sma[1], "position 1")
         assertEqual(1490.95, sma[sma.size / 2], "position " + sma.size / 2)
@@ -51,10 +50,10 @@ class SimpleMovingAverageTest : TestBase() {
     }
 
     @Test
-    fun sma_usesHighestAverage() {
-        val sma20 = arr.sma(20)
-        val sma100 = arr.sma(100)
-        val sma200 = arr.sma(200)
+    fun sma_usesHighestAverage() = runPriceTest {
+        val sma20 = it.close.sma(20)
+        val sma100 = it.close.sma(100)
+        val sma200 = it.close.sma(200)
 
         for (i in 0..19)
             assertEqual(sma20[i], sma100[i], "20 and 100 position $i")

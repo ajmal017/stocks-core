@@ -1,13 +1,13 @@
 package org.cerion.stocks.core.overlays
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Test
+import kotlin.test.Test
 
 class KeltnerChannelsTest : TestBase() {
 
     @Test
-    fun keltnerChannels_defaults() {
-        val arr = KeltnerChannels().eval(priceList)
+    fun keltnerChannels_defaults() = runPriceTest {
+        val arr = KeltnerChannels().eval(it)
 
         val last = arr.size - 1
         // TODO verify values online, just doing these pre-refactor

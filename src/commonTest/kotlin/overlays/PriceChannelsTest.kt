@@ -1,16 +1,16 @@
 package org.cerion.stocks.core.overlays
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Test
+import kotlin.test.Test
 
 class PriceChannelsTest : TestBase() {
 
     @Test
-    fun priceChannels_defaults() {
-        val arr = PriceChannels().eval(priceList)
+    fun priceChannels_defaults() = runPriceTest {
+        val arr = PriceChannels().eval(it)
 
-        assertEqual(priceList.high[0], arr.upper(0), "priceChannels 0")
-        assertEqual(priceList.low[0], arr.lower(0), "priceChannels 0")
+        assertEqual(it.high[0], arr.upper(0), "priceChannels 0")
+        assertEqual(it.low[0], arr.lower(0), "priceChannels 0")
         assertEqual(1478.0, arr.upper(1), "priceChannels 1 upper")
         assertEqual(1438.36, arr.lower(1), "priceChannels 1 lower")
         assertEqual(1478.0, arr.upper(18), "priceChannels 18")
@@ -19,7 +19,7 @@ class PriceChannelsTest : TestBase() {
 
         // TODO add assert function that takes BandArray and position with 5 values
         // Last
-        val p = size - 1
+        val p = it.size - 1
         assertEqual(2104.27, arr.upper(p), "priceChannels upper last")
         assertEqual(1993.26, arr.lower(p), "priceChannels lower last")
         assertEqual(2048.77, arr.mid(p), "mid last")
@@ -28,10 +28,9 @@ class PriceChannelsTest : TestBase() {
     }
 
     @Test
-    fun priceChannels_100() {
-        val arr = PriceChannels(100).eval(priceList)
-        assertEqual(2116.48, arr.upper(size - 1), "priceChannels upper last with different parameters")
-        assertEqual(1867.01, arr.lower(size - 1), "priceChannels lower last with different parameters")
+    fun priceChannels_100() = runPriceTest {
+        val arr = PriceChannels(100).eval(it)
+        assertEqual(2116.48, arr.upper(it.size - 1), "priceChannels upper last with different parameters")
+        assertEqual(1867.01, arr.lower(it.size - 1), "priceChannels lower last with different parameters")
     }
-
 }

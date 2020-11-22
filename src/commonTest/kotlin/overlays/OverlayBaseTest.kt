@@ -1,17 +1,16 @@
 package org.cerion.stocks.core.overlays
 
-import org.cerion.stocks.core.TestBase
 import org.cerion.stocks.core.functions.types.Overlay
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-class OverlayBaseTest : TestBase() {
+class OverlayBaseTest {
 
     @Test
     fun correctEnumReturned() {
         for (o in Overlay.values()) {
             val overlay = o.instance
-            assertEquals("enum does not match instance", o, overlay.id)
+            assertEquals(o, overlay.id, "enum does not match instance")
         }
     }
 }

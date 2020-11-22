@@ -1,13 +1,13 @@
 package org.cerion.stocks.core.overlays
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Test
+import kotlin.test.Test
 
 class ChandelierExitTest : TestBase() {
 
     @Test
-    fun eval() {
-        var arr = ChandelierExit(22, 3.0).eval(priceList)
+    fun eval() = runPriceTest {
+        var arr = ChandelierExit(22, 3.0).eval(it)
 
         assertEqual(1359.08, arr.pos(0), "chandelierExit 0")
         assertEqual(1356.61, arr.pos(1), "chandelierExit 1")
@@ -15,9 +15,9 @@ class ChandelierExitTest : TestBase() {
         assertEqual(1379.12, arr.pos(21), "chandelierExit 21")
         assertEqual(1374.90, arr.pos(22), "chandelierExit 22")
         assertEqual(2007.38, arr.pos(3950), "chandelierExit 3950")
-        assertEqual(2030.88, arr.pos(size - 1), "chandelierExit last")
+        assertEqual(2030.88, arr.pos(it.size - 1), "chandelierExit last")
 
-        arr = ChandelierExit(15, 2.5).eval(priceList)
-        assertEqual(2020.99, arr.pos(size - 1), "chandelierExit last with different parameters")
+        arr = ChandelierExit(15, 2.5).eval(it)
+        assertEqual(2020.99, arr.pos(it.size - 1), "chandelierExit last with different parameters")
     }
 }
