@@ -3,6 +3,7 @@ package org.cerion.stocks.core.web.clients
 import org.cerion.stocks.core.PriceRow
 import org.cerion.stocks.core.model.Dividend
 import org.cerion.stocks.core.platform.KMPDate
+import org.cerion.stocks.core.web.CSVParser
 import org.cerion.stocks.core.web.FetchInterval
 import org.cerion.stocks.core.web.PriceHistoryDataSource
 import org.cerion.stocks.core.web.Tools
@@ -54,7 +55,7 @@ class YahooFinance private constructor() : PriceHistoryDataSource {
         }
 
         val sData = res.result
-        return getPricesFromTable(sData)
+        return CSVParser.getPricesFromTable(sData)
     }
 
     fun getDividends(symbol: String): List<Dividend> {
@@ -126,28 +127,6 @@ class YahooFinance private constructor() : PriceHistoryDataSource {
 
         private const val DEBUG = true
 
-        /***
-         * Gets PriceList from csv formatted file that API would return
-         * @param tableData file contents as string
-         * @return PriceList
-         */
-        fun getPricesFromTable(tableData: String): MutableList<PriceRow> {
-            val lines = tableData.split("\\r\\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-
-            if (DEBUG)
-                println("Table lines = " + lines.size)
-
-            val prices = ArrayList<PriceRow>()
-            for (i in 1 until lines.size) {
-                if (!lines[i].contains("null"))
-                    prices.add(parseLine(lines[i]))
-                else
-                    println("Ignoring line " + lines[i]) // new API issue some rows have all null values
-            }
-
-            return prices
-        }
-
         private fun parseDate(inputDate: String): KMPDate? {
             var date = inputDate
             var result: Date?
@@ -169,56 +148,6 @@ class YahooFinance private constructor() : PriceHistoryDataSource {
                 KMPDate(result)
             else
                 null
-        }
-
-        fun parseLine(sLine: String): PriceRow {
-            val fields = sLine.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            if (fields.size == 7) {
-                //TODO fix this for S&P large numbers
-                try
-                //Fails on S&P index since too large, just ignore it
-                {
-                    var open = java.lang.Float.parseFloat(fields[1])
-                    var high = java.lang.Float.parseFloat(fields[2])
-                    var low = java.lang.Float.parseFloat(fields[3])
-                    val close = java.lang.Float.parseFloat(fields[4])
-                    val adjClose = java.lang.Float.parseFloat(fields[5])
-
-                    if (adjClose != close) {
-                        if (close == open)
-                            open = adjClose
-                        else
-                            open = adjClose * open / close
-
-                        if (close == high)
-                        //Fix float rounding issues to prevent close > high when they are the same
-                            high = adjClose
-                        else
-                            high = adjClose * high / close
-
-                        if (close == low)
-                            low = adjClose
-                        else
-                            low = adjClose * low / close
-                    }
-
-                    // Correcting bad data
-                    if (open < low) {
-                        println("Correcting bad [open] data on " + fields[0])
-                        open = (high + low) / 2
-                    }
-
-                    var volume = java.lang.Long.parseLong(fields[6], 10)
-                    volume /= 1000
-                    val date = KMPDate.parse(fields[0])
-
-                    return PriceRow(date, open, high, low, adjClose, volume.toFloat())
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-
-            throw Exception("Unexpected price line")
         }
     }
 }

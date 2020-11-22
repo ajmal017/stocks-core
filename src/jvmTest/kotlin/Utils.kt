@@ -3,7 +3,7 @@ package org.cerion.stocks.core
 import kotlinx.coroutines.runBlocking
 import org.cerion.stocks.core.model.Dividend
 import org.cerion.stocks.core.platform.KMPDate
-import org.cerion.stocks.core.web.clients.YahooFinance
+import org.cerion.stocks.core.web.CSVParser
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -21,7 +21,7 @@ object Utils {
 
     val sP500TestData: PriceList by lazy {
         val data = resourceToString("sp500_2000-2015.csv")
-        PriceList("^GSPC", YahooFinance.getPricesFromTable(data))
+        PriceList("^GSPC", CSVParser.getPricesFromTable(data))
     }
 
     fun resourceToString(fileName: String): String {
