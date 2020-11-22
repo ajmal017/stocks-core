@@ -1,14 +1,13 @@
 package org.cerion.stocks.core.indicators
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Test
-
+import kotlin.test.Test
 
 class UltimateOscillatorTest : TestBase() {
 
     @Test
-    fun eval() {
-        val arr = UltimateOscillator(7, 14, 28).eval(priceList)
+    fun eval() = runPriceTest {
+        val arr = UltimateOscillator(7, 14, 28).eval(it)
 
         assertEqual(0.0, arr.first, "uo 0")
         assertEqual(0.0, arr[1], "uo 1")

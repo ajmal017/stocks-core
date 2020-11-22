@@ -1,13 +1,13 @@
 package org.cerion.stocks.core.indicators
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Test
+import kotlin.test.Test
 
 class StochasticTest : TestBase() {
 
     @Test
-    fun eval() {
-        val stoch = Stochastic(14, 1, 1).eval(priceList)
+    fun eval() = runPriceTest {
+        val stoch = Stochastic(14, 1, 1).eval(it)
 
         // Verified on stockcharts
         assertEqual(42.53, stoch.first, "position 0")

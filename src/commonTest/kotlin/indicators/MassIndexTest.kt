@@ -1,13 +1,13 @@
 package org.cerion.stocks.core.indicators
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Test
+import kotlin.test.Test
 
 class MassIndexTest : TestBase() {
 
     @Test
-    fun eval() {
-        val ma = MassIndex(23).eval(priceList)
+    fun eval() = runPriceTest {
+        val ma = MassIndex(23).eval(it)
         assertEqual(23.00, ma[0], "massIndex 0")
         assertEqual(23.83, ma[1], "massIndex 1")
         assertEqual(20.93, ma[10], "massIndex p-2")

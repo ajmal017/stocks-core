@@ -1,13 +1,13 @@
 package org.cerion.stocks.core.indicators
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Test
+import kotlin.test.Test
 
 class PringsSpecialKTest : TestBase() {
 
     @Test
-    fun pringsSpecialK_test() {
-        val arr = PringsSpecialK().eval(priceList)
+    fun pringsSpecialK_test() = runPriceTest {
+        val arr = PringsSpecialK().eval(it)
 
         // TODO verify values online, just doing these pre-refactor
         assertEqual(0.0, arr.first, "first")

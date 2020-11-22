@@ -1,13 +1,13 @@
 package org.cerion.stocks.core.indicators
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Test
+import kotlin.test.Test
 
 class DirectionalIndexTest : TestBase() {
 
     @Test
-    fun directionalIndex_defaults() {
-        val arr = DirectionalIndex().eval(priceList)
+    fun directionalIndex_defaults() = runPriceTest{
+        val arr = DirectionalIndex().eval(it)
         val last = arr.size - 1
 
         // TODO verify values online, just doing these pre-refactor

@@ -1,13 +1,13 @@
 package org.cerion.stocks.core.indicators
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Test
+import kotlin.test.Test
 
 class TrueStrengthIndexTest : TestBase() {
 
     @Test
-    fun eval() {
-        val arr = TrueStrengthIndex(20, 10).eval(priceList)
+    fun eval() = runPriceTest {
+        val arr = TrueStrengthIndex(20, 10).eval(it)
         assertEqual(0.0, arr.first, "tsi 0")
         assertEqual(0.0, arr[1], "tsi 1")
         assertEqual(-94.56, arr[2], "tsi 2")

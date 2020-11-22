@@ -1,8 +1,8 @@
 package org.cerion.stocks.core.indicators
 
 import org.cerion.stocks.core.functions.types.Indicator
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class AllTest {
 
@@ -10,7 +10,7 @@ class AllTest {
     fun correctEnumReturned() {
         for (i in Indicator.values()) {
             val instance = i.instance
-            assertEquals("enum does not match instance", i, instance.id)
+            assertEquals(i, instance.id, "enum does not match instance")
         }
     }
 }

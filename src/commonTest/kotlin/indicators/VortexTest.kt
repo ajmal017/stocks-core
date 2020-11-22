@@ -1,13 +1,13 @@
 package org.cerion.stocks.core.indicators
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Test
+import kotlin.test.Test
 
 class VortexTest : TestBase() {
 
     @Test
-    fun eval() {
-        val arr = Vortex(14).eval(priceList)
+    fun eval() = runPriceTest {
+        val arr = Vortex(14).eval(it)
         assertEqual(1.0, arr.neg(0), "vortex (-) 0")
         assertEqual(1.0, arr.pos(0), "vortex (+) 0")
         assertEqual(0.83, arr.neg(1), "vortex (-) 0")

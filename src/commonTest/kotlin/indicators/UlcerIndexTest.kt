@@ -1,13 +1,13 @@
 package org.cerion.stocks.core.indicators
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Test
+import kotlin.test.Test
 
 class UlcerIndexTest : TestBase() {
 
     @Test
-    fun eval() {
-        val arr = UlcerIndex(14).eval(priceList)
+    fun eval() = runPriceTest {
+        val arr = UlcerIndex(14).eval(it)
 
         // TODO stock charts has a different value for this but their calculation might be wrong
         // This one matches if you do sqrt twice which seems wrong
