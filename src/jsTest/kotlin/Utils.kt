@@ -1,13 +1,11 @@
 package org.cerion.stocks.core
 
 import kotlinx.browser.window
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.await
-import kotlinx.coroutines.promise
+import kotlinx.coroutines.*
 import kotlin.js.Promise
 
-actual suspend fun readResourceFile(fileName: String): String {
-    return getText(fileName).await()
+actual suspend fun readResourceFileAsync(fileName: String): Deferred<String> {
+    return getText(fileName).asDeferred()
 }
 
 private fun getText(fileName: String): Promise<String> {
@@ -18,6 +16,6 @@ private fun getText(fileName: String): Promise<String> {
     }
 }
 
-actual fun runTest(block: suspend () -> Unit): dynamic = GlobalScope.promise {
+actual fun runAsync(block: suspend () -> Unit): dynamic = GlobalScope.promise {
     block()
 }

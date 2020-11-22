@@ -1,5 +1,7 @@
 package org.cerion.stocks.core
 
-expect suspend fun readResourceFile(fileName: String): String
+import kotlinx.coroutines.Deferred
 
-expect fun runTest(block: suspend () -> Unit)
+expect suspend fun readResourceFileAsync(fileName: String): Deferred<String>
+
+expect fun runAsync(block: suspend () -> Unit)

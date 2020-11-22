@@ -24,7 +24,7 @@ class PriceChannelsTest : TestBase() {
         assertEqual(1993.26, arr.lower(p), "priceChannels lower last")
         assertEqual(2048.77, arr.mid(p), "mid last")
         assertEqual(5.42, arr.bandwidth(p), "bandwidth last")
-        assertEqual(0.4565, arr.percent(p), "percent last")
+        assertEqual(0.46, arr.percent(p), "percent last")
     }
 
     @Test

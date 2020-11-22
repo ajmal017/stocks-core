@@ -1,13 +1,13 @@
 package org.cerion.stocks.core.indicators
 
 import org.cerion.stocks.core.TestBase
-import org.junit.Test
+import kotlin.test.Test
 
 class AverageDirectionalIndexTest : TestBase() {
 
     @Test
-    fun averageDirectionalIndex_defaults() {
-        val adx = AverageDirectionalIndex().eval(priceList) // period is 14 by default
+    fun averageDirectionalIndex_defaults() = runPriceTest {
+        val adx = AverageDirectionalIndex().eval(it) // period is 14 by default
 
         assertEqual(0.0, adx.first, "first")
         assertEqual(50.0, adx[1], "position 1")
@@ -16,8 +16,8 @@ class AverageDirectionalIndexTest : TestBase() {
     }
 
     @Test
-    fun averageDirectionalIndex_test_7() {
-        val adx = AverageDirectionalIndex(7).eval(priceList)
+    fun averageDirectionalIndex_test_7() = runPriceTest {
+        val adx = AverageDirectionalIndex(7).eval(it)
 
         assertEqual(0.0, adx.first, "first")
         assertEqual(50.0, adx[1], "position 1")

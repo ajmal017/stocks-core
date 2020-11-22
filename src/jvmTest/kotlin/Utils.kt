@@ -1,5 +1,7 @@
 package org.cerion.stocks.core
 
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
 import org.cerion.stocks.core.model.Dividend
 import org.cerion.stocks.core.platform.KMPDate
@@ -9,17 +11,18 @@ import java.io.File
 import java.io.InputStreamReader
 import java.util.*
 
-actual suspend fun readResourceFile(fileName: String): String {
-    return Utils.resourceToString(fileName)
+actual suspend fun readResourceFileAsync(fileName: String): Deferred<String> {
+    return CompletableDeferred(Utils.resourceToString(fileName))
 }
 
-actual fun runTest(block: suspend () -> Unit) = runBlocking {
+actual fun runAsync(block: suspend () -> Unit) = runBlocking {
     block()
 }
 
 object Utils {
 
     val sP500TestData: PriceList by lazy {
+        println("loading")
         val data = resourceToString("sp500_2000-2015.csv")
         PriceList("^GSPC", CSVParser.getPricesFromTable(data))
     }

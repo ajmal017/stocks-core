@@ -10,7 +10,7 @@ class ChandelierExitTest : TestBase() {
         var arr = ChandelierExit(22, 3.0).eval(priceList)
 
         assertEqual(1359.08, arr.pos(0), "chandelierExit 0")
-        assertEqual(1356.60, arr.pos(1), "chandelierExit 1")
+        assertEqual(1356.61, arr.pos(1), "chandelierExit 1")
         assertEqual(1376.86, arr.pos(20), "chandelierExit 20")
         assertEqual(1379.12, arr.pos(21), "chandelierExit 21")
         assertEqual(1374.90, arr.pos(22), "chandelierExit 22")
