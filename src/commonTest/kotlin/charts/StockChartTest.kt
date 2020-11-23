@@ -115,7 +115,6 @@ class StockChartTest : TestBase() {
     @Test
     fun stockChart_IndicatorChart_deserialize() {
         val chart = IndicatorChart(RSI(11))
-        val test = chart.serialize()
         var deserializedChart = StockChart.deserialize(chart.serialize()) as IndicatorChart
         assertEquals(Indicator.RSI, deserializedChart.id)
         assertEquals(11, deserializedChart.indicator.params[0])

@@ -10,6 +10,6 @@ class StochasticRSITest : TestBase() {
         val arr = StochasticRSI().eval(it)
 
         // TODO verify value online, just doing these pre-refactor
-        assertEqual(0.57, arr.last, "last")
+        assertEquals(0.57, arr.last, "last")
     }
 }

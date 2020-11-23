@@ -21,10 +21,10 @@ class SimpleMovingAverageTest : TestBase() {
         val sma = it.close.sma(2)
 
         assertEquals(4025, sma.size, "Unexpected test arrays length")
-        assertEqual(1455.22, sma[0], "position 0")
-        assertEqual(1427.32, sma[1], "position 1")
-        assertEqual(1429.40, sma[sma.size / 2], "position " + sma.size / 2)
-        assertEqual(2053.65, sma[sma.size - 1], "position last")
+        assertEquals(1455.22, sma[0], "position 0")
+        assertEquals(1427.32, sma[1], "position 1")
+        assertEquals(1429.40, sma[sma.size / 2], "position " + sma.size / 2)
+        assertEquals(2053.65, sma[sma.size - 1], "position last")
     }
 
     @Test
@@ -32,10 +32,10 @@ class SimpleMovingAverageTest : TestBase() {
         val sma = it.close.sma(20)
 
         assertEquals(4025, sma.size, "Unexpected test arrays length")
-        assertEqual(1455.22, sma[0], "position 0")
-        assertEqual(1427.32, sma[1], "position 1")
-        assertEqual(1473.51, sma[sma.size / 2], "position " + sma.size / 2)
-        assertEqual(2050.38, sma[sma.size - 1], "position last")
+        assertEquals(1455.22, sma[0], "position 0")
+        assertEquals(1427.32, sma[1], "position 1")
+        assertEquals(1473.51, sma[sma.size / 2], "position " + sma.size / 2)
+        assertEquals(2050.38, sma[sma.size - 1], "position last")
     }
 
     @Test
@@ -43,10 +43,10 @@ class SimpleMovingAverageTest : TestBase() {
         val sma = it.close.sma(200)
 
         assertEquals(4025, sma.size.toLong(), "Unexpected test arrays length")
-        assertEqual(1455.22, sma[0], "position 0")
-        assertEqual(1427.32, sma[1], "position 1")
-        assertEqual(1490.95, sma[sma.size / 2], "position " + sma.size / 2)
-        assertEqual(2061.15, sma[sma.size - 1], "position last")
+        assertEquals(1455.22, sma[0], "position 0")
+        assertEquals(1427.32, sma[1], "position 1")
+        assertEquals(1490.95, sma[sma.size / 2], "position " + sma.size / 2)
+        assertEquals(2061.15, sma[sma.size - 1], "position last")
     }
 
     @Test

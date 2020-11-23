@@ -30,7 +30,7 @@ class PriceChannelsTest : TestBase() {
     @Test
     fun priceChannels_100() = runPriceTest {
         val arr = PriceChannels(100).eval(it)
-        assertEqual(2116.48, arr.upper(it.size - 1), "priceChannels upper last with different parameters")
-        assertEqual(1867.01, arr.lower(it.size - 1), "priceChannels lower last with different parameters")
+        assertEquals(2116.48, arr.upper(it.size - 1), "priceChannels upper last with different parameters")
+        assertEquals(1867.01, arr.lower(it.size - 1), "priceChannels lower last with different parameters")
     }
 }

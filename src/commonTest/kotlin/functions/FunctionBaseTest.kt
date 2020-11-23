@@ -10,26 +10,12 @@ import org.cerion.stocks.core.functions.types.PriceOverlay
 import org.cerion.stocks.core.indicators.MACD
 import org.cerion.stocks.core.overlays.BollingerBands
 import org.cerion.stocks.core.overlays.ExpMovingAverage
+import org.cerion.stocks.core.overlays.PriceOverlayBase
 import org.cerion.stocks.core.overlays.SimpleMovingAverage
 import org.cerion.stocks.core.platform.KMPDate
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
-
-abstract class BaseClass {
-    abstract fun eval(): Number
-}
-class SomeClassOne : BaseClass() {
-    override fun eval(): Int = 55
-}
-
-class SomeClassTwo : BaseClass() {
-    override fun eval(): Double = 5.5
-}
-
-fun run(foo: BaseClass, bar: BaseClass) {
-    // TODO check if foo.eval() returns the same type as bar.eval()
-}
 
 class FunctionBaseTest : TestBase() {
 
@@ -82,7 +68,7 @@ class FunctionBaseTest : TestBase() {
     fun equals_checksClassName() {
         val call1 = ExpMovingAverage(10)
         val call2 = SimpleMovingAverage(10)
-        assertNotEquals(call1, call2)
+        assertNotEquals<PriceOverlayBase>(call1, call2)
     }
     @Test
     fun equals_checksParameters() {
@@ -98,14 +84,14 @@ class FunctionBaseTest : TestBase() {
     fun parametersVerified_DecimalType() {
         //All types should work on decimal input, no exceptions thrown
         var call: IFunction = BollingerBands(20, 2.0)
-        call.eval(generateList(50))
+        call.eval(PriceList.generateSeries(50))
 
         call = BollingerBands(20, 2.0)
-        call.eval(generateList(50))
+        call.eval(PriceList.generateSeries(50))
 
         //Int
         call = BollingerBands(20, 2.0)
-        call.eval(generateList(50))
+        call.eval(PriceList.generateSeries(50))
     }
 
     @Test

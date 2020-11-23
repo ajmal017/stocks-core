@@ -11,7 +11,7 @@ class DirectionalIndexTest : TestBase() {
         val last = arr.size - 1
 
         // TODO verify values online, just doing these pre-refactor
-        assertEqual(30.29, arr.neg(last), "last")
-        assertEqual(27.01, arr.pos(last), "last")
+        assertEquals(30.29, arr.neg(last), "last")
+        assertEquals(27.01, arr.pos(last), "last")
     }
 }
