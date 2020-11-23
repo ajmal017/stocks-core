@@ -5,17 +5,16 @@ import org.cerion.stocks.core.arrays.BandArray
 import org.cerion.stocks.core.functions.IPriceOverlay
 import org.cerion.stocks.core.overlays.BollingerBands
 import org.cerion.stocks.core.overlays.SimpleMovingAverage
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 
 class PriceConditionTest : TestBase() {
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun verifiesCondition() {
-        PriceCondition(Condition.INSIDE, SimpleMovingAverage())
+        assertFailsWith<IllegalArgumentException> {
+            PriceCondition(Condition.INSIDE, SimpleMovingAverage())
+        }
     }
 
     @Test
@@ -40,7 +39,7 @@ class PriceConditionTest : TestBase() {
 
     private fun testCondition(trueCondition: Condition, overlay: IPriceOverlay) = runPriceTest {
         for (c in Condition.values()) {
-            if (c == Condition.INSIDE && overlay.resultType != BandArray::class.java)
+            if (c == Condition.INSIDE && overlay.resultType != BandArray::class)
                 continue
 
             val condition = PriceCondition(c, overlay)

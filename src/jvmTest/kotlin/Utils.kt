@@ -5,26 +5,19 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
 import org.cerion.stocks.core.model.Dividend
 import org.cerion.stocks.core.platform.KMPDate
-import org.cerion.stocks.core.web.CSVParser
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 import java.util.*
 
-actual suspend fun readResourceFileAsync(fileName: String): Deferred<String> {
-    return CompletableDeferred(Utils.resourceToString(fileName))
-}
+actual object Utils {
 
-actual fun runAsync(block: suspend () -> Unit) = runBlocking {
-    block()
-}
+    actual suspend fun readResourceFileAsync(fileName: String): Deferred<String> {
+        return CompletableDeferred(Utils.resourceToString(fileName))
+    }
 
-object Utils {
-
-    val sP500TestData: PriceList by lazy {
-        println("loading")
-        val data = resourceToString("sp500_2000-2015.csv")
-        PriceList("^GSPC", CSVParser.getPricesFromTable(data))
+    actual fun runAsync(block: suspend () -> Unit) = runBlocking {
+        block()
     }
 
     fun resourceToString(fileName: String): String {
@@ -46,23 +39,6 @@ object Utils {
 
     private fun fileToString(fileName: String): String {
         return File(fileName).readText(Charsets.UTF_8)
-        /*
-        val contentBuilder = StringBuilder()
-
-        Files.lines(Paths.get(fileName), StandardCharsets.UTF_8).use {
-            stream -> stream.forEach { s: String? -> contentBuilder.append(s).append("\r\n") }
-        }
-
-        return contentBuilder.toString()
-         */
-    }
-
-    fun generateList(size: Int): PriceList {
-        val prices = ArrayList<PriceRow>()
-        for (i in 0 until size)
-            prices.add(PriceRow(KMPDate.TODAY, i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat()))
-
-        return PriceList("TEST", prices)
     }
 
     fun getDividends(vararg values: Float): List<Dividend> {

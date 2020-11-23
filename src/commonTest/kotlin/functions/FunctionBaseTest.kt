@@ -1,7 +1,8 @@
 package org.cerion.stocks.core.functions
 
+import org.cerion.stocks.core.PriceList
+import org.cerion.stocks.core.PriceRow
 import org.cerion.stocks.core.TestBase
-import org.cerion.stocks.core.Utils
 import org.cerion.stocks.core.functions.types.IFunctionEnum
 import org.cerion.stocks.core.functions.types.Indicator
 import org.cerion.stocks.core.functions.types.Overlay
@@ -9,11 +10,11 @@ import org.cerion.stocks.core.functions.types.PriceOverlay
 import org.cerion.stocks.core.indicators.MACD
 import org.cerion.stocks.core.overlays.BollingerBands
 import org.cerion.stocks.core.overlays.ExpMovingAverage
-import org.cerion.stocks.core.overlays.OverlayBase
 import org.cerion.stocks.core.overlays.SimpleMovingAverage
-import java.util.*
+import org.cerion.stocks.core.platform.KMPDate
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotEquals
 
 abstract class BaseClass {
@@ -98,32 +99,38 @@ class FunctionBaseTest : TestBase() {
     fun parametersVerified_DecimalType() {
         //All types should work on decimal input, no exceptions thrown
         var call: IFunction = BollingerBands(20, 2.0)
-        call.eval(Utils.generateList(50))
+        call.eval(generateList(50))
 
         call = BollingerBands(20, 2.0)
-        call.eval(Utils.generateList(50))
+        call.eval(generateList(50))
 
         //Int
         call = BollingerBands(20, 2.0)
-        call.eval(Utils.generateList(50))
+        call.eval(generateList(50))
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun setParams_tooMany() {
-        val call = BollingerBands(20, 2.0)
-        call.setParams(20, 10, 10)
+        assertFailsWith<IllegalArgumentException> {
+            val call = BollingerBands(20, 2.0)
+            call.setParams(20, 10, 10)
+        }
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun setParams_tooFew() {
-        val call = BollingerBands(20, 2.0)
-        call.setParams(20)
+        assertFailsWith<IllegalArgumentException> {
+            val call = BollingerBands(20, 2.0)
+            call.setParams(20)
+        }
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun setParams_typeMismatch() {
-        val call = BollingerBands(20, 2.0)
-        call.setParams(20, 10)
+        assertFailsWith<IllegalArgumentException> {
+            val call = BollingerBands(20, 2.0)
+            call.setParams(20, 10)
+        }
     }
 
     @Test
@@ -182,5 +189,14 @@ class FunctionBaseTest : TestBase() {
         assertEquals("SMA(22)", SimpleMovingAverage(22).serialize())
         assertEquals("BB(30,2.1)", BollingerBands(30, 2.1).serialize())
         assertEquals("MACD(2,3,4)", MACD(2,3,4).serialize())
+    }
+
+    @Deprecated("may be actual function on PriceList to do this now")
+    private fun generateList(size: Int): PriceList {
+        val prices = ArrayList<PriceRow>()
+        for (i in 0 until size)
+            prices.add(PriceRow(KMPDate.TODAY, i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat(), i.toFloat()))
+
+        return PriceList("TEST", prices)
     }
 }

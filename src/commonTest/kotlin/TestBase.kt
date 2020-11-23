@@ -34,9 +34,9 @@ open class TestBase {
             assertEquals(expected, actual, message)
     }
 
-    protected fun runPriceTest(block: suspend (priceList: PriceList) -> Unit) = runAsync {
+    protected fun runPriceTest(block: suspend (priceList: PriceList) -> Unit) = Utils.runAsync {
         if (!isInitialized()) {
-            val data = readResourceFileAsync("sp500_2000-2015.csv").await()
+            val data = Utils.readResourceFileAsync("sp500_2000-2015.csv").await()
             priceList = PriceList("^GSPC", CSVParser.getPricesFromTable(data))
         }
 

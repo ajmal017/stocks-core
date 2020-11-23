@@ -7,16 +7,15 @@ import org.cerion.stocks.core.indicators.RSI
 import org.cerion.stocks.core.overlays.BollingerBands
 import org.cerion.stocks.core.overlays.ExpMovingAverage
 import org.cerion.stocks.core.overlays.KAMA
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class ValueIndicatorConditionTest : TestBase() {
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun verifies_insideBandArray() {
-        ValueIndicatorCondition(0f, Condition.INSIDE, ExpMovingAverage())
+        assertFailsWith<IllegalArgumentException> {
+            ValueIndicatorCondition(0f, Condition.INSIDE, ExpMovingAverage())
+        }
     }
 
     @Test
@@ -40,7 +39,7 @@ class ValueIndicatorConditionTest : TestBase() {
 
     private fun runValue(value: Float, expectedCondition: Condition, function: IFunction) = runPriceTest {
         for (c in Condition.values()) {
-            if (c == Condition.INSIDE && function.resultType != BandArray::class.java)
+            if (c == Condition.INSIDE && function.resultType != BandArray::class)
                 continue
 
             if (c == expectedCondition)

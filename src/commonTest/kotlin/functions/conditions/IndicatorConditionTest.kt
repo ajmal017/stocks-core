@@ -6,26 +6,29 @@ import org.cerion.stocks.core.indicators.RSI
 import org.cerion.stocks.core.overlays.BollingerBands
 import org.cerion.stocks.core.overlays.ExpMovingAverage
 import org.cerion.stocks.core.overlays.SimpleMovingAverage
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class IndicatorConditionTest : TestBase() {
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun verifies_floatArray() {
-        IndicatorCondition(BollingerBands(), Condition.ABOVE, ExpMovingAverage())
+        assertFailsWith<IllegalArgumentException> {
+            IndicatorCondition(BollingerBands(), Condition.ABOVE, ExpMovingAverage())
+        }
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun verifies_floatArray2() {
-        IndicatorCondition(SimpleMovingAverage(), Condition.ABOVE, BollingerBands())
+        assertFailsWith<IllegalArgumentException> {
+            IndicatorCondition(SimpleMovingAverage(), Condition.ABOVE, BollingerBands())
+        }
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun verifies_condition() {
-        IndicatorCondition(SimpleMovingAverage(), Condition.INSIDE, ExpMovingAverage())
+        assertFailsWith<IllegalArgumentException> {
+            IndicatorCondition(SimpleMovingAverage(), Condition.INSIDE, ExpMovingAverage())
+        }
     }
 
     @Test
