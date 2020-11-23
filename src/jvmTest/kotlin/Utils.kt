@@ -13,7 +13,7 @@ import java.util.*
 actual object Utils {
 
     actual suspend fun readResourceFileAsync(fileName: String): Deferred<String> {
-        return CompletableDeferred(Utils.resourceToString(fileName))
+        return CompletableDeferred(resourceToString(fileName))
     }
 
     actual fun runAsync(block: suspend () -> Unit) = runBlocking {

@@ -34,7 +34,7 @@ class PriceConditionTest : TestBase() {
     fun toStringTest() {
         assertEquals("Price above SMA 29", PriceCondition(Condition.ABOVE, SimpleMovingAverage(29)).toString())
         assertEquals("Price below SMA 29", PriceCondition(Condition.BELOW, SimpleMovingAverage(29)).toString())
-        assertEquals("Price inside BB 30,3.0", PriceCondition(Condition.INSIDE, BollingerBands(30, 3.0)).toString())
+        assertEquals("Price inside BB 30,3.1", PriceCondition(Condition.INSIDE, BollingerBands(30, 3.1)).toString())
     }
 
     private fun testCondition(trueCondition: Condition, overlay: IPriceOverlay) = runPriceTest {

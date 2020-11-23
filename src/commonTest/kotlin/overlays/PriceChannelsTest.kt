@@ -9,22 +9,22 @@ class PriceChannelsTest : TestBase() {
     fun priceChannels_defaults() = runPriceTest {
         val arr = PriceChannels().eval(it)
 
-        assertEqual(it.high[0], arr.upper(0), "priceChannels 0")
-        assertEqual(it.low[0], arr.lower(0), "priceChannels 0")
-        assertEqual(1478.0, arr.upper(1), "priceChannels 1 upper")
-        assertEqual(1438.36, arr.lower(1), "priceChannels 1 lower")
-        assertEqual(1478.0, arr.upper(18), "priceChannels 18")
-        assertEqual(1478.0, arr.upper(19), "priceChannels 19")
-        assertEqual(1350.14, arr.lower(20), "priceChannels 20")
+        assertEquals(it.high[0], arr.upper(0), "priceChannels 0")
+        assertEquals(it.low[0], arr.lower(0), "priceChannels 0")
+        assertEquals(1478.0, arr.upper(1), "priceChannels 1 upper")
+        assertEquals(1438.36, arr.lower(1), "priceChannels 1 lower")
+        assertEquals(1478.0, arr.upper(18), "priceChannels 18")
+        assertEquals(1478.0, arr.upper(19), "priceChannels 19")
+        assertEquals(1350.14, arr.lower(20), "priceChannels 20")
 
         // TODO add assert function that takes BandArray and position with 5 values
         // Last
         val p = it.size - 1
-        assertEqual(2104.27, arr.upper(p), "priceChannels upper last")
-        assertEqual(1993.26, arr.lower(p), "priceChannels lower last")
-        assertEqual(2048.77, arr.mid(p), "mid last")
-        assertEqual(5.42, arr.bandwidth(p), "bandwidth last")
-        assertEqual(0.46, arr.percent(p), "percent last")
+        assertEquals(2104.27, arr.upper(p), "priceChannels upper last")
+        assertEquals(1993.26, arr.lower(p), "priceChannels lower last")
+        assertEquals(2048.77, arr.mid(p), "mid last")
+        assertEquals(5.42, arr.bandwidth(p), "bandwidth last")
+        assertEquals(0.46, arr.percent(p), "percent last")
     }
 
     @Test

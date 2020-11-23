@@ -56,12 +56,12 @@ class SimpleMovingAverageTest : TestBase() {
         val sma200 = it.close.sma(200)
 
         for (i in 0..19)
-            assertEqual(sma20[i], sma100[i], "20 and 100 position $i")
+            assertEquals(sma20[i], sma100[i], "20 and 100 position $i")
 
         for (i in 0..19)
-            assertEqual(sma20[i], sma200[i], "20 and 200 position $i")
+            assertEquals(sma20[i], sma200[i], "20 and 200 position $i")
 
         for (i in 0..99)
-            assertEqual(sma100[i], sma200[i], "100 and 200 position $i")
+            assertEquals(sma100[i], sma200[i], "100 and 200 position $i")
     }
 }

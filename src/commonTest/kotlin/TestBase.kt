@@ -9,11 +9,6 @@ import kotlin.test.assertEquals
 open class TestBase {
 
     @Deprecated("use precision methods")
-    fun assertEqual(expected: Float, actual: Float, message: String) {
-        assertEquals(expected, actual, message)
-    }
-
-    @Deprecated("use precision methods")
     fun assertEqual(expected: Double, actual: Float, message: String) {
         val dec2 = roundToDecimals(actual, 2).toString()
         assertEquals(expected.toString(), dec2, message)
@@ -31,7 +26,7 @@ open class TestBase {
     fun assertEquals(expected: Number, actual: Float, delta: Double, message: String? = null) {
         val diff = abs(expected.toDouble() - actual)
         if (diff > delta)
-            assertEquals(expected, actual, message)
+            kotlin.test.assertEquals(expected, actual, "expected=$expected, actual=$actual, diff=$diff - $message")
     }
 
     protected fun runPriceTest(block: suspend (priceList: PriceList) -> Unit) = Utils.runAsync {

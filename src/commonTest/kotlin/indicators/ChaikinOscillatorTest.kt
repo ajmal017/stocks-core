@@ -10,9 +10,9 @@ class ChaikinOscillatorTest : TestBase() {
         val arr = ChaikinOscillator().eval(it)
 
         // TODO verify values online, just doing these pre-refactor
-        assertEqual(0.0, arr.first, "first")
-        assertEqual(-298935.10, arr[1], "position 1")
-        assertEqual(-265271.78, arr[2], "position 2")
-        assertEqual(550272.0, arr.last, "last")
+        assertEquals(0.0, arr.first, "first")
+        assertEquals(-298935.10, arr[1], 0.05, "position 1")
+        assertEquals(-265271.78, arr[2], 0.05, "position 2")
+        assertEquals(550272.0, arr.last, "last")
     }
 }

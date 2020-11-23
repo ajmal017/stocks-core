@@ -9,11 +9,11 @@ class ZigZagTest : TestBase() {
     fun eval() = runPriceTest {
         val arr = ZigZag(20.0).eval(it)
 
-        assertEqual(it.high[0], arr[0], "zigzag start")
-        assertEqual(it.low[307], arr[307], "zigzag first low")
-        assertEqual(it.high[349], arr[349], "zigzag first high")
-        assertEqual(it.low[2957], arr[2957], "zigzag last low")
-        assertEqual(it.high[3868], arr[3868], "zigzag last high")
-        assertEqual(it.low.last, arr.last, "zigzag end")
+        assertEquals(it.high[0], arr[0], "zigzag start")
+        assertEquals(it.low[307], arr[307], "zigzag first low")
+        assertEquals(it.high[349], arr[349], "zigzag first high")
+        assertEquals(it.low[2957], arr[2957], "zigzag last low")
+        assertEquals(it.high[3868], arr[3868], "zigzag last high")
+        assertEquals(it.low.last, arr.last, "zigzag end")
     }
 }

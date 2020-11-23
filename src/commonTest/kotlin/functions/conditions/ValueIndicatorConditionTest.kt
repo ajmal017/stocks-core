@@ -20,8 +20,8 @@ class ValueIndicatorConditionTest : TestBase() {
 
     @Test
     fun toStringTest() {
-        assertEquals("50.0 below KAMA 10,2,30", ValueIndicatorCondition(50.00f, Condition.BELOW, KAMA()).toString())
-        assertEquals("50.0 inside BB 20,2.0", ValueIndicatorCondition(50.00f, Condition.INSIDE, BollingerBands()).toString())
+        assertEquals("50.1 below KAMA 10,2,30", ValueIndicatorCondition(50.1f, Condition.BELOW, KAMA()).toString())
+        assertEquals("50.1 inside BB 20,2.1", ValueIndicatorCondition(50.1f, Condition.INSIDE, BollingerBands(20,2.1)).toString())
     }
 
     @Test

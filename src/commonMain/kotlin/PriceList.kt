@@ -24,8 +24,7 @@ class PriceList(val symbol: String, list: List<PriceRow>, delegate: ArrayList<Pr
     val interval: Interval
         get() {
             if (size > 1) {
-                var diff = dates[2].time - dates[1].time
-                diff /= (1000 * 60 * 60 * 24).toLong()
+                val diff = dates[2].diff(dates[1])
 
                 if (diff > 200)
                     return Interval.YEARLY
