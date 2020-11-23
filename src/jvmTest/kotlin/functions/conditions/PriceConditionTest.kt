@@ -5,8 +5,10 @@ import org.cerion.stocks.core.arrays.BandArray
 import org.cerion.stocks.core.functions.IPriceOverlay
 import org.cerion.stocks.core.overlays.BollingerBands
 import org.cerion.stocks.core.overlays.SimpleMovingAverage
-import org.junit.Assert.*
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 
 class PriceConditionTest : TestBase() {
@@ -36,16 +38,16 @@ class PriceConditionTest : TestBase() {
         assertEquals("Price inside BB 30,3.0", PriceCondition(Condition.INSIDE, BollingerBands(30, 3.0)).toString())
     }
 
-    private fun testCondition(trueCondition: Condition, overlay: IPriceOverlay) {
+    private fun testCondition(trueCondition: Condition, overlay: IPriceOverlay) = runPriceTest {
         for (c in Condition.values()) {
             if (c == Condition.INSIDE && overlay.resultType != BandArray::class.java)
                 continue
 
             val condition = PriceCondition(c, overlay)
             if (c == trueCondition)
-                assertTrue("Price $trueCondition with $overlay", condition.eval(priceList))
+                assertTrue(condition.eval(it), "Price $trueCondition with $overlay")
             else
-                assertFalse("Price NOT $trueCondition with $overlay", condition.eval(priceList))
+                assertFalse(condition.eval(it), "Price NOT $trueCondition with $overlay")
         }
     }
 }

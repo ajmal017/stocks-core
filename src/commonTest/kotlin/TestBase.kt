@@ -37,13 +37,13 @@ open class TestBase {
     protected fun runPriceTest(block: suspend (priceList: PriceList) -> Unit) = runAsync {
         if (!isInitialized()) {
             val data = readResourceFileAsync("sp500_2000-2015.csv").await()
-            priceList2 = PriceList("^GSPC", CSVParser.getPricesFromTable(data))
+            priceList = PriceList("^GSPC", CSVParser.getPricesFromTable(data))
         }
 
-        block(priceList2)
+        block(priceList)
     }
 
-    fun roundToDecimals(value: Float, decimals: Int): Float {
+    private fun roundToDecimals(value: Float, decimals: Int): Float {
         var dotAt = 1
         repeat(decimals) { dotAt *= 10 }
         val roundedValue = (value * dotAt).roundToInt()
@@ -51,13 +51,7 @@ open class TestBase {
     }
 
     companion object {
-
         fun isInitialized() = ::priceList.isInitialized
-        private lateinit var priceList2: PriceList
-
-        // TODO remove this version
-        lateinit var priceList: PriceList
-        val size
-            get() = priceList.size
+        private lateinit var priceList: PriceList
     }
 }

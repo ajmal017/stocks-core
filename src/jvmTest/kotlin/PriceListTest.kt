@@ -1,14 +1,15 @@
 package org.cerion.stocks.core
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class PriceListTest : TestBase() {
 
     @Test
-    fun averageYearlyGain() {
-        val gain = priceList.averageYearlyGain()
-        assertEquals(0.0215, gain.toDouble(), 0.0001)
+    fun averageYearlyGain() = runPriceTest {
+        val gain = it.averageYearlyGain()
+        assertEquals(0.0215, gain, 0.0001)
     }
 
     @Test

@@ -7,8 +7,10 @@ import org.cerion.stocks.core.indicators.RSI
 import org.cerion.stocks.core.overlays.BollingerBands
 import org.cerion.stocks.core.overlays.ExpMovingAverage
 import org.cerion.stocks.core.overlays.KAMA
-import org.junit.Assert
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class ValueIndicatorConditionTest : TestBase() {
 
@@ -19,8 +21,8 @@ class ValueIndicatorConditionTest : TestBase() {
 
     @Test
     fun toStringTest() {
-        Assert.assertEquals("50.0 below KAMA 10,2,30", ValueIndicatorCondition(50.00f, Condition.BELOW, KAMA()).toString())
-        Assert.assertEquals("50.0 inside BB 20,2.0", ValueIndicatorCondition(50.00f, Condition.INSIDE, BollingerBands()).toString())
+        assertEquals("50.0 below KAMA 10,2,30", ValueIndicatorCondition(50.00f, Condition.BELOW, KAMA()).toString())
+        assertEquals("50.0 inside BB 20,2.0", ValueIndicatorCondition(50.00f, Condition.INSIDE, BollingerBands()).toString())
     }
 
     @Test
@@ -36,15 +38,15 @@ class ValueIndicatorConditionTest : TestBase() {
         runValue(42f, Condition.BELOW, RSI(5))
     }
 
-    private fun runValue(value: Float, expectedCondition: Condition, function: IFunction) {
+    private fun runValue(value: Float, expectedCondition: Condition, function: IFunction) = runPriceTest {
         for (c in Condition.values()) {
             if (c == Condition.INSIDE && function.resultType != BandArray::class.java)
                 continue
 
             if (c == expectedCondition)
-                Assert.assertTrue(ValueIndicatorCondition(value, c, function).eval(priceList))
+                assertTrue(ValueIndicatorCondition(value, c, function).eval(it))
             else
-                Assert.assertFalse(ValueIndicatorCondition(value, c, function).eval(priceList))
+                assertFalse(ValueIndicatorCondition(value, c, function).eval(it))
         }
     }
 }

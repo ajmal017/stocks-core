@@ -9,14 +9,12 @@ import org.cerion.stocks.core.functions.types.PriceOverlay
 import org.cerion.stocks.core.indicators.MACD
 import org.cerion.stocks.core.overlays.BollingerBands
 import org.cerion.stocks.core.overlays.ExpMovingAverage
+import org.cerion.stocks.core.overlays.OverlayBase
 import org.cerion.stocks.core.overlays.SimpleMovingAverage
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
-import org.junit.Test
 import java.util.*
-import kotlin.reflect.KClass
-import kotlin.reflect.full.defaultType
-import kotlin.reflect.full.starProjectedType
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 abstract class BaseClass {
     abstract fun eval(): Number
@@ -51,8 +49,8 @@ class FunctionBaseTest : TestBase() {
             map[function] = ""
         }
 
-        assertEquals("no values returned", true, size > 0)
-        assertEquals("map does not match size", size.toLong(), map.size.toLong())
+        assertEquals(true, size > 0, "no values returned")
+        assertEquals(size.toLong(), map.size.toLong(), "map does not match size")
     }
 
     @Test
@@ -61,7 +59,7 @@ class FunctionBaseTest : TestBase() {
         val po = PriceOverlay.values()[0]
         val map = HashMap<IFunction, String>()
 
-        assertEquals("expected functions do not match", overlay.ordinal.toLong(), po.ordinal.toLong())
+        assertEquals(overlay.ordinal, po.ordinal, "expected functions do not match")
         val params = arrayOf<Number>(0)
 
         val call1 = overlay.getInstance(*params)
@@ -69,15 +67,15 @@ class FunctionBaseTest : TestBase() {
         val call3 = overlay.getInstance(*params)
         val call4 = po.getInstance(*params)
 
-        assertEquals("hash code should match", call1.hashCode().toLong(), call2.hashCode().toLong())
+        assertEquals(call1.hashCode(), call2.hashCode(), "hash code should match")
 
         map[call1] = ""
         map[call2] = ""
-        assertEquals("unique functions mapped to same value", map.size.toLong(), 2)
+        assertEquals(map.size, 2, "unique functions mapped to same value")
 
         map[call3] = ""
         map[call4] = ""
-        assertEquals("same functions should not be mapped", map.size.toLong(), 2)
+        assertEquals(map.size, 2, "same functions should not be mapped")
     }
 
     @Test
@@ -92,8 +90,8 @@ class FunctionBaseTest : TestBase() {
         val call2 = Overlay.EMA.getInstance(10)
         val call3 = Overlay.EMA.getInstance(20)
 
-        assertEquals("should be equal", call1, call2)
-        assertNotEquals("should not be equal", call1, call3)
+        assertEquals(call1, call2, "should be equal")
+        assertNotEquals(call1, call3, "should not be equal")
     }
 
     @Test
@@ -147,36 +145,35 @@ class FunctionBaseTest : TestBase() {
     }
 
     @Test
-    fun verifyReturnTypes_simpleOverlays() {
-
+    fun verifyReturnTypes_simpleOverlays() = runPriceTest {
         for (o in Overlay.values()) {
             val overlay = o.instance
-            var arr = overlay.eval(priceList.close)
-            assertEquals("'$o' resultType() does not match eval() result", arr::class, overlay.resultType)
+            var arr = overlay.eval(it.close)
+            assertEquals(arr::class, overlay.resultType, "'$o' resultType() does not match eval() result")
 
             // Verify when called on both evals
-            arr = overlay.eval(priceList)
-            assertEquals("'$o' resultType() does not match eval() result (2)", arr::class, overlay.resultType)
+            arr = overlay.eval(it)
+            assertEquals(arr::class, overlay.resultType, "'$o' resultType() does not match eval() result (2)")
         }
     }
 
     @Test
-    fun verifyReturnTypes_priceOverlays() {
+    fun verifyReturnTypes_priceOverlays() = runPriceTest {
         for (o in PriceOverlay.values()) {
             val overlay = o.instance
-            val arr = overlay.eval(priceList)
+            val arr = overlay.eval(it)
 
-            assertEquals("'$o' resultType() does not match eval() result", arr::class, overlay.resultType)
+            assertEquals(arr::class, overlay.resultType, "'$o' resultType() does not match eval() result")
         }
     }
 
     @Test
-    fun verifyReturnTypes_indicators() {
+    fun verifyReturnTypes_indicators() = runPriceTest {
         for (i in Indicator.values()) {
             val indicator = i.instance
-            val arr = indicator.eval(priceList)
+            val arr = indicator.eval(it)
 
-            assertEquals("'$i' resultType() does not match eval() result", arr::class, indicator.resultType)
+            assertEquals(arr::class, indicator.resultType, "'$i' resultType() does not match eval() result")
         }
     }
 

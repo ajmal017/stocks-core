@@ -2,12 +2,12 @@ package org.cerion.stocks.core.model
 
 import org.cerion.stocks.core.TestBase
 import org.cerion.stocks.core.Utils
-import org.junit.Test
-
-import org.junit.Assert.*
 import org.cerion.stocks.core.platform.KMPDate
 import org.junit.Ignore
+import kotlin.test.Test
+import kotlin.test.assertEquals
 import java.util.*
+import kotlin.test.assertNull
 
 class DividendHistoryTest : TestBase() {
 
@@ -16,7 +16,7 @@ class DividendHistoryTest : TestBase() {
         val dividends = Utils.getDividends(9.1f, 2.2f, 3.56f)
         val history = DividendHistory(dividends, Utils.getDate(30))
 
-        assertEquals(9.1, history.lastDividend!!, 0.005)
+        assertEquals(9.1, history.lastDividend!!.toFloat(), 0.005)
         assertEquals(KMPDate.TODAY, history.lastDividendDate)
 
         val calendar = Calendar.getInstance()
@@ -29,7 +29,7 @@ class DividendHistoryTest : TestBase() {
         val history = DividendHistory(listOf(), KMPDate(2011, 8, 13))
 
         assertNull(history.lastDividend)
-        assertEquals(0.0, history.totalDividends, 0.0001)
+        assertEquals(0.0, history.totalDividends.toFloat(), 0.0001)
         assertNull(history.lastDividendDate)
         assertNull(history.nextDividendEstimate)
     }
@@ -39,8 +39,8 @@ class DividendHistoryTest : TestBase() {
     fun startDate_pastLastDividend() {
         val history = DividendHistory(getSampleList(), KMPDate(2016, 5, 1))
 
-        assertEquals(4.75, history.lastDividend!!, 0.0001)
-        assertEquals(0.0, history.totalDividends, 0.0001)
+        assertEquals(4.75, history.lastDividend!!.toFloat(), 0.0001)
+        assertEquals(0.0, history.totalDividends.toFloat(), 0.0001)
         assertEquals(KMPDate(2016,4,12), history.lastDividendDate)
         assertEquals(KMPDate(2016,7,7), history.nextDividendEstimate)
     }
@@ -50,8 +50,8 @@ class DividendHistoryTest : TestBase() {
     fun fields_Test() {
         val history = DividendHistory(getSampleList(), KMPDate(2011, 8, 13))
 
-        assertEquals(4.75, history.lastDividend!!, 0.0001)
-        assertEquals(89.3, history.totalDividends, 0.0001)
+        assertEquals(4.75, history.lastDividend!!.toFloat(), 0.0001)
+        assertEquals(89.3, history.totalDividends.toFloat(), 0.0001)
         assertEquals(KMPDate(2016,4,12), history.lastDividendDate)
         assertEquals(KMPDate(2016,7, 7), history.nextDividendEstimate)
     }

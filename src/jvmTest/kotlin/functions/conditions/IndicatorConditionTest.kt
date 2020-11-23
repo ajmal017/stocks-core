@@ -6,8 +6,10 @@ import org.cerion.stocks.core.indicators.RSI
 import org.cerion.stocks.core.overlays.BollingerBands
 import org.cerion.stocks.core.overlays.ExpMovingAverage
 import org.cerion.stocks.core.overlays.SimpleMovingAverage
-import org.junit.Assert.*
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class IndicatorConditionTest : TestBase() {
 
@@ -35,21 +37,21 @@ class IndicatorConditionTest : TestBase() {
 
     @Test
     fun toStringTest() {
-        assertEquals("EMA 20 above EMA 30", IndicatorCondition(ExpMovingAverage(20), Condition.ABOVE, ExpMovingAverage(30)).toString())
+        assertEquals(IndicatorCondition(ExpMovingAverage(20), Condition.ABOVE, ExpMovingAverage(30)).toString(), "EMA 20 above EMA 30")
     }
 
-    private fun runFunction(f1: IFunction, expectedCondition: Condition, f2: IFunction) {
+    private fun runFunction(f1: IFunction, expectedCondition: Condition, f2: IFunction) = runPriceTest {
         for (c in Condition.values()) {
             if (c == Condition.INSIDE)
             // not applicable to this constructor
                 continue
 
             if (c == expectedCondition) {
-                assertTrue(IndicatorCondition(f1, c, f2).eval(priceList))
-                assertFalse(IndicatorCondition(f2, c, f1).eval(priceList))
+                assertTrue(IndicatorCondition(f1, c, f2).eval(it))
+                assertFalse(IndicatorCondition(f2, c, f1).eval(it))
             } else {
-                assertFalse(IndicatorCondition(f1, c, f2).eval(priceList))
-                assertTrue(IndicatorCondition(f2, c, f1).eval(priceList))
+                assertFalse(IndicatorCondition(f1, c, f2).eval(it))
+                assertTrue(IndicatorCondition(f2, c, f1).eval(it))
             }
         }
     }
