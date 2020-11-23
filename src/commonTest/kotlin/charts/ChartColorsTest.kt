@@ -8,8 +8,8 @@ import org.cerion.stocks.core.indicators.Vortex
 import org.cerion.stocks.core.overlays.BollingerBands
 import org.cerion.stocks.core.overlays.ExpMovingAverage
 import org.cerion.stocks.core.overlays.SimpleMovingAverage
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class ChartColorsTest : TestBase() {
 
@@ -30,40 +30,40 @@ class ChartColorsTest : TestBase() {
     }
 
     @Test
-    fun chartColors_basicCharts() {
+    fun chartColors_basicCharts() = runPriceTest {
         // Price chart is primary blue
         val priceChart = PriceChart(colors)
-        var data = priceChart.getDataSets(priceList)
+        var data = priceChart.getDataSets(it)
         assertEquals(2, data[0].color)
 
         // Misc line chart is primary
         val indicatorChart = IndicatorChart(AccumulationDistributionLine(), colors)
-        data = indicatorChart.getDataSets(priceList)
+        data = indicatorChart.getDataSets(it)
         assertEquals(1, data[0].color)
 
         // Volume chart
         val volumeChart = VolumeChart(colors)
-        data = volumeChart.getDataSets(priceList)
+        data = volumeChart.getDataSets(it)
         assertEquals(3, data[0].color)
 
         // Pair
         val pairChart = IndicatorChart(Vortex(), colors)
-        data = pairChart.getDataSets(priceList)
+        data = pairChart.getDataSets(it)
         assertEquals(4, data[0].color)
         assertEquals(5, data[1].color)
     }
 
     @Test
-    fun chartColors_MACD() {
+    fun chartColors_MACD() = runPriceTest {
         val chart = IndicatorChart(MACD(), colors)
-        val data = chart.getDataSets(priceList)
+        val data = chart.getDataSets(it)
         assertEquals(6, data[0].color)
         assertEquals(10, data[1].color)
         assertEquals(13, data[2].color)
     }
 
     @Test
-    fun chartColors_overlaysRotateColor() {
+    fun chartColors_overlaysRotateColor() = runPriceTest {
         val chart = IndicatorChart(AccumulationDistributionLine(), colors)
         chart.addOverlay(SimpleMovingAverage())
         chart.addOverlay(ExpMovingAverage())
@@ -73,7 +73,7 @@ class ChartColorsTest : TestBase() {
         chart.addOverlay(SimpleMovingAverage())
         chart.addOverlay(SimpleMovingAverage())
 
-        val data = chart.getDataSets(priceList)
+        val data = chart.getDataSets(it)
         assertEquals(colors.primary, data[0].color)
         assertEquals(colors.getOverlayColor(0), data[1].color)
         assertEquals(colors.getOverlayColor(1), data[2].color)
@@ -87,13 +87,13 @@ class ChartColorsTest : TestBase() {
     }
 
     @Test
-    fun chartColors_specialCaseColors() {
+    fun chartColors_specialCaseColors() = runPriceTest {
         val chart = IndicatorChart(RSI(), colors)
         chart.addOverlay(SimpleMovingAverage())
         chart.addOverlay(ExpMovingAverage())
 
         // Primary color is purple
-        val data = chart.getDataSets(priceList)
+        val data = chart.getDataSets(it)
         assertEquals(colors.primaryPurple, data[0].color)
         assertEquals(colors.getOverlayColor(0), data[1].color)
         assertEquals(colors.getOverlayColor(1), data[2].color)

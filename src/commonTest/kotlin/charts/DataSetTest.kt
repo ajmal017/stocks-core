@@ -1,19 +1,19 @@
 package org.cerion.stocks.core.charts
 
+import org.cerion.stocks.core.TestBase
 import org.cerion.stocks.core.arrays.FloatArray
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-import org.junit.Assert.*
-
-class DataSetTest {
+class DataSetTest : TestBase() {
 
     @Test
     fun sizeOffsetByOne() {
         val arr = FloatArray(5)
         val data = DataSet(arr, "", 0)
 
-        assertEquals("size should be 1 less", arr.size - 1, data.size)
-        assertEquals("invalid value at position 0", arr[1].toDouble(), data[0].toDouble(), 0.0001)
+        assertEquals(arr.size - 1, data.size, "size should be 1 less")
+        assertEquals(arr[1], data[0], 0.0001, "invalid value at position 0")
     }
 
     @Test

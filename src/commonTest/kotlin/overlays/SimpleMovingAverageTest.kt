@@ -8,12 +8,12 @@ class SimpleMovingAverageTest : TestBase() {
 
     @Test
     fun sma_1() = runPriceTest {
-        val arr = priceList.close
+        val arr = it.close
         val sma = arr.sma(1)
         assertEquals(4025, sma.size, "Unexpected test arrays length")
 
         for (i in 0 until sma.size)
-            assertEqual(arr[i], sma[i], "position $i")
+            assertEquals(arr[i], sma[i], "position $i")
     }
 
     @Test

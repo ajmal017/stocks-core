@@ -5,44 +5,43 @@ import org.cerion.stocks.core.functions.types.Indicator
 import org.cerion.stocks.core.indicators.RSI
 import org.cerion.stocks.core.indicators.Vortex
 import org.cerion.stocks.core.overlays.*
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import kotlin.test.assertFails
+import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class StockChartTest : TestBase() {
 
     @Test
-    fun dates_firstElementRemoved() {
+    fun dates_firstElementRemoved() = runPriceTest {
         val chart = VolumeChart()
-        val dates = chart.getDates(priceList)
+        val dates = chart.getDates(it)
 
-        assertEquals(priceList.size - 1, dates.size)
-        assertEquals(priceList.dates[1], dates[0])
-        assertEquals(priceList.dates[priceList.size - 1], dates[dates.size - 1])
+        assertEquals(it.size - 1, dates.size)
+        assertEquals(it.dates[1], dates[0])
+        assertEquals(it.dates[it.size - 1], dates[dates.size - 1])
     }
 
     @Test
-    fun dataSets_firstElementRemoved() {
+    fun dataSets_firstElementRemoved() = runPriceTest {
         val chart = PriceChart()
         chart.addOverlay(SimpleMovingAverage())
         chart.addOverlay(BollingerBands())
         chart.addOverlay(PriceChannels())
-        var dataSets = chart.getDataSets(priceList)
+        var dataSets = chart.getDataSets(it)
 
-        val count = priceList.size - 1
+        val count = it.size - 1
         for(set in dataSets)
             assertEquals(count, set.size)
 
         val vchart = VolumeChart()
         vchart.addOverlay(ExpMovingAverage())
-        dataSets = chart.getDataSets(priceList)
+        dataSets = chart.getDataSets(it)
         for(set in dataSets)
             assertEquals(count, set.size)
 
         val ichart = IndicatorChart(Vortex())
-        dataSets = ichart.getDataSets(priceList)
+        dataSets = ichart.getDataSets(it)
         for(set in dataSets)
             assertEquals(count, set.size)
     }

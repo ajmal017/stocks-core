@@ -25,11 +25,11 @@ open class TestBase {
         assertEquals(expected.toString(), dec2)
     }
 
-    fun assertEquals(expected: Double, actual: Float, message: String? = null) =
+    fun assertEquals(expected: Number, actual: Float, message: String? = null) =
             assertEquals(expected, actual, 0.005, message)
 
-    fun assertEquals(expected: Double, actual: Float, delta: Double, message: String? = null) {
-        val diff = abs(expected - actual)
+    fun assertEquals(expected: Number, actual: Float, delta: Double, message: String? = null) {
+        val diff = abs(expected.toDouble() - actual)
         if (diff > delta)
             assertEquals(expected, actual, message)
     }
